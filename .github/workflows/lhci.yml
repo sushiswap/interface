@@ -3,7 +3,7 @@ name: "Lighthouse"
 on:
   push:
     paths:
-      - 'apps/web/**
+      - 'apps/web/**'
 
 jobs:
   lighthouseci:
