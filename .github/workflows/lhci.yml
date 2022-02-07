@@ -16,3 +16,4 @@ jobs:
       - run: yarn install && yarn global add @lhci/cli@0.8.x
       - run: yarn run build
       - run: lhci autorun
+
