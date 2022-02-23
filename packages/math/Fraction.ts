@@ -6,6 +6,7 @@ import Rounding from "./Rounding";
 import _Decimal from "decimal.js-light";
 import invariant from "tiny-invariant";
 import toFormat from "toformat";
+import { BigNumber } from "@ethersproject/bignumber";
 
 const Decimal = toFormat(_Decimal);
 const Big = toFormat(_Big);
@@ -32,8 +33,12 @@ class Fraction {
     numerator: BigintIsh,
     denominator: BigintIsh = JSBI.BigInt(1)
   ) {
-    this.numerator = JSBI.BigInt(numerator);
-    this.denominator = JSBI.BigInt(denominator);
+    this.numerator = JSBI.BigInt(
+      numerator instanceof BigNumber ? numerator.toString() : numerator
+    );
+    this.denominator = JSBI.BigInt(
+      denominator instanceof BigNumber ? denominator.toString() : denominator
+    );
   }
 
   private static tryParseFraction(fractionish: BigintIsh | Fraction): Fraction {
@@ -41,11 +46,17 @@ class Fraction {
       fractionish instanceof JSBI ||
       typeof fractionish === "number" ||
       typeof fractionish === "string"
-    )
+    ) {
       return new Fraction(fractionish);
+    }
 
-    if ("numerator" in fractionish && "denominator" in fractionish)
+    if (fractionish instanceof BigNumber) {
+      return new Fraction(fractionish.toString());
+    }
+
+    if ("numerator" in fractionish && "denominator" in fractionish) {
       return fractionish;
+    }
     throw new Error("Could not parse fraction");
   }
 
