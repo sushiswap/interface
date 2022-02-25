@@ -1,0 +1,26 @@
+{
+  "name": "sake",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3004",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fontsource/vt323": "^4.5.3",
+    "@headlessui/react": "^1.5.0",
+    "@heroicons/react": "^1.0.5",
+    "@tailwindcss/aspect-ratio": "^0.4.0",
+    "@tailwindcss/forms": "^0.4.0",
+    "autoprefixer": "^10.4.2",
+    "framer-motion": "^6.2.8",
+    "next": "12.0.10",
+    "react": "^18.0.0-rc.0",
+    "react-dom": "^18.0.0-rc.0",
+    "postcss": "^8.4.7",
+    "react-3d-viewer": "^1.0.12",
+    "tailwindcss": "^3.0.23"
+  }
+}

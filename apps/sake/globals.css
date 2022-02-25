@@ -1,0 +1,8 @@
+.brand-font {
+  font-family: "bpdotssquaresbold";
+  font-weight: 700;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
