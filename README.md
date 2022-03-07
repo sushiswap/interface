@@ -16,11 +16,11 @@ pnpx
 
 ### Dev
 
-pnpn run dev
+pnpm run dev
 
 ### Build
 
-pnpn run build
+pnpm run build
 
 ## Apps
 
