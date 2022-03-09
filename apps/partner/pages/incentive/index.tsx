@@ -9,7 +9,7 @@ export default function Incentive() {
 
   return (
     <div>
-      <h1>Create Incentive</h1>
+      {/* <h1>Create Incentive</h1>
       <div className="flex flex-col gap-3">
           <SwapAssetPanel
             spendFromWallet={true}
@@ -52,7 +52,7 @@ export default function Incentive() {
             onSelect={handleOutputSelect}
             priceImpact={priceImpact}
             priceImpactCss={priceImpactCss}
-          />
+          /> */}
     </div>
   )
 }
