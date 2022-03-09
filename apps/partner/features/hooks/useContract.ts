@@ -1,8 +1,8 @@
 import { Contract } from "@ethersproject/contracts";
 import { useWeb3React } from "@web3-react/core";
 import { useMemo } from "react";
-import STAKING_ABI from '../abis/Staking.json'
-import ERC20_ABI from '../abis/ERC20.json'
+import STAKING_ABI from '../../abis/Staking.json'
+import ERC20_ABI from '../../abis/ERC20.json'
 
 export const STAKING_ADDRESS = "0x1CeD9B90aa573849b42ADAC7204860823c290dAc";
 

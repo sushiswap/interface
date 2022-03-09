@@ -1,14 +1,16 @@
 import { useWeb3React } from '@web3-react/core'
+import { DefaultRootState, useSelector } from 'react-redux'
 import { useStakingContract } from '../../hooks/useContract'
 
 
 export default function Incentive() {
   const { account, activate, library, chainId } = useWeb3React()
   const stakingContract = useStakingContract()
-
+  const tokenLists = useSelector( (state: DefaultRootState) => state.tokens.value)
 
   return (
     <div>
+      
       {/* <h1>Create Incentive</h1>
       <div className="flex flex-col gap-3">
           <SwapAssetPanel
