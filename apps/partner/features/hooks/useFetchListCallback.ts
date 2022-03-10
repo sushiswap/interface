@@ -1,34 +1,34 @@
 import { nanoid } from '@reduxjs/toolkit'
 import { TokenList } from '@uniswap/token-lists'
 import { useCallback } from 'react'
-import { hooks } from '../../connectors/network'
+import { hooks } from '../../components/connectors/network'
 import { ChainId } from '../../enums/ChainId'
 import { resolveENSContentHash } from '../../functions/ens'
-import { getNetworkLibrary } from '../../functions/getNetworkLibrary'
 import { getTokenList } from '../../functions/list'
 import { useAppDispatch } from '../../state/hooks'
+import { useWeb3React } from 'web3-react-core-v6'
 import { fetchTokenList } from '../../state/lists/actions'
 
 export function useFetchListCallback(): (listUrl: string, sendDispatch?: boolean) => Promise<TokenList> {
-  const { useChainId, useProvider } = hooks
-  const chainId = useChainId()
-  const provider = useProvider()
+  const { useProvider } = hooks
+  const { chainId, library } = useWeb3React()
+  const networkProvider = useProvider()
   const dispatch = useAppDispatch()
 
   const ensResolver = useCallback(
     (ensName: string) => {
-      if (!provider || chainId !== ChainId.ETHEREUM) {
+      if (!library || chainId !== ChainId.ETHEREUM) {
         if (chainId === ChainId.ETHEREUM) {
-          const networkLibrary = getNetworkLibrary()
+          const networkLibrary = networkProvider
           if (networkLibrary) {
             return resolveENSContentHash(ensName, networkLibrary)
           }
         }
         throw new Error('Could not construct mainnet ENS resolver')
       }
-      return resolveENSContentHash(ensName, provider)
+      return resolveENSContentHash(ensName, library)
     },
-    [chainId, provider],
+    [chainId, library, networkProvider],
   )
 
   // note: prevent dispatch if using for list search or unsupported list

@@ -3,6 +3,7 @@ import { TokenList } from '@uniswap/token-lists'
 import { useMemo } from 'react'
 import { AppState } from '../../state'
 import { useAppSelector } from '../../state/hooks'
+import { UNSUPPORTED_LIST_URLS } from './token-lists'
 import { WrappedTokenInfo } from './wrappedTokenInfo'
 
 

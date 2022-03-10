@@ -6,10 +6,10 @@ import { useAppDispatch } from '../hooks'
 import { useCallback, useEffect } from 'react'
 
 import { acceptListUpdate } from './actions'
-import { hooks } from '../../connectors/network'
+import { hooks } from '../../components/connectors/network'
 import { useActiveListUrls, useAllLists } from './hooks'
 
-const {  useProvider } = hooks
+const { useProvider } = hooks
 
 export default function Updater(): null {
   
