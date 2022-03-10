@@ -3,7 +3,6 @@ import { Version } from '@uniswap/token-lists'
 import schema from '@uniswap/token-lists/src/tokenlist.schema.json'
 import Ajv from 'ajv'
 
-import { DEFAULT_LIST_OF_LISTS } from 'temp/src/token-lists'
 import { contenthashToUri, uriToHttp } from './convert'
 import { parseENSAddress } from './ens'
 
@@ -68,17 +67,6 @@ export async function getTokenList(
     return json
   }
   throw new Error('Unrecognized list URL protocol.')
-}
-
-// use ordering of default list of lists to assign priority
-export function sortByListPriority(urlA: string, urlB: string) {
-  const first = DEFAULT_LIST_OF_LISTS.includes(urlA) ? DEFAULT_LIST_OF_LISTS.indexOf(urlA) : Number.MAX_SAFE_INTEGER
-  const second = DEFAULT_LIST_OF_LISTS.includes(urlB) ? DEFAULT_LIST_OF_LISTS.indexOf(urlB) : Number.MAX_SAFE_INTEGER
-
-  // need reverse order to make sure mapping includes top priority last
-  if (first < second) return 1
-  else if (first > second) return -1
-  return 0
 }
 
 export function listVersionLabel(version: Version): string {

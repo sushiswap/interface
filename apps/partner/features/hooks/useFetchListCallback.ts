@@ -1,21 +1,23 @@
 import { nanoid } from '@reduxjs/toolkit'
-import { ChainId } from '../../enums/ChainId' //TODO: fix this, shouldn't come from src
 import { TokenList } from '@uniswap/token-lists'
+import { useCallback } from 'react'
+import { hooks } from '../../connectors/network'
+import { ChainId } from '../../enums/ChainId'
 import { resolveENSContentHash } from '../../functions/ens'
 import { getNetworkLibrary } from '../../functions/getNetworkLibrary'
 import { getTokenList } from '../../functions/list'
-import { useActiveWeb3React } from 'services/src/web3'
 import { useAppDispatch } from '../../state/hooks'
 import { fetchTokenList } from '../../state/lists/actions'
-import { useCallback } from 'react'
 
 export function useFetchListCallback(): (listUrl: string, sendDispatch?: boolean) => Promise<TokenList> {
-  const { chainId, library } = useActiveWeb3React()
+  const { useChainId, useProvider } = hooks
+  const chainId = useChainId()
+  const provider = useProvider()
   const dispatch = useAppDispatch()
 
   const ensResolver = useCallback(
     (ensName: string) => {
-      if (!library || chainId !== ChainId.ETHEREUM) {
+      if (!provider || chainId !== ChainId.ETHEREUM) {
         if (chainId === ChainId.ETHEREUM) {
           const networkLibrary = getNetworkLibrary()
           if (networkLibrary) {
@@ -24,9 +26,9 @@ export function useFetchListCallback(): (listUrl: string, sendDispatch?: boolean
         }
         throw new Error('Could not construct mainnet ENS resolver')
       }
-      return resolveENSContentHash(ensName, library)
+      return resolveENSContentHash(ensName, provider)
     },
-    [chainId, library]
+    [chainId, provider],
   )
 
   // note: prevent dispatch if using for list search or unsupported list
@@ -47,11 +49,11 @@ export function useFetchListCallback(): (listUrl: string, sendDispatch?: boolean
                 url: listUrl,
                 requestId,
                 errorMessage: error.message,
-              })
+              }),
             )
           throw error
         })
     },
-    [dispatch, ensResolver]
+    [dispatch, ensResolver],
   )
 }

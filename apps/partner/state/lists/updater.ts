@@ -2,15 +2,18 @@ import { getVersionUpgrade, minVersionBump, VersionUpgrade } from '@uniswap/toke
 import { useFetchListCallback } from '../../features/hooks/useFetchListCallback'
 import useInterval from '../../features/hooks/useInterval'
 import useIsWindowVisible from '../../features/hooks/useIsWindowVisible'
-import { useActiveWeb3React } from 'services/src/web3'
 import { useAppDispatch } from '../hooks'
 import { useCallback, useEffect } from 'react'
 
 import { acceptListUpdate } from './actions'
+import { hooks } from '../../connectors/network'
 import { useActiveListUrls, useAllLists } from './hooks'
 
+const {  useProvider } = hooks
+
 export default function Updater(): null {
-  const { library } = useActiveWeb3React()
+  
+  const provider = useProvider()
   const dispatch = useAppDispatch()
   const isWindowVisible = useIsWindowVisible()
 
@@ -27,7 +30,7 @@ export default function Updater(): null {
   }, [fetchList, isWindowVisible, lists])
 
   // fetch all lists every 10 minutes, but only after we initialize library
-  useInterval(fetchAllListsCallback, library ? 1000 * 60 * 10 : null)
+  useInterval(fetchAllListsCallback, provider ? 1000 * 60 * 10 : null)
 
   // whenever a list is not loaded and not loading, try again to load it
   useEffect(() => {
@@ -37,7 +40,7 @@ export default function Updater(): null {
         fetchList(listUrl).catch((error) => console.debug('list added fetching error', error))
       }
     })
-  }, [dispatch, fetchList, library, lists])
+  }, [dispatch, fetchList, provider, lists])
 
 
   // automatically update lists if versions are minor/patch

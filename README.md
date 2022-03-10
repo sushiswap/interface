@@ -7,16 +7,25 @@ Sushi 2.0 🍣
 https://pnpm.io/installation
 
 ### Install
-
+```sh
 pnpm install
+```
 
 ### Execute
-
+```sh
 pnpx
+```
 
 ### Dev
-
+Run all apps
+```sh
 pnpm run dev
+```
+
+Run specific app
+```sh
+pnpx turbo run dev --scope=partner
+```
 
 ### Build
 
