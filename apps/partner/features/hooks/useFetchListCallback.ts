@@ -1,5 +1,5 @@
 import { nanoid } from '@reduxjs/toolkit'
-import { ChainId } from 'enums/src/ChainId' //TODO: fix this, shouldn't come from src
+import { ChainId } from '../../enums/ChainId' //TODO: fix this, shouldn't come from src
 import { TokenList } from '@uniswap/token-lists'
 import { resolveENSContentHash } from '../../functions/ens'
 import { getNetworkLibrary } from '../../functions/getNetworkLibrary'

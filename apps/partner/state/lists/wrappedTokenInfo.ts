@@ -1,4 +1,4 @@
-import { Token, Currency } from 'currency'
+import { Token, Currency } from 'currency/src'
 import { Tags, TokenInfo } from '@uniswap/token-lists'
 import { TokenList } from '@uniswap/token-lists/dist/types'
 

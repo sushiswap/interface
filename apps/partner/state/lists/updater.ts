@@ -1,5 +1,4 @@
 import { getVersionUpgrade, minVersionBump, VersionUpgrade } from '@uniswap/token-lists'
-import { UNSUPPORTED_LIST_URLS } from 'config/token-lists'
 import { useFetchListCallback } from '../../features/hooks/useFetchListCallback'
 import useInterval from '../../features/hooks/useInterval'
 import useIsWindowVisible from '../../features/hooks/useIsWindowVisible'
@@ -40,15 +39,6 @@ export default function Updater(): null {
     })
   }, [dispatch, fetchList, library, lists])
 
-  // if any lists from unsupported lists are loaded, check them too (in case new updates since last visit)
-  useEffect(() => {
-    UNSUPPORTED_LIST_URLS.forEach((listUrl) => {
-      const list = lists[listUrl]
-      if (!list || (!list.current && !list.loadingRequestId && !list.error)) {
-        fetchList(listUrl).catch((error) => console.debug('list added fetching error', error))
-      }
-    })
-  }, [dispatch, fetchList, library, lists])
 
   // automatically update lists if versions are minor/patch
   useEffect(() => {

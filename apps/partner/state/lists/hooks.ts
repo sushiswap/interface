@@ -1,23 +1,9 @@
-import DEFAULT_TOKEN_LIST from '@sushiswap/default-token-list'
+import DEFAULT_TOKEN_LIST from '@sushiswap/default-token-list' // Only need this
 import { TokenList } from '@uniswap/token-lists'
-import { UNSUPPORTED_LIST_URLS } from 'config/token-lists'
-import UNSUPPORTED_TOKEN_LIST from 'config/sushiswap-v2-unsupported.tokenlist.json'
-import { DEFAULT_LIST_OF_LISTS } from 'config/token-lists'
+import { useMemo } from 'react'
 import { AppState } from '../../state'
 import { useAppSelector } from '../../state/hooks'
-import { useMemo } from 'react'
-
 import { WrappedTokenInfo } from './wrappedTokenInfo'
-
-export function sortByListPriority(urlA: string, urlB: string) {
-  const first = DEFAULT_LIST_OF_LISTS.includes(urlA) ? DEFAULT_LIST_OF_LISTS.indexOf(urlA) : Number.MAX_SAFE_INTEGER
-  const second = DEFAULT_LIST_OF_LISTS.includes(urlB) ? DEFAULT_LIST_OF_LISTS.indexOf(urlB) : Number.MAX_SAFE_INTEGER
-
-  // need reverse order to make sure mapping includes top priority last
-  if (first < second) return 1
-  else if (first > second) return -1
-  return 0
-}
 
 
 export type TokenAddressMap = Readonly<{
@@ -62,35 +48,35 @@ export function useAllLists(): AppState['lists']['byUrl'] {
 
 function combineMaps(map1: TokenAddressMap, map2: TokenAddressMap): TokenAddressMap {
   return {
-    1: { ...map1[1], ...map2[1] }, // mainnet
-    3: { ...map1[3], ...map2[3] }, // ropsten
-    4: { ...map1[4], ...map2[4] }, // rinkeby
-    5: { ...map1[5], ...map2[5] }, // goerli
+    // 1: { ...map1[1], ...map2[1] }, // mainnet
+    // 3: { ...map1[3], ...map2[3] }, // ropsten
+    // 4: { ...map1[4], ...map2[4] }, // rinkeby
+    // 5: { ...map1[5], ...map2[5] }, // goerli
     42: { ...map1[42], ...map2[42] }, // kovan
-    250: { ...map1[250], ...map2[250] }, // fantom
-    4002: { ...map1[4002], ...map2[4002] }, // fantom testnet
-    137: { ...map1[137], ...map2[137] }, // matic
-    80001: { ...map1[80001], ...map2[80001] }, // matic testnet
-    100: { ...map1[100], ...map2[100] }, // xdai
-    56: { ...map1[56], ...map2[56] }, // bsc
-    97: { ...map1[97], ...map2[97] }, // bsc testnet
-    42161: { ...map1[42161], ...map2[42161] }, // arbitrum
-    79377087078960: { ...map1[79377087078960], ...map2[79377087078960] }, // arbitrum testnet
-    1287: { ...map1[1287], ...map2[1287] }, // moonbase
-    128: { ...map1[128], ...map2[128] }, // heco
-    256: { ...map1[256], ...map2[256] }, // heco testnet
-    43114: { ...map1[43114], ...map2[43114] }, // avax mainnet
-    43113: { ...map1[43113], ...map2[43113] }, // avax testnet fuji
-    1666600000: { ...map1[1666600000], ...map2[1666600000] }, // harmony
-    1666700000: { ...map1[1666700000], ...map2[1666700000] }, // harmony testnet
-    66: { ...map1[66], ...map2[66] }, // okex
-    65: { ...map1[65], ...map2[65] }, // okex testnet
-    42220: { ...map1[42220], ...map2[42220] }, // celo
-    11297108109: { ...map1[11297108109], ...map2[11297108109] }, // palm
-    11297108099: { ...map1[11297108099], ...map2[11297108099] }, // palm testnet
-    1285: { ...map1[1285], ...map2[1285] }, // moonriver
-    122: { ...map1[122], ...map2[122] }, // fuse
-    40: { ...map1[40], ...map2[40] }, // telos
+    // 250: { ...map1[250], ...map2[250] }, // fantom
+    // 4002: { ...map1[4002], ...map2[4002] }, // fantom testnet
+    // 137: { ...map1[137], ...map2[137] }, // matic
+    // 80001: { ...map1[80001], ...map2[80001] }, // matic testnet
+    // 100: { ...map1[100], ...map2[100] }, // xdai
+    // 56: { ...map1[56], ...map2[56] }, // bsc
+    // 97: { ...map1[97], ...map2[97] }, // bsc testnet
+    // 42161: { ...map1[42161], ...map2[42161] }, // arbitrum
+    // 79377087078960: { ...map1[79377087078960], ...map2[79377087078960] }, // arbitrum testnet
+    // 1287: { ...map1[1287], ...map2[1287] }, // moonbase
+    // 128: { ...map1[128], ...map2[128] }, // heco
+    // 256: { ...map1[256], ...map2[256] }, // heco testnet
+    // 43114: { ...map1[43114], ...map2[43114] }, // avax mainnet
+    // 43113: { ...map1[43113], ...map2[43113] }, // avax testnet fuji
+    // 1666600000: { ...map1[1666600000], ...map2[1666600000] }, // harmony
+    // 1666700000: { ...map1[1666700000], ...map2[1666700000] }, // harmony testnet
+    // 66: { ...map1[66], ...map2[66] }, // okex
+    // 65: { ...map1[65], ...map2[65] }, // okex testnet
+    // 42220: { ...map1[42220], ...map2[42220] }, // celo
+    // 11297108109: { ...map1[11297108109], ...map2[11297108109] }, // palm
+    // 11297108099: { ...map1[11297108099], ...map2[11297108099] }, // palm testnet
+    // 1285: { ...map1[1285], ...map2[1285] }, // moonriver
+    // 122: { ...map1[122], ...map2[122] }, // fuse
+    // 40: { ...map1[40], ...map2[40] }, // telos
   }
 }
 
@@ -103,7 +89,7 @@ function useCombinedTokenMapFromUrls(urls: string[] | undefined): TokenAddressMa
       urls
         .slice()
         // sort by priority so top priority goes last
-        .sort(sortByListPriority)
+        // .sort(sortByListPriority)
         .reduce((allTokens, currentUrl) => {
           const current = lists[currentUrl]?.current
           if (!current) return allTokens
@@ -127,7 +113,7 @@ export function useActiveListUrls(): string[] | undefined {
 export function useInactiveListUrls(): string[] {
   const lists = useAllLists()
   const allActiveListUrls = useActiveListUrls()
-  return Object.keys(lists).filter((url) => !allActiveListUrls?.includes(url) && !UNSUPPORTED_LIST_URLS.includes(url))
+  return Object.keys(lists).filter((url) => !allActiveListUrls?.includes(url))
 }
 
 // get all the tokens from active lists, combine with local default tokens
@@ -135,21 +121,6 @@ export function useCombinedActiveList(): TokenAddressMap {
   const activeListUrls = useActiveListUrls()
   const activeTokens = useCombinedTokenMapFromUrls(activeListUrls)
   return useMemo(() => combineMaps(activeTokens, TRANSFORMED_DEFAULT_TOKEN_LIST), [activeTokens])
-}
-
-// list of tokens not supported on interface, used to show warnings and prevent swaps and adds
-export function useUnsupportedTokenList(): TokenAddressMap {
-  // get hard coded unsupported tokens
-  const localUnsupportedListMap = listToTokenMap(UNSUPPORTED_TOKEN_LIST)
-
-  // get any loaded unsupported tokens
-  const loadedUnsupportedListMap = useCombinedTokenMapFromUrls(UNSUPPORTED_LIST_URLS)
-
-  // format into one token address map
-  return useMemo(
-    () => combineMaps(localUnsupportedListMap, loadedUnsupportedListMap),
-    [localUnsupportedListMap, loadedUnsupportedListMap]
-  )
 }
 
 export function useIsListActive(url: string): boolean {

@@ -3,7 +3,7 @@ import { Version } from '@uniswap/token-lists'
 import schema from '@uniswap/token-lists/src/tokenlist.schema.json'
 import Ajv from 'ajv'
 
-import { DEFAULT_LIST_OF_LISTS } from 'config/token-lists'
+import { DEFAULT_LIST_OF_LISTS } from 'temp/src/token-lists'
 import { contenthashToUri, uriToHttp } from './convert'
 import { parseENSAddress } from './ens'
 

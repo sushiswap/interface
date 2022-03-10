@@ -1,6 +1,6 @@
 import transpileModules from 'next-transpile-modules'
 
-const withTranspileModules = transpileModules(['ui'])
+const withTranspileModules = transpileModules(['ui']) // add packages
 
 export default withTranspileModules({
   basePath: '/partner',
