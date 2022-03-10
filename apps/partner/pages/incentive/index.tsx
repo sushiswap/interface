@@ -1,5 +1,7 @@
 // import { useWeb3React } from '@web3-react/core'
 import { DefaultRootState, useSelector } from 'react-redux'
+import MetaMaskCard from '../../components/connectors/MetaMaskCard'
+import NoSSR from 'react-no-ssr'
 
 
 export default function Incentive() {
@@ -9,7 +11,10 @@ export default function Incentive() {
 
   return (
     <div>
-      
+      <NoSSR>
+        
+      <MetaMaskCard/>
+      </NoSSR>
       {/* <h1>Create Incentive</h1>
       <div className="flex flex-col gap-3">
           <SwapAssetPanel
