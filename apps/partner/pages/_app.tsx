@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import PriorityConnector from '../components/connectors/PriorityConnector'
 import store, { persistor } from '../state'
 import ListsUpdater from '../state/lists/updater'
+import './index.css'
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (

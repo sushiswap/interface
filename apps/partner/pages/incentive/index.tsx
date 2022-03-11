@@ -1,64 +1,43 @@
 // import { useWeb3React } from '@web3-react/core'
-import { DefaultRootState, useSelector } from 'react-redux'
+import { DefaultRootState, ReactReduxContext, RootStateOrAny, useSelector } from 'react-redux'
 import MetaMaskCard from '../../components/connectors/MetaMaskCard'
 import NoSSR from 'react-no-ssr'
-
+import { createContext, useContext, useState } from 'react'
+import { stringify } from 'querystring'
+import { useAllLists, useCombinedActiveList } from '../../state/lists/hooks'
+import { useAllTokens } from '../../features/hooks/Tokens'
 
 export default function Incentive() {
   // const { account, activate, library, chainId } = useWeb3React()
   // const stakingContract = useStakingContract()
   // const tokenLists = useSelector( (state: DefaultRootState) => state.tokens.value)
+  // const { store } = useContext(ReactReduxContext)
+  // console.log(store)
+
+  const tokens = useCombinedActiveList()
+  const defaultTokens = useAllTokens()
+  console.log(defaultTokens)  
+
 
   return (
     <div>
       <NoSSR>
-        
-      <MetaMaskCard/>
+        <MetaMaskCard />
       </NoSSR>
-      {/* <h1>Create Incentive</h1>
-      <div className="flex flex-col gap-3">
-          <SwapAssetPanel
-            spendFromWallet={true}
-            header={(props) => (
-              <SwapAssetPanel.Header
-                {...props}
-                label={
-                  independentField === Field.OUTPUT && !showWrap ? i18n._(t`Swap from (est.):`) : i18n._(t`Swap from:`)
-                }
-              />
-            )}
-            currency={currencies[Field.INPUT]}
-            value={formattedAmounts[Field.INPUT]}
-            onChange={handleTypeInput}
-            onSelect={handleInputSelect}
-          />
-          <div className="z-0 flex justify-center -mt-6 -mb-6">
-            <div
-              role="button"
-              className="p-1.5 rounded-full bg-dark-800 border shadow-md border-dark-700 hover:border-dark-600"
-              onClick={() => {
-                setApprovalSubmitted(false) // reset 2 step UI for approvals
-                onSwitchTokens()
-              }}
-            >
-              <ArrowDownIcon width={14} className="text-high-emphesis hover:text-white" />
+      <h1>Create Incentive</h1>
+      Token:
+      <select onChange={(e) => setToken(e.target.value)}>
+        { () => {
+          
+          return 
+            <div>
+              
             </div>
-          </div>
-          <SwapAssetPanel
-            spendFromWallet={true}
-            header={(props) => (
-              <SwapAssetPanel.Header
-                {...props}
-                label={independentField === Field.INPUT && !showWrap ? i18n._(t`Swap to (est.):`) : i18n._(t`Swap to:`)}
-              />
-            )}
-            currency={currencies[Field.OUTPUT]}
-            value={formattedAmounts[Field.OUTPUT]}
-            onChange={handleTypeOutput}
-            onSelect={handleOutputSelect}
-            priceImpact={priceImpact}
-            priceImpactCss={priceImpactCss}
-          /> */}
+        // return <option value="mango">Mango</option>
+        }
+        }
+        
+      </select>
     </div>
   )
 }
