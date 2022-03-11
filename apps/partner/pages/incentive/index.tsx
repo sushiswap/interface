@@ -1,12 +1,9 @@
-// import { useWeb3React } from '@web3-react/core'
 import { Token } from 'currency'
 import { useMemo, useState } from 'react'
 import NoSSR from 'react-no-ssr'
 import MetaMaskCard from '../../components/connectors/MetaMaskCard'
-import { filterTokens } from '../../functions/filtering'
 import { useTokenComparator } from '../../functions/sorting'
 import { useAllTokens } from '../../hooks/Tokens'
-import useDebounce from '../../hooks/useDebounce'
 import { useCombinedActiveList } from '../../state/lists/hooks'
 
 const DEFAULT_START_DATE = new Date()
@@ -34,6 +31,10 @@ export default function Incentive() {
     return (date.getTime() / 1000).toFixed().toString()
   }
 
+
+  const onSubmit = async () => {
+  }
+
   return (
     <div>
       <NoSSR>
@@ -43,8 +44,8 @@ export default function Incentive() {
       <h1>Create Incentive</h1>
       Pool:
       <div>
-    <select onChange={() => {}}>
-      {}
+      <select onChange={(e) => setToken(e.target.value)}>
+      {[['DAI/WETH','address']].map((value, i) => (<option value={value[1]} key={i}>{value[0]}</option> ))}
       </select>
     </div>
       Token:
@@ -57,7 +58,7 @@ export default function Incentive() {
     <div>
       Amount:
      <div>
-     <input></input>
+     <input type="number"></input>
       </div>
 
       <div>
@@ -74,7 +75,7 @@ export default function Incentive() {
           <input type="datetime-local" onChange={(e) => setEndDate(new Date(e.target.value))}></input>
           </div>
         </div>
-
+    <button onClick={onSubmit}>Send reward</button>
 
     </div>
     </div>
