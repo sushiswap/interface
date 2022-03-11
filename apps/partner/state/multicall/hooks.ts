@@ -1,7 +1,7 @@
 import { FunctionFragment, Interface } from '@ethersproject/abi'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
-import { hooks } from '../../components/connectors/network'
+import { hooks } from '../../components/connectors/metaMask'
 import { useAppDispatch, useAppSelector } from '../../state/hooks'
 import { useEffect, useMemo } from 'react'
 import { useBlockNumber } from '../application/hooks'

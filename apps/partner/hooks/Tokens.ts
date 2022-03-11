@@ -2,7 +2,7 @@ import { arrayify } from '@ethersproject/bytes'
 import { parseBytes32String } from '@ethersproject/strings'
 import { Token } from 'currency'
 import { useMemo } from 'react'
-import { hooks } from '../components/connectors/network'
+import { hooks } from '../components/connectors/metaMask'
 // import { useActiveWeb3React } from 'app/services/web3'
 import { useCombinedActiveList } from '../state/lists/hooks'
 
@@ -10,7 +10,7 @@ export function useAllTokens(): { [address: string]: Token } {
   const allTokens = useCombinedActiveList()
   // const chainId = hooks.useChainId() 
   // TODO: No SSR?
-  const chainId = 42
+  const chainId = hooks.useChainId()
 
   return useMemo(() => {
     if (!chainId) return {}

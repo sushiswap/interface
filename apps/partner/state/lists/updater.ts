@@ -6,7 +6,7 @@ import { useAppDispatch } from '../hooks'
 import { useCallback, useEffect } from 'react'
 
 import { acceptListUpdate } from './actions'
-import { hooks } from '../../components/connectors/network'
+import { hooks } from '../../components/connectors/metaMask'
 import { useActiveListUrls, useAllLists } from './hooks'
 
 const { useProvider } = hooks

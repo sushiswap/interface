@@ -5,7 +5,7 @@ import { Formatter } from '@ethersproject/providers'
 import { ChainId } from '@sushiswap/core-sdk'
 import useDebounce from '../../hooks/useDebounce'
 import useIsWindowVisible from '../../hooks/useIsWindowVisible'
-import { hooks } from '../../components/connectors/network'
+import { hooks } from '../../components/connectors/metaMask'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -119,7 +119,6 @@ export default function Updater(): null {
   }, [windowVisible, dispatch, debouncedState.blockTimestamp, debouncedState.chainId])
 
   useEffect(() => {
-    // @ts-ignore TYPE NEEDS FIXING
     dispatch(updateChainId({ chainId: debouncedState.chainId in ChainId ? debouncedState.chainId ?? null : null }))
   }, [dispatch, debouncedState.chainId])
 

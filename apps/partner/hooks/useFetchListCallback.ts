@@ -1,7 +1,7 @@
 import { nanoid } from '@reduxjs/toolkit'
 import { TokenList } from '@uniswap/token-lists'
 import { useCallback } from 'react'
-import { hooks } from '../components/connectors/network'
+import { hooks } from '../components/connectors/metaMask'
 import { ChainId } from '../enums/ChainId'
 import { resolveENSContentHash } from '../functions/ens'
 import { getTokenList } from '../functions/list'
