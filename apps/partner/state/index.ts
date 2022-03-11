@@ -22,7 +22,7 @@ const migrations = {
   // },
 }
 
-const PERSISTED_KEYS: string[] = ['lists']
+const PERSISTED_KEYS: string[] = ['transactions','lists']
 
 const persistConfig = {
   key: 'root',

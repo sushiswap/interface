@@ -6,6 +6,7 @@ import { useTokenComparator } from '../../functions/sorting'
 import { useAllTokens } from '../../hooks/Tokens'
 import { useStakingContract } from '../../hooks/useContract'
 import { useCombinedActiveList } from '../../state/lists/hooks'
+import { useTransactionAdder } from '../../state/transactions/hooks'
 
 const DEFAULT_START_DATE = new Date()
 DEFAULT_START_DATE.setDate(DEFAULT_START_DATE.getDate() + 1)
