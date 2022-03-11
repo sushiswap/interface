@@ -5,7 +5,6 @@ import MetaMaskCard from '../../components/connectors/MetaMaskCard'
 import useStaking from '../../features/staking/useStaking'
 import { useTokenComparator } from '../../functions/sorting'
 import { useAllTokens } from '../../hooks/Tokens'
-import { useCombinedActiveList } from '../../state/lists/hooks'
 
 const DEFAULT_START_DATE = new Date()
 DEFAULT_START_DATE.setDate(DEFAULT_START_DATE.getDate() + 1)
@@ -19,7 +18,6 @@ export default function Incentive() {
   const { createIncentive } = useStaking()
   const [amount, setAmount] = useState<number>(0)
 
-  const tokens = useCombinedActiveList()
   const allTokens = useAllTokens()
   const tokenComparator = useTokenComparator()
 
@@ -46,8 +44,11 @@ export default function Incentive() {
       <h1>Create Incentive</h1>
       Pool:
       <div>
-        <select onChange={(e) => setRewardToken(e.target.value)}>
-          {[['DAI/WETH', 'address']].map((value, i) => (
+        <select onChange={(e) => setPool(e.target.value)}>
+          {[
+            ['DAI/WETH', '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0'],
+            ['USDC/WETH', '0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa']
+          ].map((value, i) => (
             <option value={value[1]} key={i}>
               {value[0]}
             </option>
