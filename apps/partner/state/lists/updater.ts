@@ -1,7 +1,7 @@
 import { getVersionUpgrade, minVersionBump, VersionUpgrade } from '@uniswap/token-lists'
-import { useFetchListCallback } from '../../features/hooks/useFetchListCallback'
-import useInterval from '../../features/hooks/useInterval'
-import useIsWindowVisible from '../../features/hooks/useIsWindowVisible'
+import { useFetchListCallback } from '../../hooks/useFetchListCallback'
+import useInterval from '../../hooks/useInterval'
+import useIsWindowVisible from '../../hooks/useIsWindowVisible'
 import { useAppDispatch } from '../hooks'
 import { useCallback, useEffect } from 'react'
 

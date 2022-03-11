@@ -1,4 +1,4 @@
-import { Token } from '../entities/Token'
+import { Token } from 'currency'
 import { TokenInfo } from '@uniswap/token-lists'
 import { useMemo } from 'react'
 
@@ -37,7 +37,7 @@ export function createTokenFilterFunction<T extends Token | TokenInfo>(search: s
   return ({ name, symbol }: T): boolean => Boolean((symbol && matchesSearch(symbol)) || (name && matchesSearch(name)))
 }
 
-export function filterTokens<T extends Token | TokenInfo>(tokens: T[], search: string): T[] {
+export function filterTokens<T extends Token>(tokens: T[], search: string): T[] {
   return tokens.filter(createTokenFilterFunction(search))
 }
 

@@ -1,13 +1,13 @@
 import { nanoid } from '@reduxjs/toolkit'
 import { TokenList } from '@uniswap/token-lists'
 import { useCallback } from 'react'
-import { hooks } from '../../components/connectors/network'
-import { ChainId } from '../../enums/ChainId'
-import { resolveENSContentHash } from '../../functions/ens'
-import { getTokenList } from '../../functions/list'
-import { useAppDispatch } from '../../state/hooks'
+import { hooks } from '../components/connectors/network'
+import { ChainId } from '../enums/ChainId'
+import { resolveENSContentHash } from '../functions/ens'
+import { getTokenList } from '../functions/list'
+import { useAppDispatch } from '../state/hooks'
 import { useWeb3React } from 'web3-react-core-v6'
-import { fetchTokenList } from '../../state/lists/actions'
+import { fetchTokenList } from '../state/lists/actions'
 
 export function useFetchListCallback(): (listUrl: string, sendDispatch?: boolean) => Promise<TokenList> {
   const { useProvider } = hooks
