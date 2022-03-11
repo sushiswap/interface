@@ -4,6 +4,7 @@ import NoSSR from 'react-no-ssr'
 import MetaMaskCard from '../../components/connectors/MetaMaskCard'
 import { useTokenComparator } from '../../functions/sorting'
 import { useAllTokens } from '../../hooks/Tokens'
+import { useStakingContract } from '../../hooks/useContract'
 import { useCombinedActiveList } from '../../state/lists/hooks'
 
 const DEFAULT_START_DATE = new Date()
@@ -14,6 +15,7 @@ DEFAULT_END_DATE.setDate(DEFAULT_END_DATE.getDate() + 7)
 
 export default function Incentive() {
   const [token, setToken] = useState<string>('')
+  const stakingContract = useStakingContract(true)
 
   const tokens = useCombinedActiveList()
   const allTokens = useAllTokens()  
@@ -33,6 +35,7 @@ export default function Incentive() {
 
 
   const onSubmit = async () => {
+    stakingContract
   }
 
   return (
