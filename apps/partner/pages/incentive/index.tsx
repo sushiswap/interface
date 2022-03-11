@@ -9,55 +9,74 @@ import { useAllTokens } from '../../hooks/Tokens'
 import useDebounce from '../../hooks/useDebounce'
 import { useCombinedActiveList } from '../../state/lists/hooks'
 
+const DEFAULT_START_DATE = new Date()
+DEFAULT_START_DATE.setDate(DEFAULT_START_DATE.getDate() + 1)
+
+const DEFAULT_END_DATE = new Date()
+DEFAULT_END_DATE.setDate(DEFAULT_END_DATE.getDate() + 7)
+
 export default function Incentive() {
-  // const { account, activate, library, chainId } = useWeb3React()
-  // const stakingContract = useStakingContract()
-  // const tokenLists = useSelector( (state: DefaultRootState) => state.tokens.value)
-  // const { store } = useContext(ReactReduxContext)
-  // console.log(store)
+  const [token, setToken] = useState<string>('')
 
   const tokens = useCombinedActiveList()
   const allTokens = useAllTokens()  
-  // const [searchQuery, setSearchQuery] = useState<string>('')
-  // const debouncedQuery = useDebounce(searchQuery, 200)
   const tokenComparator = useTokenComparator()
-
-  // const filteredTokens: Token[] = useMemo(() => {
-  //   return filterTokens(Object.values(allTokens), debouncedQuery)
-  // }, [allTokens, debouncedQuery])
 
   const sortedTokens: Token[] = useMemo(() => {
     return Object.values(allTokens).sort(tokenComparator)
   }, [allTokens, tokenComparator])
+ 
+  const [startDate, setStartDate] = useState<Date>(DEFAULT_START_DATE)
+  const [endDate, setEndDate] = useState<Date>(DEFAULT_END_DATE)
 
-  // const currencies = filterTokens(filteredTokens, debouncedQuery)
-  // // console.log(currencies)  
 
+  function toUnix(date: Date): string {
+    return (date.getTime() / 1000).toFixed().toString()
+  }
 
   return (
     <div>
       <NoSSR>
         <MetaMaskCard />
       </NoSSR>
+
       <h1>Create Incentive</h1>
+      Pool:
+      <div>
+    <select onChange={() => {}}>
+      {}
+      </select>
+    </div>
       Token:
-      {sortedTokens.map((token, i) => (<li key={i}>{token.symbol} {}</li>)
-      )}
-      {/* <select onChange={(e) => setToken(e.target.value)}>
-        { () => {
-          Object.keys(allTokens).forEach((address) => {
-            console.log(address)
-            
-          })
-          return 
-            <div>
-              
-            </div>
-        // return <option value="mango">Mango</option>
-        }
-        }
-        
-      </select> */}
+    <div>
+    <select onChange={(e) => setToken(e.target.value)}>
+      {sortedTokens.map((token, i) => (<option value={token.address} key={i}>{token.symbol}</option> ))}
+      </select>
+    </div>
+  
+    <div>
+      Amount:
+     <div>
+     <input></input>
+      </div>
+
+      <div>
+          <label>Start: </label>
+          <div>
+
+          <input type="datetime-local" onChange={(e) => setStartDate(new Date(e.target.value))}></input>
+          </div>
+        </div>
+        <div>
+          <label>End: </label>
+          <div>
+
+          <input type="datetime-local" onChange={(e) => setEndDate(new Date(e.target.value))}></input>
+          </div>
+        </div>
+
+
+    </div>
     </div>
   )
 }
