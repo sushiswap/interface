@@ -3,6 +3,7 @@ import { FC, useMemo, useState } from 'react'
 import useStaking from 'app/features/Staking/useStaking'
 import { useTokenComparator } from 'app/functions/sorting'
 import { useAllTokens } from 'app/hooks/Tokens'
+import { toUnix } from 'app/functions/date'
 
 const DEFAULT_START_DATE = new Date()
 DEFAULT_START_DATE.setDate(DEFAULT_START_DATE.getDate() + 1)
@@ -26,9 +27,6 @@ const CreateIncentiveForm: FC = () => {
   const [startDate, setStartDate] = useState<Date>(DEFAULT_START_DATE)
   const [endDate, setEndDate] = useState<Date>(DEFAULT_END_DATE)
 
-  function toUnix(date: Date): number {
-    return parseInt((date.getTime() / 1000).toFixed())
-  }
 
   const onSubmit = async () => {
     createIncentive(pool, rewardToken, amount, toUnix(startDate), toUnix(endDate))
