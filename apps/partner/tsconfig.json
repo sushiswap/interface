@@ -9,6 +9,8 @@
     "declarationMap": true,
     "baseUrl": ".",
     "paths": {
+      "app/animation": ["./animation"],
+      "app/animation/*": ["./animation/*"],
       "app/abis": ["./abis"],
       "app/abis/*": ["./abis/*"],
       "app/components": ["./components"],

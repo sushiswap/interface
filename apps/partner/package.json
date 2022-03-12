@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3007",
-    "build": "next build",
+    "build": "lingui && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lingui": "lingui extract --clean --overwrite && lingui compile"
   },
   "dependencies": {
     "@ethersproject/abstract-provider": "^5.5.3",
@@ -30,13 +31,17 @@
     "@web3-react/metamask": "8.0.14-beta.0",
     "@web3-react/network": "8.0.14-beta.0",
     "@web3-react/types": "8.0.10-beta.0",
-    "@lingui/react": "^3.12.1",
-    "@lingui/core": "^3.12.1",
-    "@lingui/macro": "^3.12.1",
     "@sentry/browser": "^6.15.0",
     "@sentry/nextjs": "^6.13.0",
     "@sentry/tracing": "^6.15.0",
     "@headlessui/react": "^1.4.0",
+    "@heroicons/react": "^1.0.0",
+    "tailwindcss": "^3.0.1",
+    "tailwindcss-border-gradient-radius": "^2.0.0",
+    "@tailwindcss/jit": "^0.1.18",
+    "postcss": "^8.3.0",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^6.7.0",
     "jsbi": "^4.1.0",
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
@@ -50,10 +55,16 @@
     "react-no-ssr": "^1.1.0",
     "react-redux": "^7.2.6",
     "react-hook-form": "^7.22.1",
+    "react-virtualized": "^9.22.3",
+    "react-virtualized-auto-sizer": "^1.0.5",
+    "@fontsource/dm-sans": "^4.5.0",
+    "rc-slider": "^9.7.2",
+    "@hookform/resolvers": "^2.8.5",
     "redux": "^4.1.2",
     "redux-persist": "^6.0.0",
     "ui": "workspace:*",
-    "web3-react-core-v6": "npm:@web3-react/core@^6.0.9"
+    "web3-react-core-v6": "npm:@web3-react/core@^6.0.9",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "17.0.19",
