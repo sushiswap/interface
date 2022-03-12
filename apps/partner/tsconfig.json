@@ -1,8 +1,30 @@
 {
   "extends": "config/typescript/nextjs.json",
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.json"],
   "exclude": ["node_modules"],
    "compilerOptions": {
-    "preserveSymlinks": true
+    "preserveSymlinks": true,
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "app/abis": ["./abis"],
+      "app/abis/*": ["./abis/*"],
+      "app/components": ["./components"],
+      "app/components/*": ["./components/*"],
+      "app/constants": ["./constants"],
+      "app/constants/*": ["./constants/*"],
+      "app/enums": ["./enums"],
+      "app/enums/*": ["./enums/*"],
+      "app/features": ["./features"],
+      "app/features/*": ["./features/*"],
+      "app/functions": ["./functions"],
+      "app/functions/*": ["./functions/*"],
+      "app/hooks": ["./hooks"],
+      "app/hooks/*": ["./hooks/*"],
+      "app/state": ["./state"],
+      "app/state/*": ["./state/*"],
+    }
     }
 }

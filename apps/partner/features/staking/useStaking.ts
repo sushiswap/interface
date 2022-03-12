@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
-import { hooks } from '../../components/connectors/metaMask'
-import { useStakingContract } from '../../hooks/useContract'
-import { useTransactionAdder } from '../../state/transactions/hooks'
+import { hooks } from 'app/components/connectors/metaMask'
+import { useStakingContract } from 'app/hooks/useContract'
+import { useTransactionAdder } from 'app/state/transactions/hooks'
 
 const useStaking = () => {
   const account = hooks.useAccount()

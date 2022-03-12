@@ -202,6 +202,7 @@ importers:
       '@ethersproject/hash': ^5.5.3
       '@ethersproject/providers': ^5.5.3
       '@ethersproject/strings': ^5.5.3
+      '@ethersproject/units': ^5.5.3
       '@lingui/core': ^3.12.1
       '@lingui/react': ^3.12.1
       '@reduxjs/toolkit': ^1.7.1
@@ -250,6 +251,7 @@ importers:
       '@ethersproject/hash': 5.6.0
       '@ethersproject/providers': 5.5.3
       '@ethersproject/strings': 5.6.0
+      '@ethersproject/units': 5.6.0
       '@lingui/core': 3.13.2
       '@lingui/react': 3.13.2_b6535743ded9d6e615b152ed8c889920
       '@reduxjs/toolkit': 1.8.0_5b6a40f30f5a9b0dae26241d458eaaad
@@ -1318,6 +1320,14 @@ packages:
       '@ethersproject/bignumber': 5.5.0
       '@ethersproject/constants': 5.5.0
       '@ethersproject/logger': 5.5.0
+    dev: false
+
+  /@ethersproject/units/5.6.0:
+    resolution: {integrity: sha512-tig9x0Qmh8qbo1w8/6tmtyrm/QQRviBh389EQ+d8fP4wDsBrJBf08oZfoiz1/uenKK9M78yAP4PoR7SsVoTjsw==}
+    dependencies:
+      '@ethersproject/bignumber': 5.6.0
+      '@ethersproject/constants': 5.6.0
+      '@ethersproject/logger': 5.6.0
     dev: false
 
   /@ethersproject/wallet/5.5.0:

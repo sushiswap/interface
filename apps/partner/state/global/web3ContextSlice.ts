@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Web3ReactStateUpdate } from '@web3-react/types'
-import { AppState } from '../../state'
+import { AppState } from 'app/state'
 
 export interface Web3ReactContext {
   chainId?: Web3ReactStateUpdate['chainId']

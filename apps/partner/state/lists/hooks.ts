@@ -1,8 +1,8 @@
 import DEFAULT_TOKEN_LIST from '@sushiswap/default-token-list' // Only need this
 import { TokenList } from '@uniswap/token-lists'
 import { useMemo } from 'react'
-import { AppState } from '../../state'
-import { useAppSelector } from '../../state/hooks'
+import { AppState } from 'app/state'
+import { useAppSelector } from 'app/state/hooks'
 import { UNSUPPORTED_LIST_URLS } from './token-lists'
 import { WrappedTokenInfo } from './wrappedTokenInfo'
 

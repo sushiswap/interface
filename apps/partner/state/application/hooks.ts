@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import { AppState } from ".."
-import { hooks } from "../../components/connectors/metaMask"
+import { hooks } from "app/components/connectors/metaMask"
 
 export function useBlockNumber(): number | undefined {
     // const { chainId } = useActiveWeb3React()

@@ -1,13 +1,13 @@
 import { useMemo } from "react"
-import { hooks } from "../../components/connectors/metaMask"
-import { useAllTokens } from "../../hooks/Tokens"
+import { hooks } from "app/components/connectors/metaMask"
+import { useAllTokens } from "app/hooks/Tokens"
 import { Currency, CurrencyAmount, JSBI, NATIVE, Token } from '@sushiswap/core-sdk'
-import { isAddress } from "../../functions"
-import ERC20_ABI from '../../abis/ERC20.json'
+import { isAddress } from "app/functions"
+import ERC20_ABI from 'app/abis/ERC20.json'
 import { TokenBalancesMap } from "./types"
 import { Interface } from "@ethersproject/abi"
 import { useMultipleContractSingleData, useSingleContractMultipleData } from "../multicall/hooks"
-import { useMulticall2Contract } from "../../hooks/useContract"
+import { useMulticall2Contract } from "app/hooks/useContract"
 
 /**
  * Returns a map of the given addresses to their eventually consistent ETH balances.

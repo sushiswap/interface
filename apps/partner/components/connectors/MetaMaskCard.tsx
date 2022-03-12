@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { hooks, metaMask } from '../connectors/metaMask'
+import { hooks, metaMask } from 'app/components/connectors/metaMask'
 import { Accounts } from '../Accounts'
 import { Card } from '../Card'
 import { Chain } from '../Chain'

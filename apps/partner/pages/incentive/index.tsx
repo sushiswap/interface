@@ -1,10 +1,10 @@
 import { Token } from 'currency'
 import { useMemo, useState } from 'react'
 import NoSSR from 'react-no-ssr'
-import MetaMaskCard from '../../components/connectors/MetaMaskCard'
-import useStaking from '../../features/staking/useStaking'
-import { useTokenComparator } from '../../functions/sorting'
-import { useAllTokens } from '../../hooks/Tokens'
+import MetaMaskCard from 'app/components/connectors/MetaMaskCard'
+import useStaking from 'app/features/staking/useStaking'
+import { useTokenComparator } from 'app/functions/sorting'
+import { useAllTokens } from 'app/hooks/Tokens'
 
 const DEFAULT_START_DATE = new Date()
 DEFAULT_START_DATE.setDate(DEFAULT_START_DATE.getDate() + 1)

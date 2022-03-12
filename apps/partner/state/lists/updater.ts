@@ -1,12 +1,12 @@
 import { getVersionUpgrade, minVersionBump, VersionUpgrade } from '@uniswap/token-lists'
-import { useFetchListCallback } from '../../hooks/useFetchListCallback'
-import useInterval from '../../hooks/useInterval'
-import useIsWindowVisible from '../../hooks/useIsWindowVisible'
-import { useAppDispatch } from '../hooks'
+import { useFetchListCallback } from 'app/hooks/useFetchListCallback'
+import useInterval from 'app/hooks/useInterval'
+import useIsWindowVisible from 'app/hooks/useIsWindowVisible'
+import { useAppDispatch } from 'app/state/hooks'
 import { useCallback, useEffect } from 'react'
 
 import { acceptListUpdate } from './actions'
-import { hooks } from '../../components/connectors/metaMask'
+import { hooks } from 'app/components/connectors/metaMask'
 import { useActiveListUrls, useAllLists } from './hooks'
 
 const { useProvider } = hooks
