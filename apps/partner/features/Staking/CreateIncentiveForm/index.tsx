@@ -5,11 +5,6 @@ import { useTokenComparator } from 'app/functions/sorting'
 import { useAllTokens } from 'app/hooks/Tokens'
 import { toUnix } from 'app/functions/date'
 
-const DEFAULT_START_DATE = new Date()
-DEFAULT_START_DATE.setDate(DEFAULT_START_DATE.getDate() + 1)
-
-const DEFAULT_END_DATE = new Date()
-DEFAULT_END_DATE.setDate(DEFAULT_END_DATE.getDate() + 7)
 
 const CreateIncentiveForm: FC = () => {
   const [pool, setPool] = useState<string>('')
@@ -24,8 +19,8 @@ const CreateIncentiveForm: FC = () => {
     return Object.values(allTokens).sort(tokenComparator)
   }, [allTokens, tokenComparator])
 
-  const [startDate, setStartDate] = useState<Date>(DEFAULT_START_DATE)
-  const [endDate, setEndDate] = useState<Date>(DEFAULT_END_DATE)
+  const [startDate, setStartDate] = useState<Date>()
+  const [endDate, setEndDate] = useState<Date>()
 
 
   const onSubmit = async () => {
