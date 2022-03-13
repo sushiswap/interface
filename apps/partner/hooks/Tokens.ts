@@ -1,6 +1,6 @@
 import { arrayify } from '@ethersproject/bytes'
 import { parseBytes32String } from '@ethersproject/strings'
-import { Token } from 'currency'
+import { Token } from '@sushiswap/core-sdk'
 import { useMemo } from 'react'
 import { hooks } from 'app/components/connectors/metaMask'
 import { useCombinedActiveList } from 'app/state/lists/hooks'

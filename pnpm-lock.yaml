@@ -239,6 +239,7 @@ importers:
       eslint-plugin-simple-import-sort: ^7.0.0
       eslint-plugin-unused-imports: ^1.1.5
       jsbi: ^4.1.0
+      lottie-react: 2.1.0
       math: workspace:*
       next: 12.0.10
       next-transpile-modules: 9.0.0
@@ -301,6 +302,7 @@ importers:
       eslint-plugin-simple-import-sort: 7.0.0_eslint@8.9.0
       eslint-plugin-unused-imports: 1.1.5_eslint@8.9.0
       jsbi: 4.1.0
+      lottie-react: 2.1.0_3b3c4dafaa7e2bc132922eb3215c558b
       math: link:../../packages/math
       next: 12.0.10_6449e3be2d06fed4b1af6b7c48bbd790
       postcss: 8.4.8
@@ -5939,6 +5941,22 @@ packages:
     hasBin: true
     dependencies:
       js-tokens: 4.0.0
+    dev: false
+
+  /lottie-react/2.1.0_3b3c4dafaa7e2bc132922eb3215c558b:
+    resolution: {integrity: sha512-sHDJb5aeh1letUIWqwidHoHZj07ZOZQoLuUgy0gqt9FB/XiCtAZ2+421Cn+ZkHR7anVvWljKhGgctQCtgFloUA==}
+    peerDependencies:
+      prop-types: ^15.5.7
+      react: ^16.8.0
+      react-dom: ^16.8.0
+    dependencies:
+      lottie-web: 5.9.1
+      react: 18.0.0-rc.2-next-b9de50d2f-20220308
+      react-dom: 18.0.0-rc.2-next-b9de50d2f-20220308_b6535743ded9d6e615b152ed8c889920
+    dev: false
+
+  /lottie-web/5.9.1:
+    resolution: {integrity: sha512-3uKtU6BhIK6ZRCE/QyiXq/KuRvPeEAz/VFwqd99jPbpgFY9gHLw2krqvcuCFGepeW94BipS/B3TqIfTc9pUeZg==}
     dev: false
 
   /lru-cache/6.0.0:

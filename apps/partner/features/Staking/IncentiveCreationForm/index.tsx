@@ -4,7 +4,7 @@ import Button from 'app/components/Button'
 import { hooks } from 'app/components/connectors/metaMask'
 import Form from 'app/components/Form'
 // import IncentiveCreationReviewModal from 'app/features/Staking/IncentiveCreationForm/IncentiveCreationReviewModal'
-// import { formatCreationFormData } from 'app/features/Staking/IncentiveCreationForm/utils'
+import { formatCreationFormData } from 'app/features/Staking/IncentiveCreationForm/utils'
 import { addressValidator } from 'app/functions'
 // import { useToken } from 'app/hooks/Tokens'
 import { useRouter } from 'next/router'
@@ -12,6 +12,7 @@ import React, { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import GeneralDetailsStep from '../IncentiveCreationWizard/GeneralDetailsStep'
+import IncentiveCreationModal from './IncentiveCreationReviewModal'
 
 export interface IncentiveCreationFormInput {
   pool?: string
@@ -69,17 +70,13 @@ const IncentiveCreationForm: FC = () => {
 
   const data = watch()
 
-  // const poolToken = useToken(data.pool) ?? undefined
-  // const rewardToken = useToken(data.rewardToken) ?? undefined
-  let poolToken = null
-  let rewardToken = null
-  // @ts-ignore TYPE NEEDS FIXING
+  //FIXME: wire up placeholder
+  let poolToken = new Token(42, '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0', 18, "Something", "Something") ?? undefined
+  let rewardToken = new Token(42, '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0', 18, "Something", "Something") ?? undefined
   const formattedData =
     poolToken && rewardToken && !isValidating && isValid
-      ? // ? formatCreationFormData(data as IncentiveCreationFormInputValidated, poolToken, rewardToken)
-        undefined
+      ? formatCreationFormData(data as IncentiveCreationFormInputValidated, poolToken, rewardToken)
       : undefined
-
   const handleSubmit = () => setOpen(true)
 
   return (
@@ -89,13 +86,17 @@ const IncentiveCreationForm: FC = () => {
           <Form.Section header={<Form.Section.Header header={`General Details`} />}>
             <div className={'border-b-2 border-dark-700 pb-4'}></div>
             <GeneralDetailsStep />
+            <Form.Submit>
+            <div>
+              <Button disabled={!formattedData} color="blue" type="submit">
+                Review
+              </Button>
+            </div>
+          </Form.Submit>
           </Form.Section>
-          <Button disabled={!formattedData} color="blue" type="submit">
-            {`Review`}
-          </Button>
         </Form.Card>
       </Form>
-      {/* <AuctionCreationReviewModal open={open} onDismiss={() => setOpen(false)} data={formattedData} /> */}
+      <IncentiveCreationModal open={open} onDismiss={() => setOpen(false)} data={formattedData} />
     </>
   )
 }

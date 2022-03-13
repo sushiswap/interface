@@ -11,9 +11,15 @@ const GeneralDetailsStep: FC = () => {
             name="pool"
             label={'Pool*'}
             helperText={'Select a pool'}
+            // options={[
+            //   { label: 'DAI/WETH', value: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0' },
+            //   { label: 'USDC/WETH', value: '0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa' },
+            // ]}
             options={[
-              { label: 'DAI/WETH', value: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0' },
-              { label: 'USDC/WETH', value: '0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa' },
+              {
+                label: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0',
+                value: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0',
+              },
             ]}
           />
         </div>
@@ -22,20 +28,26 @@ const GeneralDetailsStep: FC = () => {
             name="rewardToken"
             label={'Reward Token*'}
             helperText={'Select a reward token'}
+            // options={[
+            //   { label: 'BAT', value: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0' },
+            //   { label: 'USDC', value: '0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa' },
+            // ]}
             options={[
-              { label: 'BAT', value: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0' },
-              { label: 'USDC', value: '0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa' },
+              {
+                label: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0',
+                value: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0',
+              },
             ]}
           />
         </div>
         <div className="col-span-4 md:col-span-2">
-        <Form.TextField
-          name="amount"
-          label={'Reward amount*'}
-          placeholder={`0.00`}
-          helperText={'The incentive reward amount will start at this value'}
-        />
-      </div>
+          <Form.TextField
+            name="amount"
+            label={'Reward amount*'}
+            placeholder={`0.00`}
+            helperText={'The incentive reward amount will start at this value'}
+          />
+        </div>
         <div className="col-span-4 md:col-span-2">
           <Form.TextField
             className="inline-flex"
