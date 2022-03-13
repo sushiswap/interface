@@ -27,6 +27,8 @@
       "app/hooks/*": ["./hooks/*"],
       "app/state": ["./state"],
       "app/state/*": ["./state/*"],
+      "app/layouts": ["./layouts"],
+      "app/layouts/*": ["./layouts/*"],
     }
     }
 }

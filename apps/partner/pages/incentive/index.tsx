@@ -1,14 +1,20 @@
 import MetaMaskCard from 'app/components/connectors/MetaMaskCard'
-import CreateIncentiveForm from 'app/features/Staking/CreateIncentiveForm'
+import IncentiveCreationForm from 'app/features/Staking/IncentiveCreationForm'
+import CreateIncentiveForm from 'app/features/Staking/IncentiveCreationForm'
+import IncentiveLayout, { IncentiveBody } from 'layouts/Incentive'
 import NoSSR from 'react-no-ssr'
 
 export default function Incentive() {
   return (
     <>
       <NoSSR>
-        <MetaMaskCard />
+        {/* <MetaMaskCard /> */}
       </NoSSR>
-      <CreateIncentiveForm/>
+      <IncentiveBody>
+      <IncentiveCreationForm/>
+      </IncentiveBody>
     </>
   )
 }
+
+Incentive.Layout = IncentiveLayout

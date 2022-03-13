@@ -1,6 +1,4 @@
 import { Transition } from '@headlessui/react'
-import { t } from '@lingui/macro'
-import { useLingui } from '@lingui/react'
 import Button from 'app/components/Button'
 import { FormSectionProps } from 'app/components/Form/FormSection'
 import ProgressBar from 'app/components/ProgressBar'
@@ -32,7 +30,6 @@ const WizardContext = createContext<WizardContext>({
 const useWizardContext = () => useContext(WizardContext)
 
 const FormWizard: FC<FormWizardProps> = ({ children, submitButton }) => {
-  const { i18n } = useLingui()
   const [index, setIndex] = useState(0)
   const setNext = useCallback(() => setIndex((prevState) => prevState + 1), [])
   const setPrev = useCallback(() => setIndex((prevState) => prevState - 1), [])
@@ -53,10 +50,10 @@ const FormWizard: FC<FormWizardProps> = ({ children, submitButton }) => {
 
           return (
             <div className={classNames(index === _index ? '' : 'hidden', 'flex flex-col gap-8')}>
-              <div className="flex justify-between items-center border-b-2 border-dark-700 pb-4">
+              <div className="flex items-center justify-between pb-4 border-b-2 border-dark-700">
                 <div className="flex flex-col gap-1">
-                  <Typography variant="xs" weight={700} className="text-secondary tracking-wider">
-                    {i18n._(t`STEP: ${index + 1} OF ${children.length}`)}
+                  <Typography variant="xs" weight={700} className="tracking-wider text-secondary">
+                    {`STEP: ${index + 1} OF ${children.length}`}
                   </Typography>
                   {child.props.header}
                 </div>
@@ -85,14 +82,14 @@ const FormWizard: FC<FormWizardProps> = ({ children, submitButton }) => {
                 {hasPrev && (
                   <div>
                     <Button variant="outlined" color="blue" onClick={setPrev} type="button">
-                      {i18n._(t`Previous`)}
+                      {`Previous`}
                     </Button>
                   </div>
                 )}
                 {hasNext && (
                   <div>
                     <Button variant="filled" color="blue" onClick={setNext} type="button">
-                      {i18n._(t`Next`)}
+                      {`Next`}
                     </Button>
                   </div>
                 )}
