@@ -87,6 +87,7 @@ const IncentiveCreationForm: FC = () => {
       <Form {...methods} onSubmit={methods.handleSubmit(handleSubmit)}>
         <Form.Card className="divide-none">
           <Form.Section header={<Form.Section.Header header={`General Details`} />}>
+            <div className={'border-b-2 border-dark-700 pb-4'}></div>
             <GeneralDetailsStep />
           </Form.Section>
           <Button disabled={!formattedData} color="blue" type="submit">
