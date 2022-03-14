@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { hooks } from 'app/components/connectors/metaMask'
 import { useStakingContract } from 'app/hooks/useContract'
 import { useTransactionAdder } from 'app/state/transactions/hooks'
-import { IncentiveCreationFormInputFormatted } from 'app/features/Staking/IncentiveCreationForm/'
+import { IncentiveCreationFormInputFormatted } from 'app/features/Incentive/IncentiveCreationForm'
 
 const useIncentiveCreate = () => {
   const account = hooks.useAccount()

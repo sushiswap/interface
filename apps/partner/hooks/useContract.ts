@@ -2,7 +2,7 @@ import { AddressZero } from '@ethersproject/constants'
 import { Contract } from '@ethersproject/contracts'
 
 import MULTICALL2_ABI from 'app/abis/multicall2.json'
-import STAKING_ABI from 'app/abis/Staking.json'
+import INCENTIVE_ABI from 'app/abis/incentive.json'
 import {
   MULTICALL2_ADDRESS,
 } from '@sushiswap/core-sdk'
@@ -12,7 +12,7 @@ import { getContract } from 'app/functions/contract'
 import ERC20_ABI from 'app/abis/ERC20.json'
 import ERC20_BYTES32_ABI from 'app/abis/erc20_bytes32.json'
 
-const STAKING_CONTRACT = "0x1ced9b90aa573849b42adac7204860823c290dac"
+const INCENTIVE_CONTRACT = "0x1ced9b90aa573849b42adac7204860823c290dac"
 
 // returns null on errors
 export function useContract(address: string | undefined, ABI: any, withSignerIfPossible = true): Contract | null {
@@ -37,7 +37,7 @@ export function useMulticall2Contract() {
 
 
 export function useStakingContract( withSignerIfPossible = true): Contract | null {
-  return useContract(STAKING_CONTRACT, STAKING_ABI, withSignerIfPossible)
+  return useContract(INCENTIVE_CONTRACT, INCENTIVE_ABI, withSignerIfPossible)
 }
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
