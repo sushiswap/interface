@@ -206,7 +206,7 @@ importers:
       '@ethersproject/strings': ^5.5.3
       '@ethersproject/units': ^5.5.3
       '@fontsource/dm-sans': ^4.5.0
-      '@headlessui/react': ^1.4.0
+      '@headlessui/react': ^1.4.3
       '@heroicons/react': ^1.0.0
       '@hookform/resolvers': ^2.8.5
       '@reduxjs/toolkit': ^1.7.1

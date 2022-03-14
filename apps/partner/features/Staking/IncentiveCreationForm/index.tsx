@@ -12,7 +12,7 @@ import React, { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import GeneralDetailsStep from '../IncentiveCreationWizard/GeneralDetailsStep'
-import IncentiveCreationModal from './IncentiveCreationReviewModal'
+import IncentiveCreationReviewModal from './IncentiveCreationReviewModal'
 
 export interface IncentiveCreationFormInput {
   pool?: string
@@ -71,32 +71,36 @@ const IncentiveCreationForm: FC = () => {
   const data = watch()
 
   //FIXME: wire up placeholder
-  let poolToken = new Token(42, '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0', 18, "Something", "Something") ?? undefined
-  let rewardToken = new Token(42, '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0', 18, "Something", "Something") ?? undefined
+  const poolToken = new Token(42, '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0', 18, "Something", "Something") ?? undefined
+  const rewardToken = new Token(42, '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0', 18, "Something", "Something") ?? undefined
   const formattedData =
     poolToken && rewardToken && !isValidating && isValid
       ? formatCreationFormData(data as IncentiveCreationFormInputValidated, poolToken, rewardToken)
       : undefined
-  const handleSubmit = () => setOpen(true)
 
+
+      
+  const handleSubmit = () => setOpen(true)
   return (
     <>
-      <Form {...methods} onSubmit={methods.handleSubmit(handleSubmit)}>
+    <Form {...methods} onSubmit={methods.handleSubmit(handleSubmit)}>
         <Form.Card className="divide-none">
-          <Form.Section header={<Form.Section.Header header={`General Details`} />}>
-            <div className={'border-b-2 border-dark-700 pb-4'}></div>
+          {/* <Form.Section header={<Form.Section.Header header={`General Details`} />}> */}
+            {/* <div className={'border-b-2 border-dark-700 pb-4'}></div> */}
             <GeneralDetailsStep />
             <Form.Submit>
-            <div>
+              <div>
               <Button disabled={!formattedData} color="blue" type="submit">
                 Review
-              </Button>
-            </div>
+              </Button> 
+              </div>
           </Form.Submit>
-          </Form.Section>
+          {/* </Form.Section> */}
         </Form.Card>
       </Form>
-      <IncentiveCreationModal open={open} onDismiss={() => setOpen(false)} data={formattedData} />
+      
+      <IncentiveCreationReviewModal open={open} onDismiss={() => setOpen(false)} data={formattedData} />
+      
     </>
   )
 }

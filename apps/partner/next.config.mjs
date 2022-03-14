@@ -7,7 +7,7 @@ const withTranspileModules = transpileModules(['ui']) // add packages
 // const { screens } = defaultTheme
 export default withTranspileModules({
   basePath: '/partner',
-  reactStrictMode: true,
+  reactStrictMode: false,
   // swcMinify: true,
   // publicRuntimeConfig: {
   //   breakpoints: screens,
