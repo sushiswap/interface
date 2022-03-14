@@ -1,15 +1,13 @@
-import { useCallback } from 'react'
 import { hooks } from 'app/components/connectors/metaMask'
+import { IncentiveCreationFormInputFormatted } from 'app/features/Incentive/IncentiveCreationForm'
 import { useStakingContract } from 'app/hooks/useContract'
 import { useTransactionAdder } from 'app/state/transactions/hooks'
-import { IncentiveCreationFormInputFormatted } from 'app/features/Incentive/IncentiveCreationForm'
+import { useCallback } from 'react'
 
 const useIncentiveCreate = () => {
   const account = hooks.useAccount()
   const addTransaction = useTransactionAdder()
   const contract = useStakingContract(true)
-
-
 
   const subscribe = useCallback(
     (event: string, cb) => {
@@ -17,7 +15,7 @@ const useIncentiveCreate = () => {
 
       contract.on(event, cb)
     },
-    [contract]
+    [contract],
   )
 
   const unsubscribe = useCallback(
@@ -26,9 +24,8 @@ const useIncentiveCreate = () => {
 
       contract.off(event, cb)
     },
-    [contract]
+    [contract],
   )
-
 
   const init = useCallback(
     async (data: IncentiveCreationFormInputFormatted) => {
@@ -37,10 +34,16 @@ const useIncentiveCreate = () => {
       const startDateUnix = data.startDate.getTime() / 1000
       const endDateUnix = data.endDate.getTime() / 1000
 
-      const tx = await contract.createIncentive(data.pool.address, data.rewardToken.address, data.amount.toExact(), startDateUnix, endDateUnix)
+      const tx = await contract.createIncentive(
+        data.pool.address,
+        data.rewardToken.address,
+        data.amount.toExact(),
+        startDateUnix,
+        endDateUnix,
+      )
 
       addTransaction(tx, { summary: 'Initialize Incentive creation' })
-      
+
       return tx
     },
     [account, contract, addTransaction],

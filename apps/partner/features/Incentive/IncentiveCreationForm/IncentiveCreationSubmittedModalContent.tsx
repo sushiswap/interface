@@ -1,4 +1,3 @@
-
 import loadingCircle from 'app/animation/loading-circle.json'
 import { HeadlessUiModal } from 'app/components/Modal'
 import Typography from 'app/components/Typography'
@@ -16,12 +15,13 @@ const IncentiveCreationSubmittedModalContent: FC<IncentiveCreationSubmittedModal
   incentiveId,
   onDismiss,
 }) => {
-
   return (
     <HeadlessUiModal.SubmittedModalContent
       txHash={txHash}
       header={'Success!'}
-      subheader={'Incentive creation transaction successfully submitted. Your newly created incentive id will appear here once we receive the event from the blockchain'}
+      subheader={
+        'Incentive creation transaction successfully submitted. Your newly created incentive id will appear here once we receive the event from the blockchain'
+      }
       onDismiss={onDismiss}
     >
       <div className="flex flex-col px-4 py-3 mt-4 border rounded bg-dark-900 border-dark-700">

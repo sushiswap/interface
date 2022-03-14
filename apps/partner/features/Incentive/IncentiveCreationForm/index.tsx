@@ -1,9 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Currency, CurrencyAmount, NATIVE, Price, Token } from '@sushiswap/core-sdk'
+import { CurrencyAmount, Token } from '@sushiswap/core-sdk'
 import Button from 'app/components/Button'
 import { hooks } from 'app/components/connectors/metaMask'
 import Form from 'app/components/Form'
-// import IncentiveCreationReviewModal from 'app/features/Staking/IncentiveCreationForm/IncentiveCreationReviewModal'
 import { formatCreationFormData } from 'app/features/Incentive/IncentiveCreationForm/utils'
 import { addressValidator } from 'app/functions'
 import { useToken } from 'app/hooks/Tokens'
@@ -73,7 +72,6 @@ const IncentiveCreationForm: FC = () => {
   } = methods
 
   const data = watch()
-
 
   const poolToken = useToken(data.pool) ?? undefined
   const rewardToken = useToken(data.rewardToken) ?? undefined
