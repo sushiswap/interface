@@ -8,6 +8,7 @@ import { IncentiveCreationFormInputFormatted as IncentiveCreationFormInputFormat
 import { getExplorerLink, shortenString } from 'app/functions'
 import Lottie from 'lottie-react'
 import React, { FC, useCallback, useEffect, useState } from 'react'
+import useIncentiveCreate from './context/hooks/useIncentiveCreate'
 import IncentiveCreationSubmittedModalContent from './IncentiveCreationSubmittedModalContent'
 
 interface IncentiveCreationModalProps {
@@ -22,6 +23,7 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
   const [pending, setPending] = useState<boolean>(false)
   const [incentiveId, setIncentiveId] = useState<string>()
   const [error, setError] = useState<string>()
+  const { createIncentive, subscribe, unsubscribe} = useIncentiveCreate()
 
   const reset = useCallback(() => {
     if (!pending) {
@@ -45,12 +47,12 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
       setPending(true)
 
       try {
-        // const tx = await init(data)
-
-        // if (tx?.hash) {
-        //   setTxHash(tx.hash)
-        //   await tx.wait()
-        // }
+        const tx = await createIncentive(data)
+        
+        if (tx?.hash) {
+          setTxHash(tx.hash.toLowerCase())
+          await tx.wait()
+        }
       } catch (e) {
         // @ts-ignore TYPE NEEDS FIXING
         setError(e.error?.message)
@@ -58,9 +60,23 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
         setPending(false)
       }
     },
-    []
+    [createIncentive]
   )
-    console.log({open, pending, error})
+
+
+  // Subscribe to creation event to get created token ID
+  useEffect(() => {
+    // @ts-ignore TYPE NEEDS FIXING
+    subscribe('IncentiveCreated', (token, rewardToken, creator, id, amount, startTime, endTime, { transactionHash }) => {
+      if (transactionHash?.toLowerCase() === txHash?.toLowerCase()) {
+        setIncentiveId(id.toString())
+      }
+    })
+
+    return () => {
+      unsubscribe('IncentiveCreated', () => console.log('unsubscribed'))
+    }
+  }, [subscribe, txHash, unsubscribe])
 
   if (!data) return <></>
 

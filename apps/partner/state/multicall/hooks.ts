@@ -300,6 +300,7 @@ export function useSingleCallResult(
   const result = useCallsData(calls, options)[0]
   const latestBlockNumber = useBlockNumber()
 
+
   return useMemo(() => {
     return toCallState(result, contract?.interface, fragment, latestBlockNumber)
   }, [result, contract, fragment, latestBlockNumber])

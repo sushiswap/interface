@@ -8,7 +8,7 @@ import { useAppSelector } from 'app/state/hooks'
 import { selectTxStatus } from 'app/state/transactions/selectors'
 import Lottie from 'lottie-react'
 import React, { FC, ReactElement } from 'react'
-import { hooks } from '../connectors/network'
+import { hooks } from '../connectors/metaMask'
 
 import { ModalHeaderProps } from './Header'
 
@@ -58,7 +58,7 @@ const SubmittedModalContent: FC<SubmittedModalContentProps> = ({
 
           <div className="flex justify-between gap-2 py-2">
             <Typography variant="sm" className="text-secondary">
-              {`Status`}
+              Status
             </Typography>
             <Typography id={`div-tx-status`} variant="sm" weight={700} className="flex items-center gap-2 italic">
               {txStatus === 'PENDING'

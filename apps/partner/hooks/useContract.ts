@@ -9,6 +9,8 @@ import {
 import { hooks } from '../components/connectors/metaMask'
 import { useMemo } from 'react'
 import { getContract } from 'app/functions/contract'
+import ERC20_ABI from 'app/abis/ERC20.json'
+import ERC20_BYTES32_ABI from 'app/abis/erc20_bytes32.json'
 
 const STAKING_CONTRACT = "0x1ced9b90aa573849b42adac7204860823c290dac"
 
@@ -36,4 +38,12 @@ export function useMulticall2Contract() {
 
 export function useStakingContract( withSignerIfPossible = true): Contract | null {
   return useContract(STAKING_CONTRACT, STAKING_ABI, withSignerIfPossible)
+}
+
+export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
+  return useContract(tokenAddress, ERC20_ABI, withSignerIfPossible)
+}
+
+export function useBytes32TokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
+  return useContract(tokenAddress, ERC20_BYTES32_ABI, withSignerIfPossible)
 }

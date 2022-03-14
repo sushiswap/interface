@@ -8,7 +8,7 @@ export default function Incentive() {
   return (
     <>
       <NoSSR>
-        {/* <MetaMaskCard /> */}
+        <MetaMaskCard />
       </NoSSR>
       <IncentiveBody>
       <IncentiveCreationForm/>

@@ -1,4 +1,4 @@
-import { Token } from "currency"
+import { Token } from '@sushiswap/core-sdk'
 import { useMemo } from "react"
 
 export function useSortedTokensByQuery(tokens: Token[] | undefined, searchQuery: string): Token[] {

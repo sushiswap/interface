@@ -1,5 +1,4 @@
 import Form from 'app/components/Form'
-// import AuctionPaymentCurrencyField from 'app/features/miso/AuctionAdminForm/AuctionPaymentCurrencyField'
 import React, { FC } from 'react'
 
 const GeneralDetailsStep: FC = () => {
@@ -11,14 +10,10 @@ const GeneralDetailsStep: FC = () => {
             name="pool"
             label={'Pool*'}
             helperText={'Select a pool'}
-            // options={[
-            //   { label: 'DAI/WETH', value: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0' },
-            //   { label: 'USDC/WETH', value: '0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa' },
-            // ]}
             options={[
               {
-                label: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0',
-                value: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0',
+                label: '0xb7a4F3E9097C08dA09517b5aB877F7a917224ede',
+                value: '0xb7a4F3E9097C08dA09517b5aB877F7a917224ede',
               },
             ]}
           />
@@ -28,14 +23,10 @@ const GeneralDetailsStep: FC = () => {
             name="rewardToken"
             label={'Reward Token*'}
             helperText={'Select a reward token'}
-            // options={[
-            //   { label: 'BAT', value: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0' },
-            //   { label: 'USDC', value: '0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa' },
-            // ]}
             options={[
               {
-                label: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0',
-                value: '0xc4cbede6c5cc7d0c775adfc76803c5888c1530f0',
+                label: '0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa',
+                value: '0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa',
               },
             ]}
           />
