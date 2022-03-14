@@ -1,10 +1,17 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { MaxUint256 } from '@ethersproject/constants'
+import { Contract } from '@ethersproject/contracts'
 import LoadingCircle from 'app/animation/loading-circle.json'
 import { hooks } from 'app/components/connectors/metaMask'
 import HeadlessUIModal from 'app/components/Modal/HeadlessUIModal'
 import Typography from 'app/components/Typography'
+import { ApprovalState } from 'app/enums/ApprovalState'
 import { IncentiveCreationFormInputFormatted } from 'app/features/Incentive/IncentiveCreationForm'
+import { useStakingContract, useTokenContract } from 'app/hooks/useContract'
+import { useTransactionAdder } from 'app/state/transactions/hooks'
+import { Fraction } from 'entities'
 import Lottie from 'lottie-react'
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import useIncentiveCreate from './context/hooks/useIncentiveCreate'
 import IncentiveCreationSubmittedModalContent from './IncentiveCreationSubmittedModalContent'
 
@@ -16,11 +23,22 @@ interface IncentiveCreationModalProps {
 
 const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, onDismiss: _onDismiss, data }) => {
   const chainId = hooks.useChainId()
+  const account = hooks.useAccount()
   const [txHash, setTxHash] = useState<string>()
   const [pending, setPending] = useState<boolean>(false)
   const [incentiveId, setIncentiveId] = useState<string>()
   const [error, setError] = useState<string>()
+  const [pendingApproval, setPendingApproval] = useState(false)
+  const addTransaction = useTransactionAdder()
+
   const { createIncentive, subscribe, unsubscribe } = useIncentiveCreate()
+  const incentiveContract = useStakingContract(true)
+
+  const poolContract = useTokenContract(data.pool.address)
+  const [poolAllowance, setPoolAllowance] = useState('0')
+
+  const rewardTokenContract = useTokenContract(data.rewardToken.address)
+  const [rewardTokenAllowance, setRewardTokenAllowance] = useState('0')
 
   const reset = useCallback(() => {
     if (!pending) {
@@ -57,6 +75,85 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
     },
     [createIncentive],
   )
+
+  const fetchAllowances = useCallback(async () => {
+    if (account) {
+      try {
+        let poolAllowance = await poolContract?.allowance(account, incentiveContract.address)
+        let rewardTokenAllowance = await rewardTokenContract?.allowance(account, incentiveContract.address)
+
+        const poolFormattedAllowance = Fraction.from(
+          BigNumber.from(poolAllowance),
+          BigNumber.from(10).pow(data.pool.decimals),
+        ).toString()
+        const rewardTokenFormattedAllowance = Fraction.from(
+          BigNumber.from(rewardTokenAllowance),
+          BigNumber.from(10).pow(data.rewardToken.decimals),
+        ).toString()
+
+        setPoolAllowance(poolFormattedAllowance)
+        setRewardTokenAllowance(rewardTokenFormattedAllowance)
+      } catch (error) {
+        setPoolAllowance('0')
+        setRewardTokenAllowance('0')
+      }
+    }
+  }, [
+    account,
+    incentiveContract.address,
+    poolContract,
+    rewardTokenContract,
+    data.pool.decimals,
+    data.rewardToken.decimals,
+  ])
+
+  useEffect(() => {
+    if (account) {
+      if (poolContract || rewardTokenContract) {
+        fetchAllowances()
+      }
+    }
+
+    const refreshInterval = setInterval(fetchAllowances, 10000)
+    return () => clearInterval(refreshInterval)
+  }, [account, fetchAllowances, poolContract, rewardTokenContract])
+
+  // TODO: Consider if we need to approve max? at least on pool? lazy way and approving max on both atm.
+  const _approve = useCallback(
+    async (contract: Contract) => {
+      try {
+        setPendingApproval(true)
+
+        let tx = await contract?.approve(contract.address, MaxUint256.toString())
+
+        addTransaction(tx, { summary: 'Approve' })
+        await tx.wait()
+        return tx
+      } catch (e) {
+        return e
+      } finally {
+        setPendingApproval(false)
+      }
+    },
+    [addTransaction],
+  )
+
+  const approvePool = useCallback(async () => {
+    _approve(poolContract)
+  }, [poolContract, _approve])
+
+  const approveRewardToken = useCallback(async () => {
+    _approve(rewardTokenContract)
+  }, [rewardTokenContract, _approve])
+
+  const approvalState: ApprovalState = useMemo(() => {
+    if (!account) return ApprovalState.UNKNOWN
+    if (pendingApproval) return ApprovalState.PENDING
+    if (!poolAllowance || BigNumber.from(poolAllowance) < MaxUint256) return ApprovalState.NOT_APPROVED
+    if (!rewardTokenAllowance || BigNumber.from(rewardTokenAllowance) < MaxUint256) return ApprovalState.NOT_APPROVED
+
+    return ApprovalState.APPROVED
+  }, [account, rewardTokenAllowance, poolAllowance, pendingApproval])
 
   // Subscribe to creation event to get created token ID
   useEffect(() => {

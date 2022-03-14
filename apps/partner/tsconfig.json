@@ -19,6 +19,8 @@
       "app/constants/*": ["./constants/*"],
       "app/enums": ["./enums"],
       "app/enums/*": ["./enums/*"],
+      "app/entities": ["./entities"],
+      "app/entities/*": ["./entities/*"],
       "app/features": ["./features"],
       "app/features/*": ["./features/*"],
       "app/functions": ["./functions"],
