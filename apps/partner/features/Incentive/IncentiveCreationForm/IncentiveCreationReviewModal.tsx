@@ -111,7 +111,7 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
               </Typography>
 
               <Typography variant="sm" className="py-2 border-b text-secondary border-dark-700">
-                {'Token Amount'}
+                {'Reward Amount'}
               </Typography>
               <Typography
                 weight={700}

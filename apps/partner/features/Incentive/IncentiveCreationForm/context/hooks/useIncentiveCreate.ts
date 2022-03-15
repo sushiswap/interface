@@ -37,7 +37,7 @@ const useIncentiveCreate = () => {
       const tx = await contract.createIncentive(
         data.pool.address,
         data.rewardToken.address,
-        data.amount.toExact(),
+        data.amount.quotient.toString(),
         startDateUnix,
         endDateUnix,
       )
