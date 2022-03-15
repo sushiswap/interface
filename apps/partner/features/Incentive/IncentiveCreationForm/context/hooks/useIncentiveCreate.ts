@@ -27,7 +27,7 @@ const useIncentiveCreate = () => {
     [contract],
   )
 
-  const init = useCallback(
+  const createIncentive = useCallback(
     async (data: IncentiveCreationFormInputFormatted) => {
       if (!contract) throw new Error('Contract not initialized')
       if (!account) throw new Error('Wallet not connected')
@@ -52,7 +52,7 @@ const useIncentiveCreate = () => {
   return {
     subscribe,
     unsubscribe,
-    createIncentive: init,
+    createIncentive,
   }
 }
 
