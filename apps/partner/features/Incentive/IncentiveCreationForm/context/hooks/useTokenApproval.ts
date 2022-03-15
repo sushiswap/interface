@@ -65,7 +65,6 @@ const useTokenApproval = (token: Token) => {
   const approvalState: ApprovalState = useMemo(() => {
     if (!account) return ApprovalState.UNKNOWN
     if (pendingApproval) return ApprovalState.PENDING
-    //FIXME: This logic is the same as on meowshi, if the approval is already set, but less than amount, this will fail
     if (!allowance || Number(allowance) === 0) return ApprovalState.NOT_APPROVED
 
     return ApprovalState.APPROVED
