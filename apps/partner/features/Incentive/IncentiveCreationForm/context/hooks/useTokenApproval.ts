@@ -60,7 +60,7 @@ const useTokenApproval = (token: Token) => {
       fetchAllowances()
       setPendingApproval(false)
     }
-  }, [addTransaction, tokenContract])
+  }, [addTransaction, tokenContract, fetchAllowances, incentiveContract.address])
 
   const approvalState: ApprovalState = useMemo(() => {
     if (!account) return ApprovalState.UNKNOWN
