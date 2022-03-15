@@ -18,8 +18,6 @@ interface IncentiveCreationModalProps {
 }
 
 const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, onDismiss: _onDismiss, data }) => {
-  const chainId = hooks.useChainId()
-  const account = hooks.useAccount()
   const [txHash, setTxHash] = useState<string>()
   const [pending, setPending] = useState<boolean>(false)
   const [incentiveId, setIncentiveId] = useState<string>()
@@ -63,7 +61,6 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
   }, [createIncentive, data])
 
   useEffect(() => {
-    // @ts-ignore TYPE NEEDS FIXING
     subscribe(
       'IncentiveCreated',
       (token, rewardToken, creator, id, amount, startTime, endTime, { transactionHash }) => {
@@ -83,7 +80,7 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
   return (
     <HeadlessUIModal.Controlled isOpen={open} onDismiss={onDismiss} afterLeave={() => setTxHash(undefined)}>
       {!txHash ? (
-        <HeadlessUIModal.Body className="lg:max-w-lg lg:min-w-lg">
+        <HeadlessUIModal.Body className="lg:max-w-lg">
           <HeadlessUIModal.Header
             onClose={onDismiss}
             header={'Create Incentive'}
@@ -168,7 +165,6 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
             ) : (
               ''
             )}
-
             {rewardTokenAproval.approvalState === ApprovalState.PENDING ? (
               <HeadlessUIModal.Action main={true} disabled={true}>
                 <Dots>Approving Reward Token</Dots>

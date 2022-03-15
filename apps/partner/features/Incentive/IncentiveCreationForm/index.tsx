@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import React, { FC, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
-import GeneralDetailsStep from '../IncentiveCreationWizard/GeneralDetailsStep'
+import GeneralDetailsStep from './GeneralDetailsStep'
 import IncentiveCreationReviewModal from './IncentiveCreationReviewModal'
 
 // TODO: wire up pool/token, how do we get the data? subgraphs?
@@ -42,8 +42,8 @@ export interface IncentiveCreationFormInputFormatted {
 }
 
 const schema = yup.object().shape({
-  pool: addressValidator.required('Must enter a valid ERC-20 address'),
-  rewardToken: addressValidator.required('Must enter a valid ERC-20 address'),
+  pool: addressValidator.required('Must enter a valid address'),
+  rewardToken: addressValidator.required('Must enter a valid address'),
   amount: yup
     .number()
     .typeError('Amount must be a number')
