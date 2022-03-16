@@ -5,17 +5,13 @@ import { hooks } from 'app/components/connectors/metaMask'
 import Form from 'app/components/Form'
 import { formatCreationFormData } from 'app/features/Incentive/IncentiveCreationForm/utils'
 import { addressValidator } from 'app/functions'
-import { useToken } from 'app/hooks/Tokens'
-import { useRouter } from 'next/router'
-import React, { FC, useState } from 'react'
+import { getToken } from 'app/hooks/Tokens'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import GeneralDetailsStep from './GeneralDetailsStep'
 import IncentiveCreationReviewModal from './IncentiveCreationReviewModal'
 
-// TODO: wire up pool/token, how do we get the data? subgraphs?
-
-// TODO: populate reward token list
 
 export interface IncentiveCreationFormInput {
   pool?: string
@@ -57,9 +53,11 @@ const schema = yup.object().shape({
 })
 
 const IncentiveCreationForm: FC = () => {
-  const { query } = useRouter()
   const chainId = hooks.useChainId()
+  const provider = hooks.useProvider()
   const [open, setOpen] = useState<boolean>(false)
+
+  const [tokens, setTokens] = useState([])
   const methods = useForm<IncentiveCreationFormInput>({
     resolver: yupResolver(schema),
     reValidateMode: 'onChange',
@@ -73,12 +71,27 @@ const IncentiveCreationForm: FC = () => {
 
   const data = watch()
 
-  const poolToken = useToken(data.pool) ?? undefined
-  const rewardToken = useToken(data.rewardToken) ?? undefined
+  const getTokens = useCallback(
+    async () => [await getToken(chainId, provider, data.pool), await getToken(chainId, provider, data.rewardToken)],
+    [chainId, data.pool, data.rewardToken, provider],
+  )
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        setTokens(await getTokens())
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    fetch()
+  }, [getTokens])
+
+  const [token, rewardToken] = tokens
 
   const formattedData =
-    poolToken && rewardToken && !isValidating && isValid
-      ? formatCreationFormData(data as IncentiveCreationFormInputValidated, poolToken, rewardToken)
+    token && rewardToken && !isValidating && isValid
+      ? formatCreationFormData(data as IncentiveCreationFormInputValidated, token, rewardToken)
       : undefined
 
   const handleSubmit = () => setOpen(true)

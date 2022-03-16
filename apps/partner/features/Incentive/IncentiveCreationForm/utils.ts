@@ -1,6 +1,5 @@
 import { parseUnits } from '@ethersproject/units'
 import { Currency, CurrencyAmount, JSBI, Price, Token } from '@sushiswap/core-sdk'
-import { tryParseAmount } from 'app/functions/parse'
 import { IncentiveCreationFormInputFormatted, IncentiveCreationFormInputValidated } from '.'
 
 export const getPriceEntity = (price: string, auctionToken: Token, paymentToken: Currency) => {

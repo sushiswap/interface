@@ -11,7 +11,6 @@ const migrations = {
     // migration clear out lists state
     return {
       ...state,
-      lists: undefined,
     }
   },
   // 1: (state) => {
@@ -22,7 +21,7 @@ const migrations = {
   // },
 }
 
-const PERSISTED_KEYS: string[] = ['transactions','lists']
+const PERSISTED_KEYS: string[] = ['transactions',]
 
 const persistConfig = {
   key: 'root',

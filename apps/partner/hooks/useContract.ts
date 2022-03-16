@@ -9,7 +9,8 @@ import { getContract } from 'app/functions/contract'
 import { useMemo } from 'react'
 import { hooks } from '../components/connectors/metaMask'
 
-const INCENTIVE_CONTRACT = '0x1ced9b90aa573849b42adac7204860823c290dac'
+//FIXME: Where should this go? sdk?
+export const INCENTIVE_CONTRACT = '0x1ced9b90aa573849b42adac7204860823c290dac'
 
 // returns null on errors
 export function useContract(address: string | undefined, ABI: any, withSignerIfPossible = true): Contract | null {

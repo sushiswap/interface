@@ -1,14 +1,14 @@
 import LoadingCircle from 'app/animation/loading-circle.json'
-import { hooks } from 'app/components/connectors/metaMask'
 import Dots from 'app/components/Dots'
 import HeadlessUIModal from 'app/components/Modal/HeadlessUIModal'
 import Typography from 'app/components/Typography'
 import { ApprovalState } from 'app/enums/ApprovalState'
 import { IncentiveCreationFormInputFormatted } from 'app/features/Incentive/IncentiveCreationForm'
+import { useApproveCallback } from 'app/hooks/useApproveCallback'
+import { INCENTIVE_CONTRACT } from 'app/hooks/useContract'
 import Lottie from 'lottie-react'
 import React, { FC, useCallback, useEffect, useState } from 'react'
 import useIncentiveCreate from './context/hooks/useIncentiveCreate'
-import useTokenApproval from './context/hooks/useTokenApproval'
 import IncentiveCreationSubmittedModalContent from './IncentiveCreationSubmittedModalContent'
 
 interface IncentiveCreationModalProps {
@@ -24,9 +24,8 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
   const [error, setError] = useState<string>()
 
   const { createIncentive, subscribe, unsubscribe } = useIncentiveCreate()
-  const poolApproval = useTokenApproval(data?.pool)
-  const rewardTokenAproval = useTokenApproval(data?.rewardToken)
-
+  const [rewardApprovalState, approveRewardToken] = useApproveCallback(data?.amount, INCENTIVE_CONTRACT)
+  
   const reset = useCallback(() => {
     if (!pending) {
       setIncentiveId(undefined)
@@ -53,7 +52,6 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
         await tx.wait()
       }
     } catch (e) {
-      // @ts-ignore TYPE NEEDS FIXING
       setError(e.error?.message)
     } finally {
       setPending(false)
@@ -154,23 +152,13 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
 
           <HeadlessUIModal.Actions>
             <HeadlessUIModal.Action onClick={onDismiss}>{'Cancel'}</HeadlessUIModal.Action>
-            {poolApproval.approvalState === ApprovalState.PENDING ? (
-              <HeadlessUIModal.Action main={true} disabled={true}>
-                <Dots>Approving Pool</Dots>
-              </HeadlessUIModal.Action>
-            ) : poolApproval.approvalState === ApprovalState.NOT_APPROVED ? (
-              <HeadlessUIModal.Action main={true} onClick={poolApproval.approve}>
-                Approve Pool
-              </HeadlessUIModal.Action>
-            ) : (
-              ''
-            )}
-            {rewardTokenAproval.approvalState === ApprovalState.PENDING ? (
+            {console.log(rewardApprovalState, "reward")}
+            {rewardApprovalState === ApprovalState.PENDING ? (
               <HeadlessUIModal.Action main={true} disabled={true}>
                 <Dots>Approving Reward Token</Dots>
               </HeadlessUIModal.Action>
-            ) : rewardTokenAproval.approvalState === ApprovalState.NOT_APPROVED ? (
-              <HeadlessUIModal.Action main={true} onClick={rewardTokenAproval.approve}>
+            ) : rewardApprovalState === ApprovalState.NOT_APPROVED ? (
+              <HeadlessUIModal.Action main={true} onClick={approveRewardToken}>
                 Approve Reward Token
               </HeadlessUIModal.Action>
             ) : (
@@ -187,8 +175,7 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
               })}
               disabled={
                 pending ||
-                poolApproval.approvalState !== ApprovalState.APPROVED ||
-                rewardTokenAproval.approvalState !== ApprovalState.APPROVED
+                rewardApprovalState !== ApprovalState.APPROVED
               }
               onClick={() => execute()}
             >

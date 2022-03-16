@@ -1,19 +1,12 @@
 import Form from 'app/components/Form'
-import { useToken } from 'app/hooks/Tokens'
 import React, { FC } from 'react'
-import { useFormContext } from 'react-hook-form'
-import { IncentiveCreationFormInput } from '.'
-import Typography from 'app/components/Typography'
 
 const GeneralDetailsStep: FC = () => {
-  const { watch } = useFormContext<IncentiveCreationFormInput>()
-  const data = watch()
-  const rewardToken = useToken(data.rewardToken) ?? undefined
   return (
     <>
       <div className="grid grid-cols-2 gap-8">
         <div className="col-span-4 md:col-span-2">
-        <Form.TextField
+          <Form.TextField
             name="pool"
             label={'Token*'}
             placeholder={`0x0000000000000000000000000000000000000000`}
@@ -21,7 +14,7 @@ const GeneralDetailsStep: FC = () => {
           />
         </div>
         <div className="col-span-2 md:col-span-2">
-        <Form.TextField
+          <Form.TextField
             name="rewardToken"
             label={'Reward Token*'}
             placeholder={`0x0000000000000000000000000000000000000000`}
@@ -30,13 +23,6 @@ const GeneralDetailsStep: FC = () => {
         </div>
         <div className="col-span-4 md:col-span-2">
           <Form.TextField
-            {...( rewardToken && {
-              endIcon: (
-                <Typography variant="sm" weight={700} className="text-secondary">
-                  {rewardToken.symbol}
-                </Typography>
-              ),
-            })}
             name="amount"
             label={'Reward amount*'}
             placeholder={`0.00`}

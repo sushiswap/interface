@@ -1,41 +1,14 @@
 import { arrayify } from '@ethersproject/bytes'
 import { parseBytes32String } from '@ethersproject/strings'
 import { Token } from '@sushiswap/core-sdk'
-import { useMemo } from 'react'
 import { hooks } from 'app/components/connectors/metaMask'
-import { useCombinedActiveList } from 'app/state/lists/hooks'
-import { isAddress } from 'app/functions'
-import { useBytes32TokenContract, useTokenContract } from './useContract'
+import { getContract } from 'app/functions'
+import { isAddress } from 'app/functions/validate'
 import { NEVER_RELOAD, useSingleCallResult } from 'app/state/multicall/hooks'
-
-export function useAllTokens(): { [address: string]: Token } {
-  const allTokens = useCombinedActiveList()
-  const chainId = hooks.useChainId()
-
-  return useMemo(() => {
-    if (!chainId) return {}
-
-    // reduce to just tokens
-    const mapWithoutUrls = Object.keys(allTokens[chainId]).reduce<{
-      [address: string]: Token
-    }>((newMap, address) => {
-      newMap[address] = allTokens[chainId][address].token
-      return newMap
-    }, {})
-
-    return mapWithoutUrls
-  }, [chainId, allTokens])
-}
-
-export function useIsTokenActive(token: Token | undefined | null): boolean {
-  const activeTokens = useAllTokens()
-
-  if (!activeTokens || !token) {
-    return false
-  }
-
-  return !!activeTokens[token.address]
-}
+import ERC20_ABI from 'app/abis/ERC20.json'
+import { useMemo } from 'react'
+import { useBytes32TokenContract, useTokenContract } from './useContract'
+import { Web3Provider } from '@ethersproject/providers'
 
 // parse a name or symbol from a token response
 const BYTES32_REGEX = /^0x[a-fA-F0-9]{64}$/
@@ -52,54 +25,21 @@ function parseStringOrBytes32(str: string | undefined, bytes32: string | undefin
 // undefined if invalid or does not exist
 // null if loading or null was passed
 // otherwise returns the token
-export function useToken(tokenAddress?: string | null): Token | undefined | null {
-  const chainId = hooks.useChainId()
-  const tokens = useAllTokens()
-
+export const getToken = async (chainId: number, provider: Web3Provider, tokenAddress?: string | null) => {
   const address = isAddress(tokenAddress)
+  if (!address) {
+    return null
+  }
 
-  const tokenContract = useTokenContract(address ? address : undefined, false)
-  const tokenContractBytes32 = useBytes32TokenContract(address ? address : undefined, false)
-  const token: Token | undefined = address ? tokens[address] : undefined
+  const tokenContract = getContract(address, ERC20_ABI, provider)
 
-  const tokenName = useSingleCallResult(token ? undefined : tokenContract, 'name', undefined, NEVER_RELOAD)
-  const tokenNameBytes32 = useSingleCallResult(
-    token ? undefined : tokenContractBytes32,
-    'name',
-    undefined,
-    NEVER_RELOAD
-  )
+  const [name, symbol, decimals] = await Promise.all([tokenContract?.name(), tokenContract?.symbol(), tokenContract?.decimals()])
 
-  const symbol = useSingleCallResult(token ? undefined : tokenContract, 'symbol', undefined, NEVER_RELOAD)
-  const symbolBytes32 = useSingleCallResult(token ? undefined : tokenContractBytes32, 'symbol', undefined, NEVER_RELOAD)
-  const decimals = useSingleCallResult(token ? undefined : tokenContract, 'decimals', undefined, NEVER_RELOAD)
-  return useMemo(() => {
-    if (token) return token
-    if (tokenAddress === null) return null
-    if (!chainId || !address) return undefined
-    if (decimals.loading || symbol.loading || tokenName.loading) return null
-    if (decimals.result) {
-      return new Token(
-        chainId,
-        address,
-        decimals.result[0],
-        parseStringOrBytes32(symbol.result?.[0], symbolBytes32.result?.[0], 'UNKNOWN'),
-        parseStringOrBytes32(tokenName.result?.[0], tokenNameBytes32.result?.[0], 'Unknown Token')
-      )
-    }
-    return undefined
-  }, [
-    address,
+  return new Token(
     chainId,
-    decimals.loading,
-    decimals.result,
-    symbol.loading,
-    symbol.result,
-    symbolBytes32.result,
-    token,
     tokenAddress,
-    tokenName.loading,
-    tokenName.result,
-    tokenNameBytes32.result,
-  ])
+    decimals,
+    symbol,
+    name,
+  )
 }
