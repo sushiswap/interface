@@ -23,9 +23,7 @@ export function useApproveCallback(
 ): [ApprovalState, () => Promise<void>] {
   const account = hooks.useAccount()
   const token = amountToApprove?.currency?.isToken ? amountToApprove.currency : undefined
-  console.log(amountToApprove, token, spender)
   const currentAllowance = useTokenAllowance(token, account ?? undefined, spender)
-  console.log(currentAllowance)
   const pendingApproval = useHasPendingApproval(token?.address, spender)
 
   // check the current approval status

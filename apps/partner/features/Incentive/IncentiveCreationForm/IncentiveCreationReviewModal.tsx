@@ -152,7 +152,6 @@ const IncentiveCreationReviewModal: FC<IncentiveCreationModalProps> = ({ open, o
 
           <HeadlessUIModal.Actions>
             <HeadlessUIModal.Action onClick={onDismiss}>{'Cancel'}</HeadlessUIModal.Action>
-            {console.log(rewardApprovalState, "reward")}
             {rewardApprovalState === ApprovalState.PENDING ? (
               <HeadlessUIModal.Action main={true} disabled={true}>
                 <Dots>Approving Reward Token</Dots>
