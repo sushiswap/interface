@@ -1,11 +1,11 @@
-import { BigNumber } from 'ethers'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
 import useSWR from 'swr'
 import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, safes, users } from '../../../constants'
 import { SafeBalance, SafeInfo } from '../../../entities/safe'
-import { formatNumber, shortenAddress } from '../../../functions/format'
-import { getBalance, getSafe } from '../../../lib/safemanager'
+import { shortenAddress, formatUSD, formatNumber } from 'format'
+import { getBalance, getSafe } from '../../../lib/safe'
+import { parseUnits } from '@ethersproject/units'
 
 interface SafesProps {
   safe: SafeInfo
@@ -16,25 +16,14 @@ const isValidThreshold = (threshold: number, ownerCount: number): boolean => {
   return threshold === EXPECTED_THRESHOLD && ownerCount === EXPECTED_OWNER_COUNT
 }
 
-const Safe: FC<SafesProps> = ({ safe, balance }) => {
+const Safe: FC<SafesProps> = (props) => {
   const router = useRouter()
   const chainId = router.query.chainId as string
   const address = router.query.address as string
-  const { data: safeData, error: safeError } = useSWR('safe', () => getSafe(chainId, address), { fallbackData: safe })
-  const { data: balanceData, error: balanceError } = useSWR('balance', () => getBalance(chainId, address), {
-    fallbackData: balance,
+  const { data: safe } = useSWR('safe', () => getSafe(chainId, address), { fallbackData: props.safe })
+  const { data: balance } = useSWR('balance', () => getBalance(chainId, address), {
+    fallbackData: props.balance,
   })
-  if (router.isFallback) {
-    return <div>loading...</div>
-  }
-
-  if (safeError || balanceError) {
-    return <>error</>
-  }
-
-  if (!safeData || !balanceData) {
-    return <>loading</>
-  }
   return (
     <>
       <h1>Safe Info</h1>
@@ -58,7 +47,7 @@ const Safe: FC<SafesProps> = ({ safe, balance }) => {
           .sort()
           .join(' ')}
       </div>
-      <div>Total balance: {formatNumber(balance?.fiatTotal, true)}</div>
+      <div>Total balance: {formatUSD(balance?.fiatTotal)}</div>
       <div>
         <div>Token Address Amount USD</div>
         {balance.items
@@ -66,13 +55,8 @@ const Safe: FC<SafesProps> = ({ safe, balance }) => {
           .map((token) => (
             <p key={token.tokenInfo.address}>
               {`${token.tokenInfo.symbol}  ${shortenAddress(token.tokenInfo.address)}
-              ${formatNumber(
-                BigNumber.from(token.balance).div(BigNumber.from(10).pow(token.tokenInfo.decimals)),
-                false,
-                false,
-                2,
-              )} 
-              ${formatNumber(token.fiatBalance, true)}`}
+              ${formatNumber(parseUnits(token.balance, token.tokenInfo.decimals).toString())} 
+              ${formatUSD(token.fiatBalance)}`}
             </p>
           ))}
       </div>
@@ -83,21 +67,19 @@ const Safe: FC<SafesProps> = ({ safe, balance }) => {
 export default Safe
 
 export async function getStaticPaths() {
-  const paths = safes.map((safe) => ({
-    params: { chainId: safe.chainId.toString(), address: safe.address },
-  }))
   return {
-    paths,
+    paths: safes.map((safe) => ({
+      params: { chainId: safe.chainId.toString(), address: safe.address },
+    })),
     fallback: true,
   }
 }
 
 export const getStaticProps = async ({ params }) => {
-  console.log('fetching')
-  console.log(params.chainId, params.address)
-  const safe = await getSafe(params.chainId, params.address)
-  const balance = await getBalance(params.chainId, params.address)
-  console.log(balance)
+  const [safe, balance] = await Promise.all([
+    getSafe(params.chainId, params.address),
+    getBalance(params.chainId, params.address),
+  ])
   return {
     props: {
       safe,

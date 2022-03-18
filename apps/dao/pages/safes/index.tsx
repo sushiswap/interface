@@ -3,23 +3,23 @@ import { useTable } from 'react-table'
 import useSWR from 'swr'
 import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, users } from '../../constants'
 import { SafeInfo } from '../../entities/safe'
-import { formatNumber, shortenAddress } from '../../functions/format'
-import { getAllSafes } from '../../lib/safemanager'
+import { formatUSD, formatNumber, shortenAddress } from 'format'
+import { getAllSafes } from '../../lib/safe'
 
 const getTotalBalance = (safes: SafeInfo[]): string => {
-  const sum = safes
+  const value = safes
     .filter((safe) => safe.balance !== 'NA')
     .reduce((sum, safe) => {
       return sum + parseInt(safe.balance)
     }, 0)
-  return formatNumber(sum, true, false)
+  return formatUSD(value)
 }
 
 interface SafesProps {
   safes: SafeInfo[]
 }
 const Safes: FC<SafesProps> = ({ safes }) => {
-  const { data, error } = useSWR('safes', getAllSafes, { fallbackData: safes })
+  const { data } = useSWR('safes', getAllSafes, { fallbackData: safes })
 
   const columns = useMemo(
     () => [
@@ -47,8 +47,10 @@ const Safes: FC<SafesProps> = ({ safes }) => {
         Cell: (props) => {
           const ownerCount = props.row.cells[4].value.length
           const threshold = props.value
-          const formattedOwnerCount = ownerCount === EXPECTED_OWNER_COUNT ? ownerCount : <p style={{ color: 'red' }}>{ownerCount}</p>
-          const formattedThreshold = props.value === EXPECTED_THRESHOLD ? threshold : <p style={{ color: 'red' }}>{threshold}</p>
+          const formattedOwnerCount =
+            ownerCount === EXPECTED_OWNER_COUNT ? ownerCount : <p style={{ color: 'red' }}>{ownerCount}</p>
+          const formattedThreshold =
+            props.value === EXPECTED_THRESHOLD ? threshold : <p style={{ color: 'red' }}>{threshold}</p>
           return formattedThreshold + ' / ' + formattedOwnerCount
         },
       },
@@ -66,7 +68,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
         Header: 'Balance',
         accessor: 'balance',
         Cell: (props) => {
-          return props.cell.value != 'NA' ? formatNumber(props.cell.value, true) : 'NA'
+          return props.cell.value != 'NA' ? formatUSD(props.cell.value) : 'NA'
         },
       },
     ],
@@ -74,13 +76,6 @@ const Safes: FC<SafesProps> = ({ safes }) => {
   )
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data })
 
-  if (error) {
-    return <>error</>
-  }
-
-  if (!data) {
-    return <>loading</>
-  }
   return (
     <>
       <h1>Safes</h1>
@@ -140,7 +135,6 @@ const Safes: FC<SafesProps> = ({ safes }) => {
 export default Safes
 
 export const getStaticProps = async () => {
-  console.log('fetching')
   const safes = await getAllSafes()
   return {
     props: {

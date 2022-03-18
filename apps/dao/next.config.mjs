@@ -1,13 +1,9 @@
 import transpileModules from 'next-transpile-modules'
 
-const withTranspileModules = transpileModules(['ui'])
+const withTranspileModules = transpileModules(['ui', 'format'])
 
 export default withTranspileModules({
   basePath: '/dao',
   reactStrictMode: true,
-  // swcMinify: true,
-  // webpack: (config) => {
-  //   config.externals['fetch'] = 'cross-fetch'
-  //   return config
-  // }
+  swcMinify: true,
 })

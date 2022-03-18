@@ -99,6 +99,7 @@ importers:
       '@ethersproject/bignumber': ^5.6.0
       '@ethersproject/experimental': ^5.6.0
       '@ethersproject/providers': ^5.6.1
+      '@ethersproject/units': ^5.6.0
       '@gnosis.pm/safe-react-gateway-sdk': 2.8.6
       '@reduxjs/toolkit': ^1.8.0
       '@typechain/ethers-v5': ^7.2.0
@@ -113,7 +114,10 @@ importers:
       config: workspace:*
       eslint: 8.10.0
       ethers: ^5.6.1
+      format: workspace:*
       isomorphic-unfetch: ^3.1.0
+      lodash: ^4.17.21
+      millify: ^4.0.0
       next: 12.0.10
       next-transpile-modules: 9.0.0
       numeral: ^2.0.0
@@ -130,6 +134,7 @@ importers:
       '@ethersproject/bignumber': 5.6.0
       '@ethersproject/experimental': 5.6.0
       '@ethersproject/providers': 5.6.1
+      '@ethersproject/units': 5.6.0
       '@gnosis.pm/safe-react-gateway-sdk': 2.8.6
       '@reduxjs/toolkit': 1.8.0_5b6a40f30f5a9b0dae26241d458eaaad
       '@typechain/ethers-v5': 7.2.0_fc2a39fbdec055b05ae1f8210697df90
@@ -139,7 +144,10 @@ importers:
       '@web3-react/network': 8.0.15-beta.0_b6535743ded9d6e615b152ed8c889920
       chain: link:../../packages/chain
       ethers: 5.6.1
+      format: link:../../packages/format
       isomorphic-unfetch: 3.1.0
+      lodash: 4.17.21
+      millify: 4.0.0
       next: 12.0.10_3b3c4dafaa7e2bc132922eb3215c558b
       numeral: 2.0.6
       react: 18.0.0-rc.2-next-b9de50d2f-20220308
@@ -331,6 +339,27 @@ importers:
       tiny-invariant: 1.2.0
     devDependencies:
       '@types/jest': 27.4.1
+      config: link:../config
+      jest: 27.5.1
+      typescript: 4.6.2
+
+  packages/format:
+    specifiers:
+      '@ethersproject/address': ^5.6.0
+      '@types/jest': ^27.4.1
+      '@types/numeral': ^2.0.2
+      config: workspace:*
+      jest: ^27.5.1
+      millify: ^4.0.0
+      numeral: ^2.0.6
+      typescript: ^4.6.2
+    dependencies:
+      '@ethersproject/address': 5.6.0
+      millify: 4.0.0
+      numeral: 2.0.6
+    devDependencies:
+      '@types/jest': 27.4.1
+      '@types/numeral': 2.0.2
       config: link:../config
       jest: 27.5.1
       typescript: 4.6.2
@@ -1766,6 +1795,10 @@ packages:
 
   /@types/node/17.0.21:
     resolution: {integrity: sha512-DBZCJbhII3r90XbQxI8Y9IjjiiOGlZ0Hr32omXIZvwwZ7p4DMMXGrKXVyPfuoBOri9XNtL0UK69jYIBIsRX3QQ==}
+
+  /@types/numeral/2.0.2:
+    resolution: {integrity: sha512-A8F30k2gYJ/6e07spSCPpkuZu79LCnkPTvqmIWQzNGcrzwFKpVOydG41lNt5wZXjSI149qjyzC2L1+F2PD/NUA==}
+    dev: true
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
