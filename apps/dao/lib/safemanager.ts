@@ -1,4 +1,4 @@
-import { SafeInfo } from '@gnosis.pm/safe-react-gateway-sdk'
+import { SafeBalanceResponse, SafeInfo } from '@gnosis.pm/safe-react-gateway-sdk'
 import { ChainId, safes } from '../constants'
 
 export const getSafes = (): Promise<SafeInfo[]> =>
@@ -13,6 +13,19 @@ export const getSafes = (): Promise<SafeInfo[]> =>
         }),
       ),
     ),
+  )
+export const getBalances = (): Promise<SafeBalanceResponse[]> =>
+  Promise.all(
+    safes
+      .filter((safe) => safe.chainId !== ChainId.HARMONY)
+      .map(({ baseUrl, chainId, address }) =>
+        fetch(`${baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`).then(
+          (response) =>
+            response.json().then((data) => {
+              return data as SafeBalanceResponse
+            }),
+        ),
+      ),
   )
 
 /**
