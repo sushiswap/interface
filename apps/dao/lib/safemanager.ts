@@ -1,21 +1,33 @@
-import { SafeBalanceResponse } from '@gnosis.pm/safe-react-gateway-sdk'
 import { ChainId, safes } from '../constants'
-import { SafeInfo } from '../entities/safe'
+import { SafeBalance, SafeInfo } from '../entities/safe'
 
-export const getSafes = (): Promise<SafeInfo[]> =>
+export const getSafes = async (): Promise<SafeInfo[]> => {
+  const safes = await _getSafes()
+  const balances = await getBalances()
+  balances?.forEach((balance) => {
+    const safe = safes.find((safe) => safe.chainId == balance.chainId && safe.address.value == balance.address)
+    if (safe) {
+      safe.balance = balance.fiatTotal
+    }
+  })
+  return safes
+}
+
+const _getSafes = (): Promise<SafeInfo[]> =>
   Promise.all(
     safes.map(({ baseUrl, name, chainId, address }) =>
       fetch(
         chainId !== ChainId.HARMONY ? `${baseUrl}/chains/${chainId}/safes/${address}` : `${baseUrl}/safes/${address}`,
       ).then((response) =>
         response.json().then((data) => {
-          updateFields(data, name, chainId)
+          updateSafeFields(data, name, chainId)
+          data.balance = "NA"
           return data as SafeInfo
         }),
       ),
     ),
   )
-export const getBalances = (): Promise<SafeBalanceResponse[]> =>
+const getBalances = (): Promise<SafeBalance[]> =>
   Promise.all(
     safes
       .filter((safe) => safe.chainId !== ChainId.HARMONY)
@@ -23,7 +35,9 @@ export const getBalances = (): Promise<SafeBalanceResponse[]> =>
         fetch(`${baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`).then(
           (response) =>
             response.json().then((data) => {
-              return data as SafeBalanceResponse
+              data.chainId = chainId
+              data.address = address
+              return data as SafeBalance
             }),
         ),
       ),
@@ -34,7 +48,7 @@ export const getBalances = (): Promise<SafeBalanceResponse[]> =>
  * @param data json response
  * @param chainId
  */
-function updateFields(data: any, name: string, chainId: ChainId) {
+function updateSafeFields(data: any, name: string, chainId: ChainId) {
   data.type = name
   if (!data.address?.value) {
     data.address = { value: data.address }

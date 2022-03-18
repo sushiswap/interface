@@ -1,30 +1,28 @@
-import { AddressEx, SafeBalanceResponse } from '@gnosis.pm/safe-react-gateway-sdk'
-import { FC, useMemo } from 'react'
+import { FC, useEffect, useMemo } from 'react'
 import { useTable } from 'react-table'
 import useSWR from 'swr'
 import { ChainId, users } from '../constants'
-import { SafeInfo } from '../entities/safe'
-import { getBalances, getSafes } from '../lib/safemanager'
+import { SafeBalance, SafeInfo } from '../entities/safe'
+import { getSafes } from '../lib/safemanager'
+
+const getTotalBalance = (safes: SafeInfo[]): string => {
+  console.log('start')
+  return (
+    '$' +
+    safes
+      .filter((safe) => safe.balance !== 'NA')
+      .reduce((sum, safe) => {
+        console.log(sum, safe.balance)
+        return sum + parseInt(safe.balance)
+      }, 0)
+  )
+}
 
 interface SafesProps {
   safes: SafeInfo[]
-  balances: SafeBalanceResponse[]
 }
-
-const getUsers = (owners: AddressEx[]) => {
-  return owners
-    .map((owner) => users.get(owner.value) ?? owner.value)
-    .sort()
-    .join(' ')
-}
-
-const getTotalBalance = (balances: SafeBalanceResponse[]): string => {
-  return '$' + balances.reduce((sum, current) => sum + parseInt(current.fiatTotal), 0)
-}
-
-const Safes: FC<SafesProps> = ({ safes, balances }) => {
+const Safes: FC<SafesProps> = ({ safes }) => {
   const { data, error } = useSWR('safes', getSafes, { fallbackData: safes })
-  useSWR('balances', getBalances, { fallbackData: balances })
 
   const columns = useMemo(
     () => [
@@ -60,12 +58,22 @@ const Safes: FC<SafesProps> = ({ safes, balances }) => {
             .join(' ')
         },
       },
+      {
+        Header: 'Balance',
+        accessor: 'balance',
+      },
     ],
     [],
   )
-
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data })
 
+  if (error) {
+    return <>error</>
+  }
+
+  if (!data) {
+    return <>loading</>
+  }
   return (
     <>
       <h1>Safes</h1>
@@ -115,18 +123,9 @@ const Safes: FC<SafesProps> = ({ safes, balances }) => {
           })}
         </tbody>
       </table>
-      {/* {safes.map((safe, i) => (
-        <div key={`${safe.chainId}-${safe.address}-${i}`}>
-          {ChainId[safe.chainId]} {safe.address.value} {safe.threshold} {getUsers(safe.owners)}
-        </div>
-      ))}
-
-      {balances.map((balance, i) => (
-        <div key={`${balance.fiatTotal}-${i}`}>{balance.fiatTotal}</div>
-      ))}
 
       <h2>Balance</h2>
-      {getTotalBalance(balances)} */}
+      {getTotalBalance(safes)}
     </>
   )
 }
@@ -134,13 +133,11 @@ const Safes: FC<SafesProps> = ({ safes, balances }) => {
 export default Safes
 
 export const getStaticProps = async () => {
+  console.log("running")
   const safes = await getSafes()
-  // const balances = await getBalances()
-
   return {
     props: {
       safes,
-      // balances,
     },
     revalidate: 60, // 60s
   }
