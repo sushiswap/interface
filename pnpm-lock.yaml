@@ -112,6 +112,7 @@ importers:
       config: workspace:*
       eslint: 8.10.0
       ethers: ^5.6.1
+      isomorphic-unfetch: ^3.1.0
       next: 12.0.10
       next-transpile-modules: 9.0.0
       react: ^18.0.0-rc.1
@@ -134,6 +135,7 @@ importers:
       '@web3-react/network': 8.0.15-beta.0_b6535743ded9d6e615b152ed8c889920
       chain: link:../../packages/chain
       ethers: 5.6.1
+      isomorphic-unfetch: 3.1.0
       next: 12.0.10_3b3c4dafaa7e2bc132922eb3215c558b
       react: 18.0.0-rc.2-next-b9de50d2f-20220308
       react-dom: 18.0.0-rc.2-next-b9de50d2f-20220308_b6535743ded9d6e615b152ed8c889920
