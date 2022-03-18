@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react'
 import { useTable } from 'react-table'
 import useSWR from 'swr'
 import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, users } from '../../constants'
-import { SafeInfo } from '../../entities/safe'
+import { SafeInfo } from '../../types'
 import { formatUSD, formatNumber, shortenAddress } from 'format'
 import { getAllSafes } from '../../lib/safe'
 

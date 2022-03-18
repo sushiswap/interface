@@ -1,5 +1,5 @@
 import { ChainId, Safe, safes } from '../constants'
-import { SafeBalance, SafeInfo } from '../entities/safe'
+import { SafeBalance, SafeInfo } from '../types'
 import fetch from 'isomorphic-unfetch'
 
 export const getAllSafes = async (): Promise<SafeInfo[]> => {
