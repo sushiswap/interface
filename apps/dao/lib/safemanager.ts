@@ -2,8 +2,8 @@ import { ChainId, Safe, safes } from '../constants'
 import { SafeBalance, SafeInfo } from '../entities/safe'
 import fetch from 'isomorphic-unfetch'
 
-export const getSafes = async (): Promise<SafeInfo[]> => {
-  const safes = await _getSafes()
+export const getAllSafes = async (): Promise<SafeInfo[]> => {
+  const safes = await getSafes()
   const balances = await getBalances()
   balances?.forEach((balance) => {
     const safe = safes.find((safe) => safe.chainId == balance.chainId && safe.address.value == balance.address)
@@ -14,7 +14,7 @@ export const getSafes = async (): Promise<SafeInfo[]> => {
   return safes
 }
 
-const _getSafes = (): Promise<SafeInfo[]> =>
+const getSafes = (): Promise<SafeInfo[]> =>
   Promise.all(
     safes.map((safe) =>
       fetch(getSafeUrl(safe))
