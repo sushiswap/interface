@@ -1,44 +1,35 @@
 import { AddressEx, SafeInfo } from '@gnosis.pm/safe-react-gateway-sdk'
-import { FC } from 'react'
-import { safes, Safe, users, User, ChainId } from '../constants'
-import useSWR from 'swr'
 import fetch from 'isomorphic-unfetch'
-import { version } from 'os'
-
-function parseVersion (str) {
-  if (typeof(str) != 'string') { return false; }
-  var x = str.split('.');
-  // parse from string or default to 0 if can't parse
-  var maj = parseInt(x[0]) || 0;
-  var min = parseInt(x[1]) || 0;
-  var pat = parseInt(x[2]) || 0;
-  return {
-      major: maj,
-      minor: min,
-      patch: pat
-  }
-}
+import { FC } from 'react'
+import useSWR from 'swr'
+import { ChainId, safes, users } from '../constants'
 
 const getSafes = (): Promise<SafeInfo[]> =>
   Promise.all(
-    safes.map(({ baseUrl, chainId, address }) => fetch(`${baseUrl}/${address}`, {
-      headers: {
-        'Accept': 'application/json'
-      },
-    }
-    )
-    .then((response) => response.json()
-    .then(data => {
-      const semver = parseVersion(data.verison)
-      if (semver && semver.minor < 30) {
-          // OLD
-          
-      }
-      return data as SafeInfo
-    })
-    ))
+    safes.map(({ baseUrl, chainId, address }) =>
+      fetch(
+        chainId !== ChainId.HARMONY ? `${baseUrl}/chains/${chainId}/safes/${address}` : `${baseUrl}/safes/${address}`,
+      ).then((response) =>
+        response.json().then((data) => {
+          if (!data.address?.value) {
+            data.address = { value: data.address }
+          }
+
+          if (!data.owners[0]?.value) {
+            const ownersValue = data.owners.map((owner) => {
+              return { value: owner }
+            })
+            data.owners = ownersValue
+          }
+
+          if (!data.chainId) {
+            data.chainId = chainId
+          }
+          return data as SafeInfo
+        }),
+      ),
+    ),
   )
-  // v1.2 or 1.3?
 
 interface SafesProps {
   safes: SafeInfo[]
@@ -54,8 +45,8 @@ const Safes: FC<SafesProps> = ({ safes }) => {
   return (
     <>
       <h1>Multisigs</h1>
-      {safes.map((safe) => (
-        <div key={`${safe.chainId}-${safe.address}`}>
+      {safes.map((safe, i) => (
+        <div key={`${safe.chainId}-${safe.address}${i}`}>
           {ChainId[safe.chainId]} {safe.address.value} {safe.threshold} {getUsers(safe.owners)}
         </div>
       ))}
