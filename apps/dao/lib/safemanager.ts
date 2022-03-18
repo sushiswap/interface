@@ -1,5 +1,6 @@
 import { ChainId, Safe, safes } from '../constants'
 import { SafeBalance, SafeInfo } from '../entities/safe'
+import fetch from 'isomorphic-unfetch'
 
 export const getSafes = async (): Promise<SafeInfo[]> => {
   const safes = await _getSafes()
@@ -16,13 +17,13 @@ export const getSafes = async (): Promise<SafeInfo[]> => {
 const _getSafes = (): Promise<SafeInfo[]> =>
   Promise.all(
     safes.map((safe) =>
-      fetch(getSafeUrl(safe)).then((response) =>
-        response.json().then((data) => {
+      fetch(getSafeUrl(safe))
+        .then((response) => response.json())
+        .then((data) => {
           updateSafeFields(data, safe.name, safe.chainId)
           data.balance = 'NA'
           return data as SafeInfo
         }),
-      ),
     ),
   )
 
@@ -31,24 +32,15 @@ const getBalances = (): Promise<SafeBalance[]> =>
     safes
       .filter((safe) => safe.chainId !== ChainId.HARMONY)
       .map(({ baseUrl, chainId, address }) =>
-        fetch(`${baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`).then(
-          (response) =>
-            response.json().then((data) => {
-              data.chainId = chainId
-              data.address = address
-              return data as SafeBalance
-            }),
-        ),
+        fetch(`${baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`)
+          .then((response) => response.json())
+          .then((data) => {
+            data.chainId = chainId
+            data.address = address
+            return data as SafeBalance
+          }),
       ),
   )
-
-// export const getSafe = async (chainId: string, address: string): Promise<SafeInfo> => {
-//   const safe = await _getSafe(chainId, address)
-//   const balance = await getBalance(chainId, address)
-//   safe.balance = balance.fiatTotal
-
-//   return safe
-// }
 
 export const getSafe = (chainId: string, address: string): Promise<SafeInfo> => {
   const safe = safes.find(
@@ -58,13 +50,13 @@ export const getSafe = (chainId: string, address: string): Promise<SafeInfo> => 
     return Promise.reject('Invalid chain ID or address')
   }
   return Promise.resolve(
-    fetch(getSafeUrl(safe)).then((response) =>
-      response.json().then((data) => {
+    fetch(getSafeUrl(safe))
+      .then((response) => response.json())
+      .then((data) => {
         updateSafeFields(data, safe.name, safe.chainId)
         data.balance = 'NA'
         return data as SafeInfo
       }),
-    ),
   )
 }
 
@@ -80,14 +72,13 @@ export const getBalance = (chainId: string, address: string): Promise<SafeBalanc
     return Promise.reject('Harmony gnosis API does not have balance endpoint')
   }
   return Promise.resolve(
-    fetch(`${safe.baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`).then(
-      (response) =>
-        response.json().then((data) => {
-          data.chainId = chainId
-          data.address = address
-          return data as SafeBalance
-        }),
-    ),
+    fetch(`${safe.baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`)
+      .then((response) => response.json())
+      .then((data) => {
+        data.chainId = chainId
+        data.address = address
+        return data as SafeBalance
+      }),
   )
 }
 
