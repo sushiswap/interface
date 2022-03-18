@@ -47,7 +47,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
         Cell: (props) => {
           const ownerCount = props.row.cells[4].value.length
           const threshold = props.value
-          const formattedOwnerCount = EXPECTED_OWNER_COUNT ? ownerCount : <p style={{ color: 'red' }}>{ownerCount}</p>
+          const formattedOwnerCount = ownerCount === EXPECTED_OWNER_COUNT ? ownerCount : <p style={{ color: 'red' }}>{ownerCount}</p>
           const formattedThreshold = props.value === EXPECTED_THRESHOLD ? threshold : <p style={{ color: 'red' }}>{threshold}</p>
           return formattedThreshold + ' / ' + formattedOwnerCount
         },

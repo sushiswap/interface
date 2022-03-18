@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import { FC } from 'react'
 import useSWR from 'swr'
-import { safes } from '../../../constants'
+import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, safes, users } from '../../../constants'
 import { SafeBalance, SafeInfo } from '../../../entities/safe'
+import { formatNumber } from '../../../functions/format'
 import { getBalance, getSafe } from '../../../lib/safemanager'
 
 interface SafesProps {
@@ -10,12 +11,16 @@ interface SafesProps {
   balance: SafeBalance
 }
 
+const isValidThreshold = (threshold: number, ownerCount: number): boolean => {
+  return threshold === EXPECTED_THRESHOLD && ownerCount === EXPECTED_OWNER_COUNT
+}
+
 const Safe: FC<SafesProps> = ({ safe, balance }) => {
   const router = useRouter()
   const chainId = router.query.chainId as string
   const address = router.query.address as string
   const { data: safeData, error: safeError } = useSWR('safe', () => getSafe(chainId, address), { fallbackData: safe })
-  const { data: balanceData, error: balanceError } = useSWR('safe', () => getBalance(chainId, address), {
+  const { data: balanceData, error: balanceError } = useSWR('balance', () => getBalance(chainId, address), {
     fallbackData: balance,
   })
   if (router.isFallback) {
@@ -31,9 +36,28 @@ const Safe: FC<SafesProps> = ({ safe, balance }) => {
   }
   return (
     <>
-      <h1>Router</h1>
+      <h1>Safe Info</h1>
+      <h2>{`${ChainId[safe.chainId]}`}</h2>
+      <div>Type: {safe.type}</div>
       <div>Address: {safe.address.value}</div>
-      <div>balance: {balance?.fiatTotal}</div>
+      <div>
+        Threshold:
+        {isValidThreshold(safe.threshold, safe.owners.length) ? (
+          `${safe.threshold} / ${safe.owners.length}`
+        ) : (
+          <div style={{ color: 'red' }}>
+            {safe.threshold} / {safe.owners.length}
+          </div>
+        )}
+      </div>
+      <div>
+        Owners:{' '}
+        { safe.owners
+          .map((owner) => users.get(owner.value) ?? <p style={{ color: 'red' }}>{owner.value}</p>)
+          .sort()
+          .join(' ')}
+      </div>
+      <div>Total balance: {formatNumber(balance?.fiatTotal, true)}</div>
     </>
   )
 }
