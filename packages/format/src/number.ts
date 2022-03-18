@@ -1,2 +1,3 @@
 import Numeral from 'numeral'
-export const formatNumber = (value: any) => Numeral(value).format('(0.00 a)')
+
+export const formatNumber = (value: any) => Numeral(value).format('(0.00a)')
