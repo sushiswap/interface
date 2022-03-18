@@ -1,14 +1,15 @@
-import { SafeBalanceResponse, SafeInfo } from '@gnosis.pm/safe-react-gateway-sdk'
+import { SafeBalanceResponse } from '@gnosis.pm/safe-react-gateway-sdk'
 import { ChainId, safes } from '../constants'
+import { SafeInfo } from '../entities/safe'
 
 export const getSafes = (): Promise<SafeInfo[]> =>
   Promise.all(
-    safes.map(({ baseUrl, chainId, address }) =>
+    safes.map(({ baseUrl, name, chainId, address }) =>
       fetch(
         chainId !== ChainId.HARMONY ? `${baseUrl}/chains/${chainId}/safes/${address}` : `${baseUrl}/safes/${address}`,
       ).then((response) =>
         response.json().then((data) => {
-          updateFields(data, chainId)
+          updateFields(data, name, chainId)
           return data as SafeInfo
         }),
       ),
@@ -33,7 +34,8 @@ export const getBalances = (): Promise<SafeBalanceResponse[]> =>
  * @param data json response
  * @param chainId
  */
-function updateFields(data: any, chainId: ChainId) {
+function updateFields(data: any, name: string, chainId: ChainId) {
+  data.type = name
   if (!data.address?.value) {
     data.address = { value: data.address }
   }
