@@ -3,18 +3,17 @@ import { useTable } from 'react-table'
 import useSWR from 'swr'
 import { ChainId, users } from '../constants'
 import { SafeBalance, SafeInfo } from '../entities/safe'
+import { formatK, formatNumber, shortenAddress } from '../functions/format'
 import { getSafes } from '../lib/safemanager'
 
 const getTotalBalance = (safes: SafeInfo[]): string => {
-  console.log('start')
+  const sum = safes
+  .filter((safe) => safe.balance !== 'NA')
+  .reduce((sum, safe) => {
+    return sum + parseInt(safe.balance)
+  }, 0)
   return (
-    '$' +
-    safes
-      .filter((safe) => safe.balance !== 'NA')
-      .reduce((sum, safe) => {
-        console.log(sum, safe.balance)
-        return sum + parseInt(safe.balance)
-      }, 0)
+    formatNumber(sum, true, false)
   )
 }
 
@@ -41,7 +40,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
         Header: 'Address',
         accessor: 'address',
         Cell: (props) => {
-          return props.value.value
+          return shortenAddress(props.value.value)
         },
       },
       {
@@ -61,6 +60,9 @@ const Safes: FC<SafesProps> = ({ safes }) => {
       {
         Header: 'Balance',
         accessor: 'balance',
+        Cell: (props) => {
+          return props.cell.value != "NA" ? formatNumber(props.cell.value, true) : "NA"
+        },
       },
     ],
     [],
@@ -124,7 +126,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
         </tbody>
       </table>
 
-      <h2>Balance</h2>
+      <h2>Total balance</h2>
       {getTotalBalance(safes)}
     </>
   )
@@ -133,7 +135,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
 export default Safes
 
 export const getStaticProps = async () => {
-  console.log("running")
+  console.log("fetching")
   const safes = await getSafes()
   return {
     props: {

@@ -95,6 +95,7 @@ importers:
 
   apps/dao:
     specifiers:
+      '@ethersproject/address': ^5.4.0
       '@ethersproject/bignumber': ^5.6.0
       '@ethersproject/experimental': ^5.6.0
       '@ethersproject/providers': ^5.6.1
@@ -115,6 +116,7 @@ importers:
       isomorphic-unfetch: ^3.1.0
       next: 12.0.10
       next-transpile-modules: 9.0.0
+      numeral: ^2.0.0
       react: ^18.0.0-rc.1
       react-dom: ^18.0.0-rc.1
       react-redux: ^7.2.6
@@ -124,6 +126,7 @@ importers:
       typescript: ^4.6.2
       ui: workspace:*
     dependencies:
+      '@ethersproject/address': 5.6.0
       '@ethersproject/bignumber': 5.6.0
       '@ethersproject/experimental': 5.6.0
       '@ethersproject/providers': 5.6.1
@@ -138,6 +141,7 @@ importers:
       ethers: 5.6.1
       isomorphic-unfetch: 3.1.0
       next: 12.0.10_3b3c4dafaa7e2bc132922eb3215c558b
+      numeral: 2.0.6
       react: 18.0.0-rc.2-next-b9de50d2f-20220308
       react-dom: 18.0.0-rc.2-next-b9de50d2f-20220308_b6535743ded9d6e615b152ed8c889920
       react-redux: 7.2.6_3b3c4dafaa7e2bc132922eb3215c558b
