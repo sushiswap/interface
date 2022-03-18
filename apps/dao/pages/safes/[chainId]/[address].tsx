@@ -1,9 +1,10 @@
+import { BigNumber } from 'ethers'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
 import useSWR from 'swr'
 import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, safes, users } from '../../../constants'
 import { SafeBalance, SafeInfo } from '../../../entities/safe'
-import { formatNumber } from '../../../functions/format'
+import { formatNumber, shortenAddress } from '../../../functions/format'
 import { getBalance, getSafe } from '../../../lib/safemanager'
 
 interface SafesProps {
@@ -52,12 +53,29 @@ const Safe: FC<SafesProps> = ({ safe, balance }) => {
       </div>
       <div>
         Owners:{' '}
-        { safe.owners
+        {safe.owners
           .map((owner) => users.get(owner.value) ?? <p style={{ color: 'red' }}>{owner.value}</p>)
           .sort()
           .join(' ')}
       </div>
       <div>Total balance: {formatNumber(balance?.fiatTotal, true)}</div>
+      <div>
+        <div>Token Address Amount USD</div>
+        {balance.items
+          .filter((token) => parseFloat(token.balance) > 0 && parseFloat(token.fiatBalance) > 0)
+          .map((token) => (
+            <p key={token.tokenInfo.address}>
+              {`${token.tokenInfo.symbol}  ${shortenAddress(token.tokenInfo.address)}
+              ${formatNumber(
+                BigNumber.from(token.balance).div(BigNumber.from(10).pow(token.tokenInfo.decimals)),
+                false,
+                false,
+                2,
+              )} 
+              ${formatNumber(token.fiatBalance, true)}`}
+            </p>
+          ))}
+      </div>
     </>
   )
 }
