@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 import { useTable } from 'react-table'
 import useSWR from 'swr'
-import { ChainId, users } from '../constants'
+import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, users } from '../constants'
 import { SafeInfo } from '../entities/safe'
 import { formatNumber, shortenAddress } from '../functions/format'
 import { getSafes } from '../lib/safemanager'
@@ -44,13 +44,20 @@ const Safes: FC<SafesProps> = ({ safes }) => {
       {
         Header: 'Threshold',
         accessor: 'threshold',
+        Cell: (props) => {
+          const ownerCount = props.row.cells[4].value.length
+          const threshold = props.value
+          const formattedOwnerCount = EXPECTED_OWNER_COUNT ? ownerCount : <p style={{ color: 'red' }}>{ownerCount}</p>
+          const formattedThreshold = props.value === EXPECTED_THRESHOLD ? threshold : <p style={{ color: 'red' }}>{threshold}</p>
+          return formattedThreshold + ' / ' + formattedOwnerCount
+        },
       },
       {
         Header: 'Owners',
         accessor: 'owners',
         Cell: (props) => {
           return props.cell.value
-            .map((owner) => users.get(owner.value) ?? owner.value)
+            .map((owner) => users.get(owner.value) ?? <p style={{ color: 'red' }}>{owner.value}</p>)
             .sort()
             .join(' ')
         },
