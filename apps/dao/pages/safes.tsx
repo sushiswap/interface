@@ -1,20 +1,18 @@
-import { FC, useEffect, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import { useTable } from 'react-table'
 import useSWR from 'swr'
 import { ChainId, users } from '../constants'
-import { SafeBalance, SafeInfo } from '../entities/safe'
-import { formatK, formatNumber, shortenAddress } from '../functions/format'
+import { SafeInfo } from '../entities/safe'
+import { formatNumber, shortenAddress } from '../functions/format'
 import { getSafes } from '../lib/safemanager'
 
 const getTotalBalance = (safes: SafeInfo[]): string => {
   const sum = safes
-  .filter((safe) => safe.balance !== 'NA')
-  .reduce((sum, safe) => {
-    return sum + parseInt(safe.balance)
-  }, 0)
-  return (
-    formatNumber(sum, true, false)
-  )
+    .filter((safe) => safe.balance !== 'NA')
+    .reduce((sum, safe) => {
+      return sum + parseInt(safe.balance)
+    }, 0)
+  return formatNumber(sum, true, false)
 }
 
 interface SafesProps {
@@ -61,7 +59,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
         Header: 'Balance',
         accessor: 'balance',
         Cell: (props) => {
-          return props.cell.value != "NA" ? formatNumber(props.cell.value, true) : "NA"
+          return props.cell.value != 'NA' ? formatNumber(props.cell.value, true) : 'NA'
         },
       },
     ],
@@ -135,7 +133,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
 export default Safes
 
 export const getStaticProps = async () => {
-  console.log("fetching")
+  console.log('fetching')
   const safes = await getSafes()
   return {
     props: {

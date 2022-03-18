@@ -1,6 +1,5 @@
 import { SafeBalanceResponse, SafeInfo as GnosisSafeInfo } from '@gnosis.pm/safe-react-gateway-sdk'
 
-
 export type SafeInfo = GnosisSafeInfo & {
   type: string
   balance: string

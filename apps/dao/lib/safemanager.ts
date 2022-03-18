@@ -21,7 +21,7 @@ const _getSafes = (): Promise<SafeInfo[]> =>
       ).then((response) =>
         response.json().then((data) => {
           updateSafeFields(data, name, chainId)
-          data.balance = "NA"
+          data.balance = 'NA'
           return data as SafeInfo
         }),
       ),
