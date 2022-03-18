@@ -1,10 +1,10 @@
 import { FC, useMemo } from 'react'
 import { useTable } from 'react-table'
 import useSWR from 'swr'
-import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, users } from '../constants'
-import { SafeInfo } from '../entities/safe'
-import { formatNumber, shortenAddress } from '../functions/format'
-import { getSafes } from '../lib/safemanager'
+import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, users } from '../../constants'
+import { SafeInfo } from '../../entities/safe'
+import { formatNumber, shortenAddress } from '../../functions/format'
+import { getSafes } from '../../lib/safemanager'
 
 const getTotalBalance = (safes: SafeInfo[]): string => {
   const sum = safes

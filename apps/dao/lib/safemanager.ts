@@ -1,4 +1,4 @@
-import { ChainId, safes } from '../constants'
+import { ChainId, Safe, safes } from '../constants'
 import { SafeBalance, SafeInfo } from '../entities/safe'
 
 export const getSafes = async (): Promise<SafeInfo[]> => {
@@ -15,18 +15,17 @@ export const getSafes = async (): Promise<SafeInfo[]> => {
 
 const _getSafes = (): Promise<SafeInfo[]> =>
   Promise.all(
-    safes.map(({ baseUrl, name, chainId, address }) =>
-      fetch(
-        chainId !== ChainId.HARMONY ? `${baseUrl}/chains/${chainId}/safes/${address}` : `${baseUrl}/safes/${address}`,
-      ).then((response) =>
+    safes.map((safe) =>
+      fetch(getSafeUrl(safe)).then((response) =>
         response.json().then((data) => {
-          updateSafeFields(data, name, chainId)
+          updateSafeFields(data, safe.name, safe.chainId)
           data.balance = 'NA'
           return data as SafeInfo
         }),
       ),
     ),
   )
+
 const getBalances = (): Promise<SafeBalance[]> =>
   Promise.all(
     safes
@@ -42,6 +41,61 @@ const getBalances = (): Promise<SafeBalance[]> =>
         ),
       ),
   )
+
+// export const getSafe = async (chainId: string, address: string): Promise<SafeInfo> => {
+//   const safe = await _getSafe(chainId, address)
+//   const balance = await getBalance(chainId, address)
+//   safe.balance = balance.fiatTotal
+
+//   return safe
+// }
+
+export const getSafe = (chainId: string, address: string): Promise<SafeInfo> => {
+  const safe = safes.find(
+    (safe) => safe.chainId.toString() === chainId && safe.address.toLowerCase() === address.toLowerCase(),
+  )
+  if (!safe) {
+    return Promise.reject('Invalid chain ID or address')
+  }
+  return Promise.resolve(
+    fetch(getSafeUrl(safe)).then((response) =>
+      response.json().then((data) => {
+        updateSafeFields(data, safe.name, safe.chainId)
+        data.balance = 'NA'
+        return data as SafeInfo
+      }),
+    ),
+  )
+}
+
+export const getBalance = (chainId: string, address: string): Promise<SafeBalance> => {
+  const safe = safes.find(
+    (safe) => safe.chainId.toString() === chainId && safe.address.toLowerCase() === address.toLowerCase(),
+  )
+  if (!safe) {
+    return Promise.reject('Invalid chain ID or address')
+  }
+
+  if (safe.chainId === ChainId.HARMONY) {
+    return Promise.reject('Harmony gnosis API does not have balance endpoint')
+  }
+  return Promise.resolve(
+    fetch(`${safe.baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`).then(
+      (response) =>
+        response.json().then((data) => {
+          data.chainId = chainId
+          data.address = address
+          return data as SafeBalance
+        }),
+    ),
+  )
+}
+
+const getSafeUrl = (safe: Safe): string => {
+  return safe.chainId !== ChainId.HARMONY
+    ? `${safe.baseUrl}/chains/${safe.chainId}/safes/${safe.address}`
+    : `${safe.baseUrl}/safes/${safe.address}`
+}
 
 /**
  * Some gnosis network have different APIs, this function maps those fields to make the data compatible with @type {SafeInfo}
