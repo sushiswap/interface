@@ -5,6 +5,7 @@ import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, users } from '../../
 import { SafeInfo } from '../../types'
 import { formatUSD, shortenAddress } from 'format'
 import { getAllSafes } from '../../lib/safe'
+import Link from 'next/link'
 
 const getTotalBalance = (safes: SafeInfo[]): string => {
   const value = safes
@@ -71,6 +72,16 @@ const Safes: FC<SafesProps> = ({ safes }) => {
           return props.cell.value != 'NA' ? formatUSD(props.cell.value) : 'NA'
         },
       },
+      {
+        Header: 'Tokens',
+        accessor: '', 
+        Cell: (props) => {
+          const chainId = props.row.original.chainId
+          const address = props.row.original.address.value
+          const url = "/safes/" + chainId + "/" + address
+          return <Link href={url}>View tokens</Link>
+        }
+      }
     ],
     [],
   )
