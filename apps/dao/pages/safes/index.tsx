@@ -151,6 +151,6 @@ export const getStaticProps = async () => {
     props: {
       safes,
     },
-    revalidate: 60, // 60s
+    revalidate: 90, // 90s
   }
 }

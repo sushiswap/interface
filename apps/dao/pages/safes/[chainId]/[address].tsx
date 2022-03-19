@@ -166,6 +166,6 @@ export const getStaticProps = async ({ params }) => {
       safe,
       balance,
     },
-    revalidate: 60, // 60s
+    revalidate: 90, // 90s
   }
 }

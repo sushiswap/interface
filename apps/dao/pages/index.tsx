@@ -14,9 +14,3 @@ export default function Dao({ chainIds, blockNumbers }) {
     </main>
   )
 }
-
-// export async function getStaticProps() {
-//   return {
-//     props: {},
-//   }
-// }
