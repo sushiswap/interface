@@ -1,6 +1,6 @@
+import fetch from 'isomorphic-unfetch'
 import { ChainId, Safe, safes } from '../constants'
 import { SafeBalance, SafeInfo } from '../types'
-import fetch from 'isomorphic-unfetch'
 
 export const getAllSafes = async (): Promise<SafeInfo[]> => {
   const [safes, balances] = await Promise.all([getSafes(), getBalances()])
@@ -17,15 +17,21 @@ export const getAllSafes = async (): Promise<SafeInfo[]> => {
 
 const getSafes = (): Promise<SafeInfo[]> =>
   Promise.all(
-    safes.map((safe) =>
-      fetch(getSafeUrl(safe))
-        .then((response) => response.json())
+    safes.map((safe) => {
+      const url = getSafeUrl(safe)
+      return fetch(url)
+        .then((response) => {
+          if (response.status !== 200) {
+            throw String(`Invalid server response: ${response.status} ${response.statusText} ${url}`)
+          }
+          return response.json()
+        })
         .then((data) => {
           updateSafeFields(data, safe.name, safe.chainId)
           data.balance = 'NA'
           return data as SafeInfo
-        }),
-    ),
+        })
+    }),
   )
 
 const getBalances = (): Promise<SafeBalance[]> =>
@@ -33,9 +39,17 @@ const getBalances = (): Promise<SafeBalance[]> =>
     safes
       .filter((safe) => safe.chainId !== ChainId.HARMONY)
       .map(({ baseUrl, chainId, address }) =>
-        fetch(`${baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`)
-          .then((response) => response.json())
-          .then((data) => ({ ...data, chainId, address })),
+        {
+          const url = `${baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`
+          return fetch(url)
+          .then((response) => {
+            if (response.status !== 200) {
+              throw String(`Invalid server response: ${response.status} ${response.statusText} ${url}`)
+            }
+            return response.json()
+          })
+          .then((data) => ({ ...data, chainId, address }))
+        }
       ),
   )
 
@@ -46,8 +60,14 @@ export const getSafe = (chainId: string, address: string): Promise<SafeInfo> => 
   if (!safe) {
     throw 'Invalid chain ID or address'
   }
-  return fetch(getSafeUrl(safe))
-    .then((response) => response.json())
+  const url = getSafeUrl(safe)
+  return fetch(url)
+    .then((response) => {
+      if (response.status !== 200) {
+        throw String(`Invalid server response: ${response.status} ${response.statusText} ${url}`)
+      }
+      return response.json()
+    })
     .then((data) => {
       updateSafeFields(data, safe.name, safe.chainId)
       data.balance = 'NA'
@@ -55,6 +75,7 @@ export const getSafe = (chainId: string, address: string): Promise<SafeInfo> => 
     })
 }
 
+// TODO: this function returns 503 sometimes, should we add a retry for that?
 export const getBalance = (chainId: string, address: string): Promise<SafeBalance> => {
   const safe = safes.find(
     (safe) => safe.chainId.toString() === chainId && safe.address.toLowerCase() === address.toLowerCase(),
@@ -66,8 +87,15 @@ export const getBalance = (chainId: string, address: string): Promise<SafeBalanc
   if (safe.chainId === ChainId.HARMONY) {
     throw 'Harmony gnosis API does not have balance endpoint'
   }
-  return fetch(`${safe.baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`)
-    .then((response) => response.json())
+  const url = `${safe.baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`
+
+  return fetch(url)
+    .then((response) => {
+      if (response.status !== 200) {
+        throw String(`Invalid server response: ${response.status} ${response.statusText} ${url}`)
+      }
+      return response.json()
+    })
     .then((data) => ({ ...data, chainId, address })) as Promise<SafeBalance>
 }
 
@@ -89,10 +117,7 @@ function updateSafeFields(data: any, name: string, chainId: ChainId) {
   }
 
   if (data?.owners?.length && !data.owners[0]?.value) {
-    const ownersValue = data.owners.map((owner) => {
-      return { value: owner }
-    })
-    data.owners = ownersValue
+    data.owners = data.owners.map((owner) => ({ value: owner }))
   }
 
   if (!data.chainId) {
