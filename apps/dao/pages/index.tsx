@@ -1,4 +1,4 @@
-import { useCurrentBlockTimestampMultichain } from '../hooks'
+import { useCurrentBlockTimestampMultichain } from '../'
 
 export default function Dao({ chainIds, blockNumbers }) {
   console.log({ blockNumbers, chainIds })

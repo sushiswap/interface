@@ -1,11 +1,7 @@
-import { FC } from 'react'
+import { ChainId, getProvider, store, Updater, useLatestBlock } from '../'
 import type { AppProps } from 'next/app'
-import { useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import { Provider } from 'react-redux'
-import { ChainId } from '../constants'
-import { getProvider, useLatestBlock } from '../hooks'
-import { store } from '../store'
-import { Updater } from '../Updater'
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   const providerEthereum = getProvider(ChainId.ETHEREUM)
   const providerRinkeby = getProvider(ChainId.RINKEBY)

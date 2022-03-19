@@ -1,7 +1,7 @@
 import { abi as MulticallABI } from '@uniswap/v3-periphery/artifacts/contracts/lens/UniswapInterfaceMulticall.sol/UniswapInterfaceMulticall.json'
 import { BigNumber, Contract, providers, utils } from 'ethers'
 import { useEffect, useMemo, useState } from 'react'
-import { UniswapInterfaceMulticall } from './abi/types'
+import { UniswapInterfaceMulticall } from 'app/abi/types'
 import { ChainId, MULTICALL_ADDRESS, NULL_ADDRESS, USDC_ADDRESS, USDT_ADDRESS } from './constants'
 import ERC20_ABI from './erc20.json'
 import { useMultiChainSingleContractSingleData, useMultipleContractSingleData, useSingleCallResult } from './multicall'
@@ -52,7 +52,7 @@ export function useCurrentBlockTimestampMultichain(
       result[chainId] = MULTICALL_ADDRESS
       return result
     }, {} as Record<number, string>)
-  }, [])
+  }, [chainIds])
 
   const chainToCallState = useMultiChainSingleContractSingleData(
     chainToBlock,

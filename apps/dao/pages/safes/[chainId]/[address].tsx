@@ -4,9 +4,9 @@ import { useRouter } from 'next/router'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { useTable } from 'react-table'
 import useSWR from 'swr'
-import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, safes, users } from '../../../constants'
-import { getBalance, getSafe } from '../../../lib/safe'
-import { SafeBalance, SafeInfo } from '../../../types'
+import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, safes, users } from 'app/constants'
+import { getBalance, getSafe } from 'app/lib/safe'
+import { SafeBalance, SafeInfo } from 'app/types'
 
 interface SafesProps {
   safe: SafeInfo

@@ -1,8 +1,17 @@
 {
   "extends": "config/typescript/nextjs.json",
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.json"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "preserveSymlinks": true
+    "baseUrl": "./",
+    "declaration": true,
+    "declarationMap": true,
+    "preserveSymlinks": true,
+    "paths": {
+      "app/abi": ["./abi/index.ts"],
+      "app/abi/*": ["./abi/*"],
+      "app/lib": ["./lib/index.ts"],
+      "app/lib/*": ["./lib/*"],
+    }
   }
 }
