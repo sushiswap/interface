@@ -6,6 +6,8 @@ import useSWR from 'swr'
 import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, safes, users } from '../../../constants'
 import { getBalance, getSafe } from '../../../lib/safe'
 import { SafeBalance, SafeInfo } from '../../../types'
+import { useTable } from 'react-table'
+import { useMemo } from 'react'
 
 interface SafesProps {
   safe: SafeInfo
@@ -24,6 +26,43 @@ const Safe: FC<SafesProps> = (props) => {
   const { data: balance } = useSWR('balance', () => getBalance(chainId, address), {
     fallbackData: props.balance,
   })
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Token',
+        accessor: 'tokenInfo.name',
+      },
+      {
+        Header: 'Address',
+        accessor: 'tokenInfo.address',
+        Cell: (props) => {
+          return shortenAddress(props.value)
+        },
+      },
+      {
+        Header: 'Amount',
+        accessor: 'balance',
+        Cell: (props) => {
+          return formatNumber(formatUnits(props.value, props.cell.row.original.tokenInfo.decimals))
+        },
+      },
+      {
+        Header: 'Total (USD)',
+        accessor: 'fiatBalance',
+        Cell: (props) => {
+          return formatUSD(props.value)
+        },
+      },
+    ],
+    [],
+  )
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
+    columns,
+    data: balance.items.filter((token) => parseFloat(token.balance) > 0 && parseFloat(token.fiatBalance) > 0),
+  })
+
   return (
     <>
       <h1>Safe Info</h1>
@@ -48,18 +87,54 @@ const Safe: FC<SafesProps> = (props) => {
           .join(' ')}
       </div>
       <div>Total balance: {formatUSD(balance?.fiatTotal)}</div>
-      <div>
-        <div>Token Address Amount USD</div>
-        {balance.items
-          .filter((token) => parseFloat(token.balance) > 0 && parseFloat(token.fiatBalance) > 0)
-          .map((token) => (
-            <p key={token.tokenInfo.address}>
-              {`${token.tokenInfo.symbol}  ${shortenAddress(token.tokenInfo.address)}
-              ${formatNumber(formatUnits(token.balance, token.tokenInfo.decimals))} 
-              ${formatUSD(token.fiatBalance)}`}
-            </p>
+
+      <h2>Tokens</h2>
+      <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+        <thead>
+          {headerGroups.map((headerGroup, i) => (
+            <tr {...headerGroup.getHeaderGroupProps()} key={`thr-${i}`}>
+              {headerGroup.headers.map((column, i) => (
+                <th
+                  {...column.getHeaderProps()}
+                  style={{
+                    borderBottom: 'solid 3px red',
+                    background: 'aliceblue',
+                    color: 'black',
+                    fontWeight: 'bold',
+                  }}
+                  key={`th-${i}`}
+                >
+                  {column.render('Header')}
+                </th>
+              ))}
+            </tr>
           ))}
-      </div>
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row)
+            return (
+              <tr {...row.getRowProps()} key={`row-${i}`}>
+                {row.cells.map((cell, i) => {
+                  return (
+                    <td
+                      {...cell.getCellProps()}
+                      style={{
+                        padding: '10px',
+                        border: 'solid 1px gray',
+                        background: 'papayawhip',
+                      }}
+                      key={`cell-${i}`}
+                    >
+                      {cell.render('Cell')}
+                    </td>
+                  )
+                })}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     </>
   )
 }
