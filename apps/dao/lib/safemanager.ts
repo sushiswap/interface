@@ -3,15 +3,14 @@ import { SafeBalance, SafeInfo } from '../types'
 import fetch from 'isomorphic-unfetch'
 
 export const getAllSafes = async (): Promise<SafeInfo[]> => {
-  const [safes, balances] = await Promise.all([getSafes(), getBalances()])
-
+  const safes = await getSafes()
+  const balances = await getBalances()
   balances?.forEach((balance) => {
     const safe = safes.find((safe) => safe.chainId == balance.chainId && safe.address.value == balance.address)
     if (safe) {
       safe.balance = balance.fiatTotal
     }
   })
-
   return safes
 }
 
@@ -35,7 +34,11 @@ const getBalances = (): Promise<SafeBalance[]> =>
       .map(({ baseUrl, chainId, address }) =>
         fetch(`${baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`)
           .then((response) => response.json())
-          .then((data) => ({ ...data, chainId, address })),
+          .then((data) => {
+            data.chainId = chainId
+            data.address = address
+            return data as SafeBalance
+          }),
       ),
   )
 
@@ -44,15 +47,17 @@ export const getSafe = (chainId: string, address: string): Promise<SafeInfo> => 
     (safe) => safe.chainId.toString() === chainId && safe.address.toLowerCase() === address.toLowerCase(),
   )
   if (!safe) {
-    throw 'Invalid chain ID or address'
+    return Promise.reject('Invalid chain ID or address')
   }
-  return fetch(getSafeUrl(safe))
-    .then((response) => response.json())
-    .then((data) => {
-      updateSafeFields(data, safe.name, safe.chainId)
-      data.balance = 'NA'
-      return data as SafeInfo
-    })
+  return Promise.resolve(
+    fetch(getSafeUrl(safe))
+      .then((response) => response.json())
+      .then((data) => {
+        updateSafeFields(data, safe.name, safe.chainId)
+        data.balance = 'NA'
+        return data as SafeInfo
+      }),
+  )
 }
 
 export const getBalance = (chainId: string, address: string): Promise<SafeBalance> => {
@@ -60,15 +65,21 @@ export const getBalance = (chainId: string, address: string): Promise<SafeBalanc
     (safe) => safe.chainId.toString() === chainId && safe.address.toLowerCase() === address.toLowerCase(),
   )
   if (!safe) {
-    throw 'Invalid chain ID or address'
+    return Promise.reject('Invalid chain ID or address')
   }
 
   if (safe.chainId === ChainId.HARMONY) {
-    throw 'Harmony gnosis API does not have balance endpoint'
+    return Promise.reject('Harmony gnosis API does not have balance endpoint')
   }
-  return fetch(`${safe.baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`)
-    .then((response) => response.json())
-    .then((data) => ({ ...data, chainId, address })) as Promise<SafeBalance>
+  return Promise.resolve(
+    fetch(`${safe.baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`)
+      .then((response) => response.json())
+      .then((data) => {
+        data.chainId = chainId
+        data.address = address
+        return data as SafeBalance
+      }),
+  )
 }
 
 const getSafeUrl = (safe: Safe): string => {
@@ -88,7 +99,7 @@ function updateSafeFields(data: any, name: string, chainId: ChainId) {
     data.address = { value: data.address }
   }
 
-  if (!data?.owners[0]?.value) {
+  if (data?.owners.length && !data.owners[0].value) {
     const ownersValue = data.owners.map((owner) => {
       return { value: owner }
     })

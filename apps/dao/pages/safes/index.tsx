@@ -12,7 +12,7 @@ const getTotalBalance = (safes: SafeInfo[]): string => {
     .reduce((sum, safe) => {
       return sum + parseInt(safe.balance)
     }, 0)
-  return formatUSD(value)
+  return formatUSD(value.toString())
 }
 
 interface SafesProps {
