@@ -1,11 +1,11 @@
+import { formatUnits } from '@ethersproject/units'
+import { formatNumber, formatUSD, shortenAddress } from 'format'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
 import useSWR from 'swr'
 import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, safes, users } from '../../../constants'
-import { SafeBalance, SafeInfo } from '../../../types'
-import { shortenAddress, formatUSD, formatNumber } from 'format'
 import { getBalance, getSafe } from '../../../lib/safe'
-import { parseUnits } from '@ethersproject/units'
+import { SafeBalance, SafeInfo } from '../../../types'
 
 interface SafesProps {
   safe: SafeInfo
@@ -55,7 +55,7 @@ const Safe: FC<SafesProps> = (props) => {
           .map((token) => (
             <p key={token.tokenInfo.address}>
               {`${token.tokenInfo.symbol}  ${shortenAddress(token.tokenInfo.address)}
-              ${formatNumber(parseUnits(token.balance, token.tokenInfo.decimals).toString())} 
+              ${formatNumber(formatUnits(token.balance, token.tokenInfo.decimals))} 
               ${formatUSD(token.fiatBalance)}`}
             </p>
           ))}
