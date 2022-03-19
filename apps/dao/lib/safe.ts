@@ -88,7 +88,7 @@ function updateSafeFields(data: any, name: string, chainId: ChainId) {
     data.address = { value: data.address }
   }
 
-  if (!data?.owners[0]?.value) {
+  if (data?.owners?.length && !data.owners[0]?.value) {
     const ownersValue = data.owners.map((owner) => {
       return { value: owner }
     })

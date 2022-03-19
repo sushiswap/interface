@@ -1,13 +1,12 @@
 import { formatUnits } from '@ethersproject/units'
 import { formatNumber, formatUSD, shortenAddress } from 'format'
 import { useRouter } from 'next/router'
-import { FC } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
+import { useTable } from 'react-table'
 import useSWR from 'swr'
 import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, safes, users } from '../../../constants'
 import { getBalance, getSafe } from '../../../lib/safe'
 import { SafeBalance, SafeInfo } from '../../../types'
-import { useTable } from 'react-table'
-import { useMemo } from 'react'
 
 interface SafesProps {
   safe: SafeInfo
@@ -26,6 +25,13 @@ const Safe: FC<SafesProps> = (props) => {
   const { data: balance } = useSWR('balance', () => getBalance(chainId, address), {
     fallbackData: props.balance,
   })
+  const [formattedBalance, setFormattedBalance] = useState([])
+
+  useEffect(() => {
+    setFormattedBalance(
+      balance?.items.filter((token) => parseFloat(token.balance) > 0 && parseFloat(token.fiatBalance) > 0) ?? [],
+    )
+  }, [balance])
 
   const columns = useMemo(
     () => [
@@ -60,7 +66,7 @@ const Safe: FC<SafesProps> = (props) => {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
-    data: balance.items.filter((token) => parseFloat(token.balance) > 0 && parseFloat(token.fiatBalance) > 0),
+    data: formattedBalance,
   })
 
   return (
@@ -68,7 +74,7 @@ const Safe: FC<SafesProps> = (props) => {
       <h1>Safe Info</h1>
       <h2>{`${ChainId[safe.chainId]}`}</h2>
       <div>Type: {safe.type}</div>
-      <div>Address: {safe.address.value}</div>
+      <div>Address: {safe.address?.value}</div>
       <div>
         Threshold:
         {isValidThreshold(safe.threshold, safe.owners.length) ? (
