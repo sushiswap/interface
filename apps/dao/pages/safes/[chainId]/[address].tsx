@@ -149,7 +149,7 @@ export default Safe
 
 export async function getStaticPaths() {
   return {
-    paths: safes.map((safe) => ({
+    paths: Object.entries(safes).map(([, safe]) => ({
       params: { chainId: safe.chainId.toString(), address: safe.address },
     })),
     fallback: true,

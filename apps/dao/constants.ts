@@ -1,3 +1,4 @@
+
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
 export const MULTICALL_ADDRESS = '0x1F98415757620B543A52E61c46B32eB19261F984' // Address on Mainnet
 export const USDC_ADDRESS = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
@@ -47,103 +48,101 @@ export type Safe = {
   address: string
 }
 
-export const safes = [
-  {
-    baseUrl: `https://safe-client.gnosis.io/v1`,
+const GNSOSIS_URL = 'https://safe-client.gnosis.io/v1'
+
+export const safes: Record<string, Safe> = {
+  '0x19B3Eb3Af5D93b77a5619b047De0EED7115A19e7': {
+    baseUrl: GNSOSIS_URL,
     name: 'Ops',
     chainId: ChainId.ETHEREUM,
     address: '0x19B3Eb3Af5D93b77a5619b047De0EED7115A19e7',
   },
-  {
-    baseUrl: `https://safe-client.gnosis.io/v1`,
+  '0x850a57630A2012B2494779fBc86bBc24F2a7baeF': {
+    baseUrl: GNSOSIS_URL,
     name: 'Fees',
     chainId: ChainId.POLYGON,
     address: '0x850a57630A2012B2494779fBc86bBc24F2a7baeF',
   },
-  {
-    baseUrl: `https://safe-client.gnosis.io/v1`,
+  '0x2B23D9B02FffA1F5441Ef951B4B95c09faa57EBA': {
+    baseUrl: GNSOSIS_URL,
     name: 'Ops',
     chainId: ChainId.POLYGON,
     address: '0x2B23D9B02FffA1F5441Ef951B4B95c09faa57EBA',
   },
-  {
-    baseUrl: `https://safe-client.gnosis.io/v1`,
+  '0xc375411C6597F692Add6a7a3AD5b3C38626B0F26': {
+    baseUrl: GNSOSIS_URL,
     name: 'Ops',
     chainId: ChainId.XDAI,
     address: '0xc375411C6597F692Add6a7a3AD5b3C38626B0F26',
   },
-
-  {
-    baseUrl: `https://safe-client.gnosis.io/v1`,
+  '0xc6fD91aD4919Fd91e2c84077ba648092cB499638': {
+    baseUrl: GNSOSIS_URL,
     name: 'Ops',
     chainId: ChainId.BINANCE,
     address: '0xc6fD91aD4919Fd91e2c84077ba648092cB499638',
   },
-  {
-    baseUrl: `https://safe-client.gnosis.io/v1`,
+  '0x09842Ce338647906B686aBB3B648A6457fbB25DA': {
+    baseUrl: GNSOSIS_URL,
     name: 'Ops',
     chainId: ChainId.AVALANCHE,
     address: '0x09842Ce338647906B686aBB3B648A6457fbB25DA',
   },
-  {
+  '0x751b01Fa14fD9640a1DF9014e2D0f3a03A198b81': {
     baseUrl: `https://client-gateway.celo-safe.io/v1`,
     name: 'Ops',
     chainId: ChainId.CELO,
     address: '0x751b01Fa14fD9640a1DF9014e2D0f3a03A198b81',
   },
-
-  {
+  '0x8b63fcBB752e425e3C4B12F7802BAd1A24c6d7F4': {
     baseUrl: `https://client-gateway.celo-safe.io/v1`,
     name: 'Fees',
     chainId: ChainId.CELO,
     address: '0x8b63fcBB752e425e3C4B12F7802BAd1A24c6d7F4',
   },
-  {
-    baseUrl: `https://safe-client.gnosis.io/v1`,
+  '0x978982772b8e4055B921bf9295c0d74eB36Bc54e': {
+    baseUrl: GNSOSIS_URL,
     name: 'Ops',
     chainId: ChainId.ARBITRUM,
     address: '0x978982772b8e4055B921bf9295c0d74eB36Bc54e',
   },
-  {
+  '0x30af69A3f4a6f266961313Ce0943719dF4A8AA10': {
     baseUrl: 'https://multisig.t.hmny.io/api/v1',
     name: 'Ops',
     chainId: ChainId.HARMONY,
     address: '0x30af69A3f4a6f266961313Ce0943719dF4A8AA10',
   },
-
-  {
+  '0x33b6beb37837459Ee84a1Ffed2C6a4ca22e5F316': {
     baseUrl: `https://safe-service.fuse.io/cgw/v1`,
     name: 'Ops',
     chainId: ChainId.FUSE,
     address: '0x33b6beb37837459Ee84a1Ffed2C6a4ca22e5F316',
   },
-  {
+  '0xF9E7d4c6d36ca311566f46c81E572102A2DC9F52': {
     baseUrl: `https://safe.fantom.network/v1`,
     name: 'Ops',
     chainId: ChainId.FANTOM,
     address: '0xF9E7d4c6d36ca311566f46c81E572102A2DC9F52',
   },
-  {
+  '0x6669cc35031A84fAc1Efe30bB586B9ADdf223Fbc': {
     baseUrl: `https://gateway.moonriver.multisig.moonbeam.network/v1`,
     name: 'Fees',
     chainId: ChainId.MOONRIVER,
     address: '0x6669cc35031A84fAc1Efe30bB586B9ADdf223Fbc',
   },
-  {
+  '0x939f7E76cc515cc296dD3ce362D9a52e148A7D5f': {
     baseUrl: `https://gateway.moonriver.multisig.moonbeam.network/v1`,
     name: 'Ops',
     chainId: ChainId.MOONRIVER,
     address: '0x939f7E76cc515cc296dD3ce362D9a52e148A7D5f',
   },
-  //FIXME: Incorrect address?
-  // {
+  // FIXME: wrong address?
+  // '0x87AEb22b7BB02AC42204eB312C08A22FC3f077F3': {
   //   baseUrl: 'https://multisig.moonbeam.network/moonbeam:',
   //   name: 'Ops',
   //   chainId: ChainId.MOONBEAM,
   //   address: '0x87AEb22b7BB02AC42204eB312C08A22FC3f077F3',
   // },
-] as Safe[]
-
+}
 
 export const users = new Map<string, string>([
   ['0x3027a0c4E35272c0707dE2651A0638c3dF1c37AC', 'Gasper'],

@@ -4,7 +4,7 @@ import useSWR from 'swr'
 import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, users } from '../../'
 import { SafeInfo } from '../../'
 import { formatUSD, shortenAddress } from 'format'
-import { getAllSafes } from 'app/lib'
+import { getAllSafes, getSafes } from 'app/lib'
 import Link from 'next/link'
 
 const getTotalBalance = (safes: SafeInfo[]): string => {
@@ -19,6 +19,7 @@ const getTotalBalance = (safes: SafeInfo[]): string => {
 interface SafesProps {
   safes: SafeInfo[]
 }
+
 const Safes: FC<SafesProps> = ({ safes }) => {
   const { data } = useSWR('safes', getAllSafes, { fallbackData: safes })
 
@@ -146,7 +147,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
 export default Safes
 
 export const getStaticProps = async () => {
-  const safes = await getAllSafes()
+  const safes = await getSafes()
   return {
     props: {
       safes,

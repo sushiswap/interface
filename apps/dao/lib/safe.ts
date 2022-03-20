@@ -3,7 +3,7 @@ import fetch from 'isomorphic-unfetch'
 
 export const getAllSafes = async (): Promise<SafeInfo[]> => {
   const [safes, balances] = await Promise.all([getSafes(), getBalances()])
-
+  
   balances?.forEach((balance) => {
     const safe = safes.find((safe) => safe.chainId == balance.chainId && safe.address.value == balance.address)
     if (safe) {
@@ -14,9 +14,9 @@ export const getAllSafes = async (): Promise<SafeInfo[]> => {
   return safes
 }
 
-const getSafes = (): Promise<SafeInfo[]> =>
-  Promise.all(
-    safes.map((safe) => {
+export const getSafes = (): Promise<SafeInfo[]> =>
+  Promise.all( 
+    Object.entries(safes).map(([, safe]) => {
       const url = getSafeUrl(safe)
       return fetch(url)
         .then((response) => {
@@ -35,28 +35,24 @@ const getSafes = (): Promise<SafeInfo[]> =>
 
 const getBalances = (): Promise<SafeBalance[]> =>
   Promise.all(
-    safes
-      .filter((safe) => safe.chainId !== ChainId.HARMONY)
-      .map(({ baseUrl, chainId, address }) =>
-        {
-          const url = `${baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`
-          return fetch(url)
+    Object.entries(safes)
+      .filter(([,safe]) => safe.chainId !== ChainId.HARMONY)
+      .map(([address, safe]) => {
+        const url = `${safe.baseUrl}/chains/${safe.chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`
+        return fetch(url)
           .then((response) => {
             if (response.status !== 200) {
               throw String(`Invalid server response: ${response.status} ${response.statusText} ${url}`)
             }
             return response.json()
           })
-          .then((data) => ({ ...data, chainId, address }))
-        }
-      ),
+          .then((data) => ({ ...data, chainId: safe.chainId, address: safe.address }))
+      }),
   )
 
 export const getSafe = (chainId: string, address: string): Promise<SafeInfo> => {
-  const safe = safes.find(
-    (safe) => safe.chainId.toString() === chainId && safe.address.toLowerCase() === address.toLowerCase(),
-  )
-  if (!safe) {
+  const safe = safes[address] ?? undefined
+  if (!safe || safe?.chainId.toString() != chainId) {
     throw 'Invalid chain ID or address'
   }
   const url = getSafeUrl(safe)
@@ -76,10 +72,8 @@ export const getSafe = (chainId: string, address: string): Promise<SafeInfo> => 
 
 // TODO: this function returns 503 sometimes, should we add a retry for that?
 export const getBalance = (chainId: string, address: string): Promise<SafeBalance> => {
-  const safe = safes.find(
-    (safe) => safe.chainId.toString() === chainId && safe.address.toLowerCase() === address.toLowerCase(),
-  )
-  if (!safe) {
+  const safe = safes[address] ?? undefined
+  if (!safe || safe?.chainId.toString() != chainId) {
     throw 'Invalid chain ID or address'
   }
 
