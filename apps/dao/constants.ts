@@ -48,11 +48,11 @@ export type Safe = {
   address: string
 }
 
-const GNSOSIS_URL = 'https://safe-client.gnosis.io/v1'
+const GNOSIS_URL = 'https://safe-client.gnosis.io/v1'
 
 export const safes: Record<string, Safe> = {
   '0x19B3Eb3Af5D93b77a5619b047De0EED7115A19e7': {
-    baseUrl: GNSOSIS_URL,
+    baseUrl: GNOSIS_URL,
     name: 'Ops',
     chainId: ChainId.ETHEREUM,
     address: '0x19B3Eb3Af5D93b77a5619b047De0EED7115A19e7',
@@ -71,19 +71,19 @@ export const safes: Record<string, Safe> = {
   //   address: '0x2B23D9B02FffA1F5441Ef951B4B95c09faa57EBA',
   // },
   '0xc375411C6597F692Add6a7a3AD5b3C38626B0F26': {
-    baseUrl: GNSOSIS_URL,
+    baseUrl: GNOSIS_URL,
     name: 'Ops',
     chainId: ChainId.XDAI,
     address: '0xc375411C6597F692Add6a7a3AD5b3C38626B0F26',
   },
   '0xc6fD91aD4919Fd91e2c84077ba648092cB499638': {
-    baseUrl: GNSOSIS_URL,
+    baseUrl: GNOSIS_URL,
     name: 'Ops',
     chainId: ChainId.BINANCE,
     address: '0xc6fD91aD4919Fd91e2c84077ba648092cB499638',
   },
   '0x09842Ce338647906B686aBB3B648A6457fbB25DA': {
-    baseUrl: GNSOSIS_URL,
+    baseUrl: GNOSIS_URL,
     name: 'Ops',
     chainId: ChainId.AVALANCHE,
     address: '0x09842Ce338647906B686aBB3B648A6457fbB25DA',
@@ -101,7 +101,7 @@ export const safes: Record<string, Safe> = {
     address: '0x8b63fcBB752e425e3C4B12F7802BAd1A24c6d7F4',
   },
   '0x978982772b8e4055B921bf9295c0d74eB36Bc54e': {
-    baseUrl: GNSOSIS_URL,
+    baseUrl: GNOSIS_URL,
     name: 'Ops',
     chainId: ChainId.ARBITRUM,
     address: '0x978982772b8e4055B921bf9295c0d74eB36Bc54e',
