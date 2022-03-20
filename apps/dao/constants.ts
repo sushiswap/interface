@@ -57,18 +57,19 @@ export const safes: Record<string, Safe> = {
     chainId: ChainId.ETHEREUM,
     address: '0x19B3Eb3Af5D93b77a5619b047De0EED7115A19e7',
   },
-  '0x850a57630A2012B2494779fBc86bBc24F2a7baeF': {
-    baseUrl: GNSOSIS_URL,
-    name: 'Fees',
-    chainId: ChainId.POLYGON,
-    address: '0x850a57630A2012B2494779fBc86bBc24F2a7baeF',
-  },
-  '0x2B23D9B02FffA1F5441Ef951B4B95c09faa57EBA': {
-    baseUrl: GNSOSIS_URL,
-    name: 'Ops',
-    chainId: ChainId.POLYGON,
-    address: '0x2B23D9B02FffA1F5441Ef951B4B95c09faa57EBA',
-  },
+  // TODO: temporarily disabled for performance reasons, this takes 10s to load
+  // '0x850a57630A2012B2494779fBc86bBc24F2a7baeF': {
+  //   baseUrl: GNSOSIS_URL,
+  //   name: 'Fees',
+  //   chainId: ChainId.POLYGON,
+  //   address: '0x850a57630A2012B2494779fBc86bBc24F2a7baeF',
+  // },
+  // '0x2B23D9B02FffA1F5441Ef951B4B95c09faa57EBA': {
+  //   baseUrl: GNSOSIS_URL,
+  //   name: 'Ops',
+  //   chainId: ChainId.POLYGON,
+  //   address: '0x2B23D9B02FffA1F5441Ef951B4B95c09faa57EBA',
+  // },
   '0xc375411C6597F692Add6a7a3AD5b3C38626B0F26': {
     baseUrl: GNSOSIS_URL,
     name: 'Ops',
