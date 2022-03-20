@@ -14,7 +14,7 @@ export const getAllSafes = async (): Promise<SafeInfo[]> => {
   return safes
 }
 
-export const getSafes = (): Promise<SafeInfo[]> =>
+const getSafes = (): Promise<SafeInfo[]> =>
   Promise.all( 
     Object.entries(safes).map(([, safe]) => {
       const url = getSafeUrl(safe)

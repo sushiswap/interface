@@ -4,12 +4,12 @@ import useSWR from 'swr'
 import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, users } from '../../'
 import { SafeInfo } from '../../'
 import { formatUSD, shortenAddress } from 'format'
-import { getAllSafes, getSafes } from 'app/lib'
+import { getAllSafes } from 'app/lib'
 import Link from 'next/link'
 
 const getTotalBalance = (safes: SafeInfo[]): string => {
   const value = safes
-    .filter((safe) => safe.balance !== 'NA')
+    .filter((safe) => safe?.balance !== 'NA')
     .reduce((sum, safe) => {
       return sum + parseInt(safe.balance)
     }, 0)
@@ -147,7 +147,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
 export default Safes
 
 export const getStaticProps = async () => {
-  const safes = await getSafes()
+  const safes = await getAllSafes()
   return {
     props: {
       safes,
