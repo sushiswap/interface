@@ -57,7 +57,6 @@ export const safes: Record<string, Safe> = {
     chainId: ChainId.ETHEREUM,
     address: '0x19B3Eb3Af5D93b77a5619b047De0EED7115A19e7',
   },
-    // TODO: temporarily disabled for performance reasons, this takes 10s to load
   '0x850a57630A2012B2494779fBc86bBc24F2a7baeF': {
     baseUrl: GNOSIS_URL,
     name: 'Fees',
