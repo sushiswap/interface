@@ -1,11 +1,24 @@
-import { ChainId, Safe, SafeBalance, SafeInfo, safes } from '../'
 import fetch from 'isomorphic-unfetch'
+import { ChainId, Safe, SafeBalance, SafeInfo, safes } from '../'
+
+const basicSafe = (safe: Safe): SafeInfo =>
+  ({
+    address: { value: safe.address },
+    chainId: safe.chainId.toString(),
+    type: safe.name,
+    threshold: -1,
+    balance: 'NA',
+    owners: [],
+  } as SafeInfo)
+
+const basicBalance = (safe: Safe): SafeBalance =>
+  ({ chainId: safe.chainId.toString(), address: safe.address } as SafeBalance)
 
 export const getAllSafes = async (): Promise<SafeInfo[]> => {
   const [safes, balances] = await Promise.all([getSafes(), getBalances()])
-  
+
   balances?.forEach((balance) => {
-    const safe = safes.find((safe) => safe.chainId == balance.chainId && safe.address.value == balance.address)
+    const safe = safes.find((safe) => safe?.chainId == balance?.chainId && safe?.address.value == balance?.address)
     if (safe) {
       safe.balance = balance.fiatTotal
     }
@@ -15,63 +28,60 @@ export const getAllSafes = async (): Promise<SafeInfo[]> => {
 }
 
 const getSafes = (): Promise<SafeInfo[]> =>
-  Promise.all( 
-    Object.entries(safes).map(([, safe]) => {
+  Promise.all(
+    Object.entries(safes).map(async ([, safe]) => {
       const url = getSafeUrl(safe)
-      return fetch(url)
-        .then((response) => {
-          if (response.status !== 200) {
-            throw String(`Invalid server response: ${response.status} ${response.statusText} ${url}`)
-          }
-          return response.json()
-        })
-        .then((data) => {
-          updateSafeFields(data, safe.name, safe.chainId)
-          data.balance = 'NA'
-          return data as SafeInfo
-        })
+      const response = await fetch(url)
+      if (response.status !== 200) {
+        console.warn(
+          `${url} returned status code: ${response.status}, skipping ${ChainId[safe.chainId]}, ${safe.address}`,
+        )
+        return basicSafe(safe)
+      }
+      const data = await response.json()
+      updateSafeFields(data, safe.name, safe.chainId)
+      data.balance = 'NA'
+      return data as SafeInfo
     }),
   )
 
 const getBalances = (): Promise<SafeBalance[]> =>
   Promise.all(
     Object.entries(safes)
-      .filter(([,safe]) => safe.chainId !== ChainId.HARMONY)
-      .map(([address, safe]) => {
+      .filter(([, safe]) => safe.chainId !== ChainId.HARMONY)
+      .map(async ([address, safe]) => {
         const url = `${safe.baseUrl}/chains/${safe.chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`
-        return fetch(url)
-          .then((response) => {
-            if (response.status !== 200) {
-              throw String(`Invalid server response: ${response.status} ${response.statusText} ${url}`)
-            }
-            return response.json()
-          })
-          .then((data) => ({ ...data, chainId: safe.chainId, address: safe.address }))
+        const response = await fetch(url)
+        if (response.status !== 200) {
+          console.warn(
+            `${url} returned status code: ${response.status}, skipping ${ChainId[safe.chainId]}, ${safe.address}`,
+          )
+          return basicSafe(safe)
+        }
+        const data = await response.json()
+        return { ...data, chainId: safe.chainId, address: safe.address }
       }),
   )
 
-export const getSafe = (chainId: string, address: string): Promise<SafeInfo> => {
+export const getSafe = async (chainId: string, address: string): Promise<SafeInfo> => {
   const safe = safes[address] ?? undefined
   if (!safe || safe?.chainId.toString() != chainId) {
     throw 'Invalid chain ID or address'
   }
   const url = getSafeUrl(safe)
-  return fetch(url)
-    .then((response) => {
-      if (response.status !== 200) {
-        throw String(`Invalid server response: ${response.status} ${response.statusText} ${url}`)
-      }
-      return response.json()
-    })
-    .then((data) => {
-      updateSafeFields(data, safe.name, safe.chainId)
-      data.balance = 'NA'
-      return data as SafeInfo
-    })
+
+  const response = await fetch(url)
+  if (response.status !== 200) {
+    console.warn(`${url} returned status code: ${response.status}, skipping ${ChainId[chainId]}, ${safe.address}`)
+    return basicSafe(safe)
+  }
+  const data = await response.json()
+  updateSafeFields(data, safe.name, safe.chainId)
+  data.balance = 'NA'
+  return data as SafeInfo
 }
 
-// TODO: this function returns 503 sometimes, should we add a retry for that?
-export const getBalance = (chainId: string, address: string): Promise<SafeBalance> => {
+export const getBalance = async (chainId: string, address: string): Promise<SafeBalance> => {
   const safe = safes[address] ?? undefined
   if (!safe || safe?.chainId.toString() != chainId) {
     throw 'Invalid chain ID or address'
@@ -80,16 +90,17 @@ export const getBalance = (chainId: string, address: string): Promise<SafeBalanc
   if (safe.chainId === ChainId.HARMONY) {
     throw 'Harmony gnosis API does not have balance endpoint'
   }
-  const url = `${safe.baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`
 
-  return fetch(url)
-    .then((response) => {
-      if (response.status !== 200) {
-        throw String(`Invalid server response: ${response.status} ${response.statusText} ${url}`)
-      }
-      return response.json()
-    })
-    .then((data) => ({ ...data, chainId, address })) as Promise<SafeBalance>
+  const url = `${safe.baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`
+  const response = await fetch(url)
+
+  if (response.status !== 200) {
+    console.warn(`${url} returned status code: ${response.status}, skipping ${ChainId[chainId]}, ${safe.address}`)
+    return basicBalance(safe)
+  }
+
+  const data = await response.json()
+  return { ...data, chainId, address } as SafeBalance
 }
 
 const getSafeUrl = (safe: Safe): string => {

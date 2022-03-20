@@ -6,6 +6,8 @@ import { SafeInfo } from '../../'
 import { formatUSD, shortenAddress } from 'format'
 import { getAllSafes } from 'app/lib'
 import Link from 'next/link'
+import { useEffect } from 'react'
+import { useState } from 'react'
 
 const getTotalBalance = (safes: SafeInfo[]): string => {
   const value = safes
@@ -22,6 +24,11 @@ interface SafesProps {
 
 const Safes: FC<SafesProps> = ({ safes }) => {
   const { data } = useSWR('safes', getAllSafes, { fallbackData: safes })
+  const [totalBalance, setTotalBalance] = useState<string>('NA')
+
+  useEffect( () => {
+    setTotalBalance(getTotalBalance(data))
+  }, [data])
 
   const columns = useMemo(
     () => [
@@ -47,8 +54,11 @@ const Safes: FC<SafesProps> = ({ safes }) => {
         Header: 'Threshold',
         accessor: 'threshold',
         Cell: (props) => {
-          const ownerCount = props.row.cells[4].value.length
           const threshold = props.value
+          if (threshold === -1) {
+            return "NA"
+          }
+          const ownerCount = props.row.cells[4].value.length
           const formattedOwnerCount =
             ownerCount === EXPECTED_OWNER_COUNT ? ownerCount : <p style={{ color: 'red' }}>{ownerCount}</p>
           const formattedThreshold =
@@ -139,7 +149,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
       </table>
 
       <h2>Total balance</h2>
-      {getTotalBalance(safes)}
+      {totalBalance}
     </>
   )
 }
@@ -150,7 +160,7 @@ export const getStaticProps = async () => {
   const safes = await getAllSafes()
   return {
     props: {
-      safes,
+      safes
     },
     revalidate: 90, // 90s
   }
