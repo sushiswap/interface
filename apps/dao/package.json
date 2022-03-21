@@ -25,6 +25,7 @@
     "@web3-react/network": "8.0.15-beta.0",
     "chain": "workspace:*",
     "ethers": "^5.6.1",
+    "math": "workspace:*",
     "format": "workspace:*",
     "ioredis": "^4.28.5",
     "isomorphic-unfetch": "^3.1.0",

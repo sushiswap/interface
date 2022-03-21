@@ -5,7 +5,7 @@ import { FC, useEffect, useMemo, useState } from 'react'
 import { useTable } from 'react-table'
 import useSWR from 'swr'
 import { ChainId, EXPECTED_OWNER_COUNT, EXPECTED_THRESHOLD, safes, users } from '../../../constants'
-import { getBalance, getSafe } from 'app/lib/safe'
+import { getBalanceInfo, getSafeInfo } from 'app/lib/safe'
 import { SafeBalance, SafeInfo } from '../../../types'
 
 interface SafesProps {
@@ -21,8 +21,8 @@ const Safe: FC<SafesProps> = (props) => {
   const router = useRouter()
   const chainId = router.query.chainId as string
   const address = router.query.address as string
-  const { data: safe } = useSWR('safe', () => getSafe(chainId, address), { fallbackData: props.safe })
-  const { data: balance } = useSWR('balance', () => getBalance(chainId, address), {
+  const { data: safe } = useSWR('safe', () => getSafeInfo(chainId, address), { fallbackData: props.safe })
+  const { data: balance } = useSWR('balance', () => getBalanceInfo(chainId, address), {
     fallbackData: props.balance,
   })
   const [formattedBalance, setFormattedBalance] = useState([])
@@ -158,8 +158,8 @@ export async function getStaticPaths() {
 
 export const getStaticProps = async ({ params }) => {
   const [safe, balance] = await Promise.all([
-    getSafe(params.chainId, params.address),
-    getBalance(params.chainId, params.address),
+    getSafeInfo(params.chainId, params.address),
+    getBalanceInfo(params.chainId, params.address),
   ])
   return {
     props: {

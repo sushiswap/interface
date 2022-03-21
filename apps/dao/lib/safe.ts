@@ -15,53 +15,46 @@ const basicBalance = (safe: Safe): SafeBalance =>
   ({ chainId: safe.chainId.toString(), address: safe.address } as SafeBalance)
 
 export const getAllSafes = async (): Promise<SafeInfo[]> => {
-  const [safes, balances] = await Promise.all([getSafes(), getBalances()])
-
+  const [safes, balances] = await Promise.all([getSafesInfo(), getSafeBalancesInfo()])
   balances?.forEach((balance) => {
-    const safe = safes.find((safe) => safe?.chainId == balance?.chainId && safe?.address.value == balance?.address)
-    if (safe) {
-      safe.balance = balance.fiatTotal
-    }
+    safes.find((safe) => {
+      if (safe?.chainId == balance?.chainId && safe?.address?.value == balance?.address) {
+        safe.balance = balance.fiatTotal
+      }
+    })
   })
 
   return safes
 }
 
-const getSafes = (): Promise<SafeInfo[]> =>
-  Promise.all(
-    Object.entries(safes).map(async ([, safe]) => {
-      const url = getSafeUrl(safe)
-      const response = await fetch(url)
-      if (response.status !== 200) {
-        console.warn(
-          `${url} returned status code: ${response.status}, skipping ${ChainId[safe.chainId]}, ${safe.address}`,
-        )
-        return basicSafe(safe)
-      }
-      const data = await response.json()
-      updateSafeFields(data, safe.name, safe.chainId)
-      data.balance = 'NA'
-      return data as SafeInfo
-    }),
-  )
+export async function getSafesInfo() {
+  //FIXME: url
+  const response = await fetch('http://localhost:3000/dao/api/safes')
+  const jsonData = await response.json()
+  return jsonData as SafeInfo[]
+}
 
-const getBalances = (): Promise<SafeBalance[]> =>
-  Promise.all(
-    Object.entries(safes)
-      .filter(([, safe]) => safe.chainId !== ChainId.HARMONY)
-      .map(async ([address, safe]) => {
-        const url = `${safe.baseUrl}/chains/${safe.chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`
-        const response = await fetch(url)
-        if (response.status !== 200) {
-          console.warn(
-            `${url} returned status code: ${response.status}, skipping ${ChainId[safe.chainId]}, ${safe.address}`,
-          )
-          return basicSafe(safe)
-        }
-        const data = await response.json()
-        return { ...data, chainId: safe.chainId, address: safe.address }
-      }),
-  )
+export async function getSafeBalancesInfo() {
+  //FIXME: url
+  const response = await fetch('http://localhost:3000/dao/api/balances')
+  const jsonData = await response.json()
+  return jsonData as SafeBalance[]
+}
+
+
+export async function getSafeInfo(chainId: string, address: string) {
+  //FIXME: url
+  const response = await fetch(`http://localhost:3000/dao/api/safes/${chainId}/${address}`)
+  const jsonData = await response.json()
+  return jsonData as SafeInfo
+}
+
+export async function getBalanceInfo(chainId: string, address: string) {
+  //FIXME: url
+  const response = await fetch(`http://localhost:3000/dao/api/balances/${chainId}/${address}`)
+  const jsonData = await response.json()
+  return jsonData as SafeBalance
+}
 
 export const getSafe = async (chainId: string, address: string): Promise<SafeInfo> => {
   const safe = safes[address] ?? undefined

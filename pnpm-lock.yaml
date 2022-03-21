@@ -119,6 +119,7 @@ importers:
       ioredis: ^4.28.5
       isomorphic-unfetch: ^3.1.0
       lodash: ^4.17.21
+      math: workspace:*
       millify: ^4.0.0
       next: 12.0.10
       next-transpile-modules: 9.0.0
@@ -151,6 +152,7 @@ importers:
       ioredis: 4.28.5
       isomorphic-unfetch: 3.1.0
       lodash: 4.17.21
+      math: link:../../packages/math
       millify: 4.0.0
       next: 12.0.10_3b3c4dafaa7e2bc132922eb3215c558b
       numeral: 2.0.6

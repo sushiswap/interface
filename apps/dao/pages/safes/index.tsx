@@ -8,14 +8,15 @@ import { getAllSafes } from 'app/lib'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { JSBI } from 'math'
 
 const getTotalBalance = (safes: SafeInfo[]): string => {
-  const value = safes
-    .filter((safe) => safe?.balance !== 'NA')
-    .reduce((sum, safe) => {
-      return sum + parseInt(safe.balance)
-    }, 0)
-  return formatUSD(value.toString())
+  const filteredSafes = safes.filter((safe) => !safe?.balance || safe.balance !== 'NA')
+  let sum = JSBI.BigInt(0)
+  for (let i = 0; i < filteredSafes.length; i++) {
+    sum = JSBI.add(JSBI.BigInt(sum), JSBI.BigInt(parseInt(filteredSafes[i].balance)))
+  }
+  return formatUSD(sum.toString())
 }
 
 interface SafesProps {
@@ -26,7 +27,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
   const { data } = useSWR('safes', getAllSafes, { fallbackData: safes })
   const [totalBalance, setTotalBalance] = useState<string>('NA')
 
-  useEffect( () => {
+  useEffect(() => {
     setTotalBalance(getTotalBalance(data))
   }, [data])
 
@@ -47,7 +48,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
         Header: 'Address',
         accessor: 'address',
         Cell: (props) => {
-          return shortenAddress(props.value.value)
+          return shortenAddress(props.value?.value)
         },
       },
       {
@@ -56,7 +57,7 @@ const Safes: FC<SafesProps> = ({ safes }) => {
         Cell: (props) => {
           const threshold = props.value
           if (threshold === -1) {
-            return "NA"
+            return 'NA'
           }
           const ownerCount = props.row.cells[4].value.length
           const formattedOwnerCount =
@@ -85,14 +86,14 @@ const Safes: FC<SafesProps> = ({ safes }) => {
       },
       {
         Header: 'Tokens',
-        accessor: '', 
+        accessor: '',
         Cell: (props) => {
           const chainId = props.row.original.chainId
           const address = props.row.original.address.value
-          const url = "/safes/" + chainId + "/" + address
+          const url = '/safes/' + chainId + '/' + address
           return <Link href={url}>View tokens</Link>
-        }
-      }
+        },
+      },
     ],
     [],
   )
@@ -160,7 +161,7 @@ export const getStaticProps = async () => {
   const safes = await getAllSafes()
   return {
     props: {
-      safes
+      safes,
     },
     revalidate: 90, // 90s
   }
