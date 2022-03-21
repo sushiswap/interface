@@ -26,14 +26,14 @@ pnpm exec turbo run dev --scope=dao
 
 There are two endpoints that updates redis:  
 `dao/api/safes/update` and `dao/api/balances/update`  
-In production, cronjobs will hit these endpoints frequently, but for a dev environment, we only need to fetch the data once
+In production, cronjobs will hit these endpoints, but for a dev environment, we only need to fetch the data once!
 
 Fetch safe information by clicking the following url: [http://localhost:3000/dao/api/safes/update](http://localhost:3000/dao/api/safes/update)
 
 The http response should be 200 with a message similarly to this:
 
 ```sh
-Updated info on 14 of undefined safes.
+Updated info on 14 of 14 safes.
 ```
 
 Do the same thing for balances [http://localhost:3000/dao/api/balances/update](http://localhost:3000/dao/api/balances/update)
@@ -45,6 +45,8 @@ Updated balance for 13 of 13 safes.
 ```
 
 ## Redis
+
+### Useful commands
 
 Flush redis
 
