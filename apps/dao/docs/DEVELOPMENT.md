@@ -14,8 +14,7 @@ Install redis
 
 ```sh
 docker pull redis # https://hub.docker.com/_/redis
-docker run --name dao -d redis
-docker run --name dao-redis -p 6379:6379 -d redis
+docker run --name dao-redis -p 6379:6379 -d redis  redis-server --save 60 1 --loglevel warning
 ```
 
 Run
@@ -30,7 +29,7 @@ In production, cronjobs will hit these endpoints, but for a dev environment, we 
 
 Fetch safe information by clicking the following url: [http://localhost:3000/dao/api/safes/update](http://localhost:3000/dao/api/safes/update)
 
-The http response should be 200 with a message similarly to this:
+The response should be 200 after a few minutes with a message similarly to this:
 
 ```sh
 Updated info on 14 of 14 safes.
