@@ -69,6 +69,7 @@ const Safe: FC<SafesProps> = (props) => {
     data: formattedBalance,
   })
 
+
   return (
     <>
       <h1>Safe Info</h1>
@@ -149,9 +150,10 @@ export default Safe
 
 export async function getStaticPaths() {
   return {
-    paths: Object.entries(safes).map(([, safe]) => ({
-      params: { chainId: safe.chainId.toString(), address: safe.address },
-    })),
+    paths: Object.values(safes)
+      .map((safe) => ({
+        params: { chainId: safe.chainId.toString(), address: safe.address },
+      })),
     fallback: true,
   }
 }
