@@ -41,7 +41,6 @@ export async function getSafeBalancesInfo() {
   return jsonData as SafeBalance[]
 }
 
-
 export async function getSafeInfo(chainId: string, address: string) {
   //FIXME: url
   const response = await fetch(`http://localhost:3000/dao/api/safes/${chainId}/${address}`)
@@ -62,11 +61,10 @@ export const getSafe = async (chainId: string, address: string): Promise<SafeInf
     throw 'Invalid chain ID or address'
   }
   const url = getSafeUrl(safe)
-
   const response = await fetch(url)
+  
   if (response.status !== 200) {
-    console.warn(`${url} returned status code: ${response.status}, skipping ${ChainId[chainId]}, ${safe.address}`)
-    return basicSafe(safe)
+    throw String(`${url} returned status code: ${response.status}, ${ChainId[chainId]}, ${safe.address}`)
   }
   const data = await response.json()
   updateSafeFields(data, safe.name, safe.chainId)
@@ -77,19 +75,18 @@ export const getSafe = async (chainId: string, address: string): Promise<SafeInf
 export const getBalance = async (chainId: string, address: string): Promise<SafeBalance> => {
   const safe = safes[address] ?? undefined
   if (!safe || safe?.chainId.toString() != chainId) {
-    throw 'Invalid chain ID or address'
+    throw String('Invalid chain ID or address')
   }
 
   if (safe.chainId === ChainId.HARMONY) {
-    throw 'Harmony gnosis API does not have balance endpoint'
+    throw String('Harmony gnosis API does not have balance endpoint')
   }
 
   const url = `${safe.baseUrl}/chains/${chainId}/safes/${address}/balances/USD/?exclude_spam=true&trusted=false`
   const response = await fetch(url)
 
   if (response.status !== 200) {
-    console.warn(`${url} returned status code: ${response.status}, skipping ${ChainId[chainId]}, ${safe.address}`)
-    return basicBalance(safe)
+    throw String(`${url} returned status code: ${response.status}, ${ChainId[chainId]}, ${safe.address}`)
   }
 
   const data = await response.json()
