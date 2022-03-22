@@ -16,7 +16,8 @@
     "@tailwindcss/forms": "^0.4.0",
     "@tailwindcss/line-clamp": "^0.3.1",
     "@tailwindcss/typography":"^0.5.2",
-    "tailwindcss": "^3.0.23"
+    "tailwindcss": "^3.0.23",
+    "next-transpile-modules": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.37",

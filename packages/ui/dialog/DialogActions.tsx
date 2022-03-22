@@ -3,7 +3,7 @@ import { classNames } from '../lib/classNames'
 
 export interface DialogActionProps {
   className?: string
-  children: ReactNode[]
+  children: ReactNode[] | ReactNode
 }
 
 const DialogActions: FC<DialogActionProps> = ({ children, className }) => {
