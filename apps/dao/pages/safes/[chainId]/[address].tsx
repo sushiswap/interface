@@ -129,7 +129,7 @@ const Safe: FC<SafesProps> = (props) => {
                       style={{
                         padding: '10px',
                         border: 'solid 1px gray',
-                        background: 'papayawhip',
+                        background: '#1E1A38',
                       }}
                       key={`cell-${i}`}
                     >

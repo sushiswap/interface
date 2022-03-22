@@ -1,3 +1,5 @@
+// import '../bootstrap'
+import '../styles/index.css'
 import { ChainId, getProvider, store, Updater, useLatestBlock } from '../'
 import type { AppProps } from 'next/app'
 import { FC, useMemo } from 'react'
