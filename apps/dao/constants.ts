@@ -135,13 +135,12 @@ export const safes: Record<string, Safe> = {
     chainId: ChainId.MOONRIVER,
     address: '0x939f7E76cc515cc296dD3ce362D9a52e148A7D5f',
   },
-  // FIXME: wrong address?
-  // '0x87AEb22b7BB02AC42204eB312C08A22FC3f077F3': {
-  //   baseUrl: 'https://multisig.moonbeam.network/moonbeam:',
-  //   name: 'Ops',
-  //   chainId: ChainId.MOONBEAM,
-  //   address: '0x87AEb22b7BB02AC42204eB312C08A22FC3f077F3',
-  // },
+  '0x87AEb22b7BB02AC42204eB312C08A22FC3f077F3': {
+    baseUrl: 'https://gateway.moonriver.multisig.moonbeam.network/v1',
+    name: 'Ops',
+    chainId: ChainId.MOONBEAM,
+    address: '0x87AEb22b7BB02AC42204eB312C08A22FC3f077F3',
+  },
 }
 
 export const users = new Map<string, string>([
