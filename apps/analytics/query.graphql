@@ -6,9 +6,10 @@ query BentoBox {
       rebase {
         elastic
       }
-      price {
-        derivedUSD
-      }
+      derivedETH
     }
+  }
+  bundle(id: 1) {
+    ethPrice
   }
 }

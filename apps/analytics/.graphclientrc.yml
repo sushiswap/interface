@@ -2,8 +2,12 @@ sources:
   - name: bentobox
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/matthewlilley/bentobox-polygon
-      transforms:
+        endpoint: https://api.thegraph.com/subgraphs/name/matthewlilley/bentobox-ethereum
+    transforms:
+      - filterSchema:
+          mode: wrap
+          filters:
+          - Type.!{Strategy, StrategyHarvest, FlashLoan, MasterContract, Clone, MasterContractApproval, Protocol, User, UserToken, Transaction}
       - typeMerging:
           queryFields:
             - queryFieldName: tokens
@@ -12,26 +16,43 @@ sources:
   - name: exchange
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/sushiswap/legacy-exchange-polygon
-    transforms:
-      - typeMerging:
-          queryFields:
-            - queryFieldName: tokens
-              keyField: id
-              keyArg: ids
-  - name: trident
-    handler:
-      graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/matthewlilley/trident
+        endpoint: https://api.thegraph.com/subgraphs/name/sushiswap/exchange
     transforms:
       - filterSchema:
-        mode: wrap
-        filters:
-          - Type.!{BentoBox, Strategy, StrategyHarvest, Rebase, FlashLoan, Clone, MasterContractApproval, Protocol, User, UserToken, Transaction}
+          mode: wrap
+          filters:
+          - Type.!{User, Factory, HourData, DayData, TokenHourData, TokenDayData, Pair, PairHourData, PairDayData, LiquidityPosition, LiquidityPositionSnapshot, Transaction, Mint, Burn, Swap}
       - typeMerging:
           queryFields:
             - queryFieldName: tokens
               keyField: id
               keyArg: ids
+  # - name: trident
+  #   handler:
+  #     graphql:
+  #       endpoint: https://api.thegraph.com/subgraphs/name/sushiswap/trident-polygon
+  #   transforms:
+      # - filterSchema:
+      #     mode: wrap
+      #     filters:
+      #     - Type.!{MasterDeployer, WhitelistedFactory, WhitelistedPool, ConstantProductPoolFactory, ConstantProductPoolAsset, ConstantProductPoolKpi, ConstantProductPool, ConcentratedLiquidityPoolFactory, ConcentratedLiquidityPool, ConcentratedLiquidityPoolKpi, HybridPoolFactory, HybridPoolAsset, HybridPool, IndexPoolFactory, IndexPool, Transaction, Mint, Burn, Swap, Collect, PoolHourSnapshot, PoolDaySnapshot, TokenHourSnapshot, TokenDaySnapshot, FactoryHourSnapshot, FactoryDaySnapshot, Rebase, User, LiquidityPosition, Factory, FactoryKpi, Pool, PoolAsset, PoolKpi, Snapshot, TokenSnapshot, PoolSnapshot, FactorySnapshot}
+      # - typeMerging:
+      #     queryFields:
+      #       - queryFieldName: tokens
+      #         keyField: id
+      #         keyArg: ids
+      # - rename:
+      #     mode: bare
+      #     renames:
+      #       - from:
+      #           type: TokenKpi
+      #         to:
+      #           type: TridentKpi
+      #       - from:
+      #           type: Query
+      #           field: kpi
+      #         to:
+      #           type: Query
+      #           field: tridentKpi
 documents:
   - ./query.graphql
