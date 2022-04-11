@@ -1,41 +1,33 @@
 sources:
-  # - name: ethereum-exchange
-  #   handler:
-  #     graphql:
-  #       endpoint: https://api.thegraph.com/subgraphs/name/sushiswap/exchange
-  #   transforms:
-  #     - prefix:
-  #         value: ETHEREUM_
-  #         includeRootOperations: true
-  #         ignore:
-  #           - _SubgraphErrorPolicy_
-  #     - typeMerging:
-  #         queryFields:
-  #           - queryFieldName: ETHEREUM_factory
-  #             keyField: id
-  #             keyArg: id
   - name: bentobox
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/matthewlilley/bentobox-ethereum
+        endpoint: https://api.thegraph.com/subgraphs/name/matthewlilley/bentobox-polygon
       transforms:
       - typeMerging:
           queryFields:
             - queryFieldName: tokens
-              # Mesh automatically does batching if return type is a list
               keyField: id
               keyArg: ids
-            #                for that query field
   - name: exchange
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/matthewlilley/legacy-exchange
+        endpoint: https://api.thegraph.com/subgraphs/name/sushiswap/legacy-exchange-polygon
     transforms:
-    #   - prefix:
-    #       value: ETHEREUM_
-    #       includeRootOperations: true
-    #       ignore:
-    #         - _SubgraphErrorPolicy_
+      - typeMerging:
+          queryFields:
+            - queryFieldName: tokens
+              keyField: id
+              keyArg: ids
+  - name: trident
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/matthewlilley/trident
+    transforms:
+      - filterSchema:
+        mode: wrap
+        filters:
+          - Type.!{BentoBox, Strategy, StrategyHarvest, Rebase, FlashLoan, Clone, MasterContractApproval, Protocol, User, UserToken, Transaction}
       - typeMerging:
           queryFields:
             - queryFieldName: tokens
