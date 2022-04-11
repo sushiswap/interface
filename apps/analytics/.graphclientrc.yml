@@ -18,16 +18,28 @@ sources:
     handler:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/matthewlilley/bentobox-ethereum
-    # transforms:
+      transforms:
+      - typeMerging:
+          queryFields:
+            - queryFieldName: tokens
+              # Mesh automatically does batching if return type is a list
+              keyField: id
+              keyArg: ids
+            #                for that query field
+  - name: exchange
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/matthewlilley/legacy-exchange
+    transforms:
     #   - prefix:
     #       value: ETHEREUM_
     #       includeRootOperations: true
     #       ignore:
     #         - _SubgraphErrorPolicy_
-      # - typeMerging:
-      #     queryFields:
-      #       - queryFieldName: ETHEREUM_bentoBox
-      #         keyField: id
-      #         keyArg: id
+      - typeMerging:
+          queryFields:
+            - queryFieldName: tokens
+              keyField: id
+              keyArg: ids
 documents:
   - ./query.graphql

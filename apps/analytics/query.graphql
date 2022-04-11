@@ -1,12 +1,13 @@
 query BentoBox {
   bentoBox(id: "0xf5bce5077908a1b7370b9ae04adc565ebd643966") {
-    __typename
-    id
     tokens {
       id
+      symbol
       rebase {
-        id
         elastic
+      }
+      price {
+        derivedUSD
       }
     }
   }

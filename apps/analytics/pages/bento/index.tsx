@@ -6,9 +6,13 @@ interface BentoBox {
       tokens: [
         {
           id: string
+          symbol: string
           rebase: {
             id: string
             elastic: string
+          }
+          price: {
+            derivedUSD: string
           }
         },
       ]
@@ -25,7 +29,7 @@ export default function Analytics(props: BentoBox) {
       <h1 className="py-4 text-2xl font-bold">Overview</h1>
       <div className="grid grid-cols-2 gap-2">
         {tokens.map( token => (
-        <div key={token.id}>{token.id} {' - '} {token.rebase.elastic}</div>
+        <div key={token.id}>{token.symbol} {' - '} {token.rebase.elastic} {' - '} {token.price.derivedUSD}</div>
         ))}
       </div>
     </div>
