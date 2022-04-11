@@ -1,6 +1,7 @@
 // import { FactoryQuery } from '../.graphclient'
 
 import { BigNumber } from 'ethers'
+import { formatNumber } from 'format'
 
 interface BentoBox {
   bentoBox: {
@@ -21,13 +22,13 @@ interface Token {
   derivedETH: string
 }
 
-function toTVL(token: Token, ethPrice: string): number {
-  console.log(token, ethPrice)
-  return parseFloat(token.rebase.elastic) * parseFloat(token.derivedETH) * parseFloat(ethPrice)
+function toTVL(token: Token, ethPrice: string): string {
+  let derivedETH = parseFloat(token.derivedETH)
+  derivedETH = derivedETH != 0 ? derivedETH : 1
+  return formatNumber(parseFloat(token.rebase.elastic) * derivedETH * parseFloat(ethPrice)) 
 }
 
 export default function Analytics(props: BentoBox) {
-  console.log(props)
   const { bentoBox, bundle } = props.bentoBox
 
   return (
@@ -47,7 +48,7 @@ export default function Analytics(props: BentoBox) {
 export async function getStaticProps() {
   const { getBuiltGraphSDK } = await import('../../.graphclient')
   const sdk = await getBuiltGraphSDK()
-  const bentoBox = await await sdk.BentoBox()
+  const bentoBox = await sdk.BentoBox()
   return {
     props: {
       bentoBox,
