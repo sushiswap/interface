@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { buildSchema, Source } from 'graphql';
 
 const source = new Source(/* GraphQL */`
@@ -3214,7 +3215,7 @@ enum _SubgraphErrorPolicy_ {
   """
   deny
 }
-`, `.graphclient/sources/exchange/schema.graphql`);
+`, `.graphclient/sources/exchange/introspectionSchema`);
 
 export default buildSchema(source, {
   assumeValid: true,

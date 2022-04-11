@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { buildSchema, Source } from 'graphql';
 
 const source = new Source(/* GraphQL */`
@@ -1935,7 +1936,7 @@ enum _SubgraphErrorPolicy_ {
   """
   deny
 }
-`, `.graphclient/sources/bentobox/schema.graphql`);
+`, `.graphclient/sources/bentobox/introspectionSchema`);
 
 export default buildSchema(source, {
   assumeValid: true,

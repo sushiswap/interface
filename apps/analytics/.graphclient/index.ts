@@ -1,10 +1,8 @@
 // @ts-nocheck
-import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { GraphQLResolveInfo, SelectionSetNode, FieldNode, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
-import { GraphQLSchema, ExecutionResult } from 'graphql';
+import { gql } from '@graphql-mesh/utils';
 
-import { compileQuery, isCompiledQuery, CompilerOptions } from 'graphql-jit';
-import { AggregateError, isAsyncIterable, mapAsyncIterator } from '@graphql-tools/utils';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -28,13 +26,61 @@ export type Query = {
   bentoBoxes: Array<BentoBox>;
   token?: Maybe<Token>;
   tokens: Array<Token>;
+  strategy?: Maybe<Strategy>;
+  strategies: Array<Strategy>;
+  strategyHarvest?: Maybe<StrategyHarvest>;
+  strategyHarvests: Array<StrategyHarvest>;
   rebase?: Maybe<Rebase>;
   rebases: Array<Rebase>;
+  flashLoan?: Maybe<FlashLoan>;
+  flashLoans: Array<FlashLoan>;
+  masterContract?: Maybe<MasterContract>;
+  masterContracts: Array<MasterContract>;
+  clone?: Maybe<Clone>;
+  clones: Array<Clone>;
+  masterContractApproval?: Maybe<MasterContractApproval>;
+  masterContractApprovals: Array<MasterContractApproval>;
+  protocol?: Maybe<Protocol>;
+  protocols: Array<Protocol>;
+  user?: Maybe<User>;
+  users: Array<User>;
+  userToken?: Maybe<UserToken>;
+  userTokens: Array<UserToken>;
+  transaction?: Maybe<Transaction>;
+  transactions: Array<Transaction>;
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
   bundle?: Maybe<Bundle>;
   bundles: Array<Bundle>;
+  factory?: Maybe<Factory>;
+  factories: Array<Factory>;
+  hourData?: Maybe<HourData>;
+  hourDatas: Array<HourData>;
+  dayData?: Maybe<DayData>;
+  dayDatas: Array<DayData>;
+  tokenHourData?: Maybe<TokenHourData>;
+  tokenHourDatas: Array<TokenHourData>;
+  tokenDayData?: Maybe<TokenDayData>;
+  tokenDayDatas: Array<TokenDayData>;
+  pair?: Maybe<Pair>;
+  pairs: Array<Pair>;
+  pairHourData?: Maybe<PairHourData>;
+  pairHourDatas: Array<PairHourData>;
+  pairDayData?: Maybe<PairDayData>;
+  pairDayDatas: Array<PairDayData>;
+  liquidityPosition?: Maybe<LiquidityPosition>;
+  liquidityPositions: Array<LiquidityPosition>;
+  liquidityPositionSnapshot?: Maybe<LiquidityPositionSnapshot>;
+  liquidityPositionSnapshots: Array<LiquidityPositionSnapshot>;
+  mint?: Maybe<Mint>;
+  mints: Array<Mint>;
+  burn?: Maybe<Burn>;
+  burns: Array<Burn>;
+  swap?: Maybe<Swap>;
+  swaps: Array<Swap>;
   tokenSearch: Array<Token>;
+  pairSearch: Array<Pair>;
+  userSearch: Array<User>;
 };
 
 
@@ -74,6 +120,42 @@ export type QuerytokensArgs = {
 };
 
 
+export type QuerystrategyArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerystrategiesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Strategy_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Strategy_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerystrategyHarvestArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerystrategyHarvestsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<StrategyHarvest_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<StrategyHarvest_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
 export type QueryrebaseArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
@@ -87,6 +169,150 @@ export type QueryrebasesArgs = {
   orderBy?: InputMaybe<Rebase_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<Rebase_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryflashLoanArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryflashLoansArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<FlashLoan_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<FlashLoan_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerymasterContractArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerymasterContractsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContract_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContract_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerycloneArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryclonesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Clone_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Clone_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerymasterContractApprovalArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerymasterContractApprovalsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContractApproval_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContractApproval_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryprotocolArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryprotocolsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Protocol_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Protocol_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryuserArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryusersArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<User_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<User_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryuserTokenArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryuserTokensArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<UserToken_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<UserToken_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytransactionArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytransactionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Transaction_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Transaction_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -115,7 +341,259 @@ export type QuerybundlesArgs = {
 };
 
 
+export type QueryfactoryArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryfactoriesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Factory_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Factory_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryhourDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryhourDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<HourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<HourData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerydayDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerydayDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<DayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<DayData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytokenHourDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytokenHourDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenHourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<TokenHourData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytokenDayDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytokenDayDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<TokenDayData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Pair_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Pair_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairHourDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairHourDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairHourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairHourData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairDayDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairDayDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairDayData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryliquidityPositionArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryliquidityPositionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPosition_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPosition_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryliquidityPositionSnapshotArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryliquidityPositionSnapshotsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPositionSnapshot_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPositionSnapshot_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerymintArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerymintsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Mint_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Mint_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryburnArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryburnsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Burn_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Burn_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryswapArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryswapsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Swap_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Swap_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
 export type QuerytokenSearchArgs = {
+  text: Scalars['String'];
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairSearchArgs = {
+  text: Scalars['String'];
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryuserSearchArgs = {
   text: Scalars['String'];
   first?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
@@ -128,12 +606,58 @@ export type Subscription = {
   bentoBoxes: Array<BentoBox>;
   token?: Maybe<Token>;
   tokens: Array<Token>;
+  strategy?: Maybe<Strategy>;
+  strategies: Array<Strategy>;
+  strategyHarvest?: Maybe<StrategyHarvest>;
+  strategyHarvests: Array<StrategyHarvest>;
   rebase?: Maybe<Rebase>;
   rebases: Array<Rebase>;
+  flashLoan?: Maybe<FlashLoan>;
+  flashLoans: Array<FlashLoan>;
+  masterContract?: Maybe<MasterContract>;
+  masterContracts: Array<MasterContract>;
+  clone?: Maybe<Clone>;
+  clones: Array<Clone>;
+  masterContractApproval?: Maybe<MasterContractApproval>;
+  masterContractApprovals: Array<MasterContractApproval>;
+  protocol?: Maybe<Protocol>;
+  protocols: Array<Protocol>;
+  user?: Maybe<User>;
+  users: Array<User>;
+  userToken?: Maybe<UserToken>;
+  userTokens: Array<UserToken>;
+  transaction?: Maybe<Transaction>;
+  transactions: Array<Transaction>;
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
   bundle?: Maybe<Bundle>;
   bundles: Array<Bundle>;
+  factory?: Maybe<Factory>;
+  factories: Array<Factory>;
+  hourData?: Maybe<HourData>;
+  hourDatas: Array<HourData>;
+  dayData?: Maybe<DayData>;
+  dayDatas: Array<DayData>;
+  tokenHourData?: Maybe<TokenHourData>;
+  tokenHourDatas: Array<TokenHourData>;
+  tokenDayData?: Maybe<TokenDayData>;
+  tokenDayDatas: Array<TokenDayData>;
+  pair?: Maybe<Pair>;
+  pairs: Array<Pair>;
+  pairHourData?: Maybe<PairHourData>;
+  pairHourDatas: Array<PairHourData>;
+  pairDayData?: Maybe<PairDayData>;
+  pairDayDatas: Array<PairDayData>;
+  liquidityPosition?: Maybe<LiquidityPosition>;
+  liquidityPositions: Array<LiquidityPosition>;
+  liquidityPositionSnapshot?: Maybe<LiquidityPositionSnapshot>;
+  liquidityPositionSnapshots: Array<LiquidityPositionSnapshot>;
+  mint?: Maybe<Mint>;
+  mints: Array<Mint>;
+  burn?: Maybe<Burn>;
+  burns: Array<Burn>;
+  swap?: Maybe<Swap>;
+  swaps: Array<Swap>;
 };
 
 
@@ -173,6 +697,42 @@ export type SubscriptiontokensArgs = {
 };
 
 
+export type SubscriptionstrategyArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionstrategiesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Strategy_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Strategy_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionstrategyHarvestArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionstrategyHarvestsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<StrategyHarvest_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<StrategyHarvest_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
 export type SubscriptionrebaseArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
@@ -186,6 +746,150 @@ export type SubscriptionrebasesArgs = {
   orderBy?: InputMaybe<Rebase_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<Rebase_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionflashLoanArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionflashLoansArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<FlashLoan_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<FlashLoan_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionmasterContractArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionmasterContractsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContract_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContract_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptioncloneArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionclonesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Clone_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Clone_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionmasterContractApprovalArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionmasterContractApprovalsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContractApproval_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContractApproval_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionprotocolArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionprotocolsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Protocol_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Protocol_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionuserArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionusersArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<User_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<User_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionuserTokenArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionuserTokensArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<UserToken_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<UserToken_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontransactionArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontransactionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Transaction_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Transaction_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -213,9 +917,249 @@ export type SubscriptionbundlesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
+export type SubscriptionfactoryArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionfactoriesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Factory_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Factory_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionhourDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionhourDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<HourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<HourData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiondayDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiondayDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<DayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<DayData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontokenHourDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontokenHourDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenHourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<TokenHourData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontokenDayDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontokenDayDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<TokenDayData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionpairArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionpairsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Pair_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Pair_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionpairHourDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionpairHourDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairHourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairHourData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionpairDayDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionpairDayDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairDayData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionliquidityPositionArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionliquidityPositionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPosition_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPosition_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionliquidityPositionSnapshotArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionliquidityPositionSnapshotsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPositionSnapshot_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPositionSnapshot_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionmintArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionmintsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Mint_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Mint_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionburnArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionburnsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Burn_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Burn_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionswapArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionswapsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Swap_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Swap_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
 export type BentoBox = {
   id: Scalars['ID'];
+  protocols?: Maybe<Array<Protocol>>;
+  users?: Maybe<Array<User>>;
   tokens?: Maybe<Array<Token>>;
+  masterContracts: Array<MasterContract>;
+  clones?: Maybe<Array<Clone>>;
+  flashloans?: Maybe<Array<FlashLoan>>;
+  transactions?: Maybe<Array<Transaction>>;
   protocolCount: Scalars['BigInt'];
   userCount: Scalars['BigInt'];
   tokenCount: Scalars['BigInt'];
@@ -226,12 +1170,66 @@ export type BentoBox = {
 };
 
 
+export type BentoBoxprotocolsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Protocol_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Protocol_filter>;
+};
+
+
+export type BentoBoxusersArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<User_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<User_filter>;
+};
+
+
 export type BentoBoxtokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Token_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<Token_filter>;
+};
+
+
+export type BentoBoxmasterContractsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContract_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContract_filter>;
+};
+
+
+export type BentoBoxclonesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Clone_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Clone_filter>;
+};
+
+
+export type BentoBoxflashloansArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<FlashLoan_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<FlashLoan_filter>;
+};
+
+
+export type BentoBoxtransactionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Transaction_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Transaction_filter>;
 };
 
 export type BentoBox_filter = {
@@ -334,6 +1332,15 @@ export type Block_height = {
   number_gte?: InputMaybe<Scalars['Int']>;
 };
 
+export type Clone = {
+  id: Scalars['ID'];
+  bentoBox: BentoBox;
+  masterContract: MasterContract;
+  data: Scalars['Bytes'];
+  block: Scalars['BigInt'];
+  timestamp: Scalars['BigInt'];
+};
+
 export type Clone_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -414,6 +1421,18 @@ export type Clone_orderBy =
   | 'data'
   | 'block'
   | 'timestamp';
+
+export type FlashLoan = {
+  id: Scalars['ID'];
+  bentoBox: BentoBox;
+  borrower: Scalars['Bytes'];
+  receiver: Scalars['Bytes'];
+  token: Token;
+  amount: Scalars['BigDecimal'];
+  feeAmount: Scalars['BigDecimal'];
+  block: Scalars['BigInt'];
+  timestamp: Scalars['BigInt'];
+};
 
 export type FlashLoan_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -521,6 +1540,38 @@ export type FlashLoan_orderBy =
   | 'block'
   | 'timestamp';
 
+export type MasterContract = {
+  id: Scalars['ID'];
+  bentoBox: BentoBox;
+  clones?: Maybe<Array<Clone>>;
+  masterContractApprovals?: Maybe<Array<MasterContractApproval>>;
+};
+
+
+export type MasterContractclonesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Clone_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Clone_filter>;
+};
+
+
+export type MasterContractmasterContractApprovalsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContractApproval_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContractApproval_filter>;
+};
+
+export type MasterContractApproval = {
+  id: Scalars['ID'];
+  masterContract: MasterContract;
+  user: User;
+  approved: Scalars['Boolean'];
+};
+
 export type MasterContractApproval_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -624,6 +1675,11 @@ export type OrderDirection =
   | 'asc'
   | 'desc';
 
+export type Protocol = {
+  id: Scalars['ID'];
+  bentoBox: BentoBox;
+};
+
 export type Protocol_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -718,6 +1774,34 @@ export type Rebase_orderBy =
   | 'token'
   | 'base'
   | 'elastic';
+
+export type Strategy = {
+  id: Scalars['ID'];
+  token: Token;
+  balance: Scalars['BigInt'];
+  totalProfit: Scalars['BigInt'];
+  harvests?: Maybe<Array<StrategyHarvest>>;
+  timestamp: Scalars['BigInt'];
+  block: Scalars['BigInt'];
+};
+
+
+export type StrategyharvestsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<StrategyHarvest_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<StrategyHarvest_filter>;
+};
+
+export type StrategyHarvest = {
+  id: Scalars['ID'];
+  strategy: Strategy;
+  profit: Scalars['BigDecimal'];
+  tokenElastic: Scalars['BigDecimal'];
+  timestamp: Scalars['BigInt'];
+  block: Scalars['BigInt'];
+};
 
 export type StrategyHarvest_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -872,9 +1956,11 @@ export type Token = {
   nameSuccess: Scalars['Boolean'];
   decimals: Scalars['BigInt'];
   decimalsSuccess: Scalars['Boolean'];
+  strategy?: Maybe<Strategy>;
   strategyTargetPercentage: Scalars['BigInt'];
   block: Scalars['BigInt'];
   timestamp: Scalars['BigInt'];
+  factory: Factory;
   totalSupply: Scalars['BigInt'];
   volume: Scalars['BigDecimal'];
   volumeUSD: Scalars['BigDecimal'];
@@ -882,6 +1968,66 @@ export type Token = {
   txCount: Scalars['BigInt'];
   liquidity: Scalars['BigDecimal'];
   derivedETH: Scalars['BigDecimal'];
+  hourData: Array<TokenHourData>;
+  dayData: Array<TokenDayData>;
+  basePairs: Array<Pair>;
+  quotePairs: Array<Pair>;
+  basePairsDayData: Array<PairDayData>;
+  quotePairsDayData: Array<PairDayData>;
+};
+
+
+export type TokenhourDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenHourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<TokenHourData_filter>;
+};
+
+
+export type TokendayDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<TokenDayData_filter>;
+};
+
+
+export type TokenbasePairsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Pair_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Pair_filter>;
+};
+
+
+export type TokenquotePairsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Pair_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Pair_filter>;
+};
+
+
+export type TokenbasePairsDayDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairDayData_filter>;
+};
+
+
+export type TokenquotePairsDayDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairDayData_filter>;
 };
 
 export type Token_filter = {
@@ -1144,6 +2290,50 @@ export type Token_orderBy =
   | 'basePairsDayData'
   | 'quotePairsDayData';
 
+export type Transaction = {
+  id: Scalars['ID'];
+  bentoBox: BentoBox;
+  type: TransactionType;
+  from: User;
+  to: User;
+  token: Token;
+  amount?: Maybe<Scalars['BigInt']>;
+  share: Scalars['BigInt'];
+  block: Scalars['BigInt'];
+  timestamp: Scalars['BigInt'];
+  blockNumber: Scalars['BigInt'];
+  mints: Array<Maybe<Mint>>;
+  burns: Array<Maybe<Burn>>;
+  swaps: Array<Maybe<Swap>>;
+};
+
+
+export type TransactionmintsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Mint_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Mint_filter>;
+};
+
+
+export type TransactionburnsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Burn_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Burn_filter>;
+};
+
+
+export type TransactionswapsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Swap_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Swap_filter>;
+};
+
 export type TransactionType =
   | 'deposit'
   | 'transfer'
@@ -1317,6 +2507,40 @@ export type Transaction_orderBy =
   | 'mints'
   | 'burns'
   | 'swaps';
+
+export type User = {
+  id: Scalars['ID'];
+  bentoBox: BentoBox;
+  masterContractApprovals?: Maybe<Array<MasterContractApproval>>;
+  block: Scalars['BigInt'];
+  timestamp: Scalars['BigInt'];
+  liquidityPositions: Array<LiquidityPosition>;
+};
+
+
+export type UsermasterContractApprovalsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContractApproval_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContractApproval_filter>;
+};
+
+
+export type UserliquidityPositionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPosition_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPosition_filter>;
+};
+
+export type UserToken = {
+  id: Scalars['ID'];
+  token: Token;
+  user: User;
+  share: Scalars['BigDecimal'];
+};
 
 export type UserToken_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -1495,6 +2719,23 @@ export type Bundle_orderBy =
   | 'id'
   | 'ethPrice';
 
+export type Burn = {
+  id: Scalars['ID'];
+  transaction: Transaction;
+  timestamp: Scalars['BigInt'];
+  pair: Pair;
+  liquidity: Scalars['BigDecimal'];
+  sender?: Maybe<Scalars['Bytes']>;
+  amount0?: Maybe<Scalars['BigDecimal']>;
+  amount1?: Maybe<Scalars['BigDecimal']>;
+  to?: Maybe<Scalars['Bytes']>;
+  logIndex?: Maybe<Scalars['BigInt']>;
+  amountUSD?: Maybe<Scalars['BigDecimal']>;
+  complete: Scalars['Boolean'];
+  feeTo?: Maybe<Scalars['Bytes']>;
+  feeLiquidity?: Maybe<Scalars['BigDecimal']>;
+};
+
 export type Burn_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -1640,6 +2881,18 @@ export type Burn_orderBy =
   | 'feeTo'
   | 'feeLiquidity';
 
+export type DayData = {
+  id: Scalars['ID'];
+  date: Scalars['Int'];
+  factory: Factory;
+  volumeETH: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  untrackedVolume: Scalars['BigDecimal'];
+  liquidityETH: Scalars['BigDecimal'];
+  liquidityUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+};
+
 export type DayData_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -1737,6 +2990,59 @@ export type DayData_orderBy =
   | 'liquidityETH'
   | 'liquidityUSD'
   | 'txCount';
+
+export type Factory = {
+  id: Scalars['ID'];
+  pairCount: Scalars['BigInt'];
+  volumeUSD: Scalars['BigDecimal'];
+  volumeETH: Scalars['BigDecimal'];
+  untrackedVolumeUSD: Scalars['BigDecimal'];
+  liquidityUSD: Scalars['BigDecimal'];
+  liquidityETH: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+  tokenCount: Scalars['BigInt'];
+  userCount: Scalars['BigInt'];
+  pairs: Array<Pair>;
+  tokens: Array<Token>;
+  hourData: Array<HourData>;
+  dayData: Array<DayData>;
+};
+
+
+export type FactorypairsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Pair_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Pair_filter>;
+};
+
+
+export type FactorytokensArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Token_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Token_filter>;
+};
+
+
+export type FactoryhourDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<HourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<HourData_filter>;
+};
+
+
+export type FactorydayDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<DayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<DayData_filter>;
+};
 
 export type Factory_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -1837,6 +3143,18 @@ export type Factory_orderBy =
   | 'hourData'
   | 'dayData';
 
+export type HourData = {
+  id: Scalars['ID'];
+  date: Scalars['Int'];
+  factory: Factory;
+  volumeETH: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  untrackedVolume: Scalars['BigDecimal'];
+  liquidityETH: Scalars['BigDecimal'];
+  liquidityUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+};
+
 export type HourData_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -1934,6 +3252,41 @@ export type HourData_orderBy =
   | 'liquidityETH'
   | 'liquidityUSD'
   | 'txCount';
+
+export type LiquidityPosition = {
+  id: Scalars['ID'];
+  user: User;
+  pair: Pair;
+  liquidityTokenBalance: Scalars['BigDecimal'];
+  snapshots: Array<Maybe<LiquidityPositionSnapshot>>;
+  block: Scalars['Int'];
+  timestamp: Scalars['Int'];
+};
+
+
+export type LiquidityPositionsnapshotsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPositionSnapshot_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPositionSnapshot_filter>;
+};
+
+export type LiquidityPositionSnapshot = {
+  id: Scalars['ID'];
+  liquidityPosition: LiquidityPosition;
+  timestamp: Scalars['Int'];
+  block: Scalars['Int'];
+  user: User;
+  pair: Pair;
+  token0PriceUSD: Scalars['BigDecimal'];
+  token1PriceUSD: Scalars['BigDecimal'];
+  reserve0: Scalars['BigDecimal'];
+  reserve1: Scalars['BigDecimal'];
+  reserveUSD: Scalars['BigDecimal'];
+  liquidityTokenTotalSupply: Scalars['BigDecimal'];
+  liquidityTokenBalance: Scalars['BigDecimal'];
+};
 
 export type LiquidityPositionSnapshot_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -2177,6 +3530,22 @@ export type LiquidityPosition_orderBy =
   | 'block'
   | 'timestamp';
 
+export type Mint = {
+  id: Scalars['ID'];
+  transaction: Transaction;
+  timestamp: Scalars['BigInt'];
+  pair: Pair;
+  to: Scalars['Bytes'];
+  liquidity: Scalars['BigDecimal'];
+  sender?: Maybe<Scalars['Bytes']>;
+  amount0?: Maybe<Scalars['BigDecimal']>;
+  amount1?: Maybe<Scalars['BigDecimal']>;
+  logIndex?: Maybe<Scalars['BigInt']>;
+  amountUSD?: Maybe<Scalars['BigDecimal']>;
+  feeTo?: Maybe<Scalars['Bytes']>;
+  feeLiquidity?: Maybe<Scalars['BigDecimal']>;
+};
+
 export type Mint_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -2316,6 +3685,116 @@ export type Mint_orderBy =
   | 'amountUSD'
   | 'feeTo'
   | 'feeLiquidity';
+
+export type Pair = {
+  id: Scalars['ID'];
+  factory: Factory;
+  name: Scalars['String'];
+  token0: Token;
+  token1: Token;
+  reserve0: Scalars['BigDecimal'];
+  reserve1: Scalars['BigDecimal'];
+  totalSupply: Scalars['BigDecimal'];
+  reserveETH: Scalars['BigDecimal'];
+  reserveUSD: Scalars['BigDecimal'];
+  trackedReserveETH: Scalars['BigDecimal'];
+  token0Price: Scalars['BigDecimal'];
+  token1Price: Scalars['BigDecimal'];
+  volumeToken0: Scalars['BigDecimal'];
+  volumeToken1: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  untrackedVolumeUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+  liquidityProviderCount: Scalars['BigInt'];
+  liquidityPositions: Array<LiquidityPosition>;
+  liquidityPositionSnapshots: Array<LiquidityPositionSnapshot>;
+  dayData: Array<PairDayData>;
+  hourData: Array<PairHourData>;
+  mints: Array<Mint>;
+  burns: Array<Burn>;
+  swaps: Array<Swap>;
+  timestamp: Scalars['BigInt'];
+  block: Scalars['BigInt'];
+};
+
+
+export type PairliquidityPositionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPosition_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPosition_filter>;
+};
+
+
+export type PairliquidityPositionSnapshotsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPositionSnapshot_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPositionSnapshot_filter>;
+};
+
+
+export type PairdayDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairDayData_filter>;
+};
+
+
+export type PairhourDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairHourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairHourData_filter>;
+};
+
+
+export type PairmintsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Mint_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Mint_filter>;
+};
+
+
+export type PairburnsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Burn_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Burn_filter>;
+};
+
+
+export type PairswapsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Swap_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Swap_filter>;
+};
+
+export type PairDayData = {
+  id: Scalars['ID'];
+  date: Scalars['Int'];
+  pair: Pair;
+  token0: Token;
+  token1: Token;
+  reserve0: Scalars['BigDecimal'];
+  reserve1: Scalars['BigDecimal'];
+  totalSupply: Scalars['BigDecimal'];
+  reserveUSD: Scalars['BigDecimal'];
+  volumeToken0: Scalars['BigDecimal'];
+  volumeToken1: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+};
 
 export type PairDayData_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -2474,6 +3953,19 @@ export type PairDayData_orderBy =
   | 'volumeToken1'
   | 'volumeUSD'
   | 'txCount';
+
+export type PairHourData = {
+  id: Scalars['ID'];
+  date: Scalars['Int'];
+  pair: Pair;
+  reserve0: Scalars['BigDecimal'];
+  reserve1: Scalars['BigDecimal'];
+  reserveUSD: Scalars['BigDecimal'];
+  volumeToken0: Scalars['BigDecimal'];
+  volumeToken1: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+};
 
 export type PairHourData_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -2831,6 +4323,21 @@ export type Pair_orderBy =
   | 'timestamp'
   | 'block';
 
+export type Swap = {
+  id: Scalars['ID'];
+  transaction: Transaction;
+  timestamp: Scalars['BigInt'];
+  pair: Pair;
+  sender: Scalars['Bytes'];
+  amount0In: Scalars['BigDecimal'];
+  amount1In: Scalars['BigDecimal'];
+  amount0Out: Scalars['BigDecimal'];
+  amount1Out: Scalars['BigDecimal'];
+  to: Scalars['Bytes'];
+  logIndex?: Maybe<Scalars['BigInt']>;
+  amountUSD: Scalars['BigDecimal'];
+};
+
 export type Swap_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -2964,6 +4471,20 @@ export type Swap_orderBy =
   | 'logIndex'
   | 'amountUSD';
 
+export type TokenDayData = {
+  id: Scalars['ID'];
+  date: Scalars['Int'];
+  token: Token;
+  volume: Scalars['BigDecimal'];
+  volumeETH: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+  liquidity: Scalars['BigDecimal'];
+  liquidityETH: Scalars['BigDecimal'];
+  liquidityUSD: Scalars['BigDecimal'];
+  priceUSD: Scalars['BigDecimal'];
+};
+
 export type TokenDayData_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -3079,6 +4600,20 @@ export type TokenDayData_orderBy =
   | 'liquidityETH'
   | 'liquidityUSD'
   | 'priceUSD';
+
+export type TokenHourData = {
+  id: Scalars['ID'];
+  date: Scalars['Int'];
+  token: Token;
+  volume: Scalars['BigDecimal'];
+  volumeETH: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+  liquidity: Scalars['BigDecimal'];
+  liquidityETH: Scalars['BigDecimal'];
+  liquidityUSD: Scalars['BigDecimal'];
+  priceUSD: Scalars['BigDecimal'];
+};
 
 export type TokenHourData_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -3212,7 +4747,7 @@ export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
 };
 
 export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  selectionSet: string;
+  selectionSet: string | ((fieldNode: FieldNode) => SelectionSetNode);
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
 export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
@@ -3290,23 +4825,30 @@ export type ResolversTypes = ResolversObject<{
   Block_height: Block_height;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Bytes: ResolverTypeWrapper<Scalars['Bytes']>;
+  Clone: ResolverTypeWrapper<Clone>;
   Clone_filter: Clone_filter;
   Clone_orderBy: Clone_orderBy;
+  FlashLoan: ResolverTypeWrapper<FlashLoan>;
   FlashLoan_filter: FlashLoan_filter;
   FlashLoan_orderBy: FlashLoan_orderBy;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  MasterContract: ResolverTypeWrapper<MasterContract>;
+  MasterContractApproval: ResolverTypeWrapper<MasterContractApproval>;
   MasterContractApproval_filter: MasterContractApproval_filter;
   MasterContractApproval_orderBy: MasterContractApproval_orderBy;
   MasterContract_filter: MasterContract_filter;
   MasterContract_orderBy: MasterContract_orderBy;
   OrderDirection: OrderDirection;
+  Protocol: ResolverTypeWrapper<Protocol>;
   Protocol_filter: Protocol_filter;
   Protocol_orderBy: Protocol_orderBy;
   Rebase: ResolverTypeWrapper<Rebase>;
   Rebase_filter: Rebase_filter;
   Rebase_orderBy: Rebase_orderBy;
+  Strategy: ResolverTypeWrapper<Strategy>;
+  StrategyHarvest: ResolverTypeWrapper<StrategyHarvest>;
   StrategyHarvest_filter: StrategyHarvest_filter;
   StrategyHarvest_orderBy: StrategyHarvest_orderBy;
   Strategy_filter: Strategy_filter;
@@ -3315,9 +4857,12 @@ export type ResolversTypes = ResolversObject<{
   Token: ResolverTypeWrapper<Token>;
   Token_filter: Token_filter;
   Token_orderBy: Token_orderBy;
+  Transaction: ResolverTypeWrapper<Transaction>;
   TransactionType: TransactionType;
   Transaction_filter: Transaction_filter;
   Transaction_orderBy: Transaction_orderBy;
+  User: ResolverTypeWrapper<User>;
+  UserToken: ResolverTypeWrapper<UserToken>;
   UserToken_filter: UserToken_filter;
   UserToken_orderBy: UserToken_orderBy;
   User_filter: User_filter;
@@ -3328,30 +4873,43 @@ export type ResolversTypes = ResolversObject<{
   Bundle: ResolverTypeWrapper<Bundle>;
   Bundle_filter: Bundle_filter;
   Bundle_orderBy: Bundle_orderBy;
+  Burn: ResolverTypeWrapper<Burn>;
   Burn_filter: Burn_filter;
   Burn_orderBy: Burn_orderBy;
+  DayData: ResolverTypeWrapper<DayData>;
   DayData_filter: DayData_filter;
   DayData_orderBy: DayData_orderBy;
+  Factory: ResolverTypeWrapper<Factory>;
   Factory_filter: Factory_filter;
   Factory_orderBy: Factory_orderBy;
+  HourData: ResolverTypeWrapper<HourData>;
   HourData_filter: HourData_filter;
   HourData_orderBy: HourData_orderBy;
+  LiquidityPosition: ResolverTypeWrapper<LiquidityPosition>;
+  LiquidityPositionSnapshot: ResolverTypeWrapper<LiquidityPositionSnapshot>;
   LiquidityPositionSnapshot_filter: LiquidityPositionSnapshot_filter;
   LiquidityPositionSnapshot_orderBy: LiquidityPositionSnapshot_orderBy;
   LiquidityPosition_filter: LiquidityPosition_filter;
   LiquidityPosition_orderBy: LiquidityPosition_orderBy;
+  Mint: ResolverTypeWrapper<Mint>;
   Mint_filter: Mint_filter;
   Mint_orderBy: Mint_orderBy;
+  Pair: ResolverTypeWrapper<Pair>;
+  PairDayData: ResolverTypeWrapper<PairDayData>;
   PairDayData_filter: PairDayData_filter;
   PairDayData_orderBy: PairDayData_orderBy;
+  PairHourData: ResolverTypeWrapper<PairHourData>;
   PairHourData_filter: PairHourData_filter;
   PairHourData_orderBy: PairHourData_orderBy;
   Pair_filter: Pair_filter;
   Pair_orderBy: Pair_orderBy;
+  Swap: ResolverTypeWrapper<Swap>;
   Swap_filter: Swap_filter;
   Swap_orderBy: Swap_orderBy;
+  TokenDayData: ResolverTypeWrapper<TokenDayData>;
   TokenDayData_filter: TokenDayData_filter;
   TokenDayData_orderBy: TokenDayData_orderBy;
+  TokenHourData: ResolverTypeWrapper<TokenHourData>;
   TokenHourData_filter: TokenHourData_filter;
   TokenHourData_orderBy: TokenHourData_orderBy;
 }>;
@@ -3367,40 +4925,63 @@ export type ResolversParentTypes = ResolversObject<{
   Block_height: Block_height;
   Boolean: Scalars['Boolean'];
   Bytes: Scalars['Bytes'];
+  Clone: Clone;
   Clone_filter: Clone_filter;
+  FlashLoan: FlashLoan;
   FlashLoan_filter: FlashLoan_filter;
   Float: Scalars['Float'];
   ID: Scalars['ID'];
   Int: Scalars['Int'];
+  MasterContract: MasterContract;
+  MasterContractApproval: MasterContractApproval;
   MasterContractApproval_filter: MasterContractApproval_filter;
   MasterContract_filter: MasterContract_filter;
+  Protocol: Protocol;
   Protocol_filter: Protocol_filter;
   Rebase: Rebase;
   Rebase_filter: Rebase_filter;
+  Strategy: Strategy;
+  StrategyHarvest: StrategyHarvest;
   StrategyHarvest_filter: StrategyHarvest_filter;
   Strategy_filter: Strategy_filter;
   String: Scalars['String'];
   Token: Token;
   Token_filter: Token_filter;
+  Transaction: Transaction;
   Transaction_filter: Transaction_filter;
+  User: User;
+  UserToken: UserToken;
   UserToken_filter: UserToken_filter;
   User_filter: User_filter;
   _Block_: _Block_;
   _Meta_: _Meta_;
   Bundle: Bundle;
   Bundle_filter: Bundle_filter;
+  Burn: Burn;
   Burn_filter: Burn_filter;
+  DayData: DayData;
   DayData_filter: DayData_filter;
+  Factory: Factory;
   Factory_filter: Factory_filter;
+  HourData: HourData;
   HourData_filter: HourData_filter;
+  LiquidityPosition: LiquidityPosition;
+  LiquidityPositionSnapshot: LiquidityPositionSnapshot;
   LiquidityPositionSnapshot_filter: LiquidityPositionSnapshot_filter;
   LiquidityPosition_filter: LiquidityPosition_filter;
+  Mint: Mint;
   Mint_filter: Mint_filter;
+  Pair: Pair;
+  PairDayData: PairDayData;
   PairDayData_filter: PairDayData_filter;
+  PairHourData: PairHourData;
   PairHourData_filter: PairHourData_filter;
   Pair_filter: Pair_filter;
+  Swap: Swap;
   Swap_filter: Swap_filter;
+  TokenDayData: TokenDayData;
   TokenDayData_filter: TokenDayData_filter;
+  TokenHourData: TokenHourData;
   TokenHourData_filter: TokenHourData_filter;
 }>;
 
@@ -3409,12 +4990,60 @@ export type QueryResolvers<ContextType = MeshContext, ParentType extends Resolve
   bentoBoxes?: Resolver<Array<ResolversTypes['BentoBox']>, ParentType, ContextType, RequireFields<QuerybentoBoxesArgs, 'skip' | 'first' | 'subgraphError'>>;
   token?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokenArgs, 'id' | 'subgraphError'>>;
   tokens?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokensArgs, 'skip' | 'first' | 'subgraphError'>>;
+  strategy?: Resolver<Maybe<ResolversTypes['Strategy']>, ParentType, ContextType, RequireFields<QuerystrategyArgs, 'id' | 'subgraphError'>>;
+  strategies?: Resolver<Array<ResolversTypes['Strategy']>, ParentType, ContextType, RequireFields<QuerystrategiesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  strategyHarvest?: Resolver<Maybe<ResolversTypes['StrategyHarvest']>, ParentType, ContextType, RequireFields<QuerystrategyHarvestArgs, 'id' | 'subgraphError'>>;
+  strategyHarvests?: Resolver<Array<ResolversTypes['StrategyHarvest']>, ParentType, ContextType, RequireFields<QuerystrategyHarvestsArgs, 'skip' | 'first' | 'subgraphError'>>;
   rebase?: Resolver<Maybe<ResolversTypes['Rebase']>, ParentType, ContextType, RequireFields<QueryrebaseArgs, 'id' | 'subgraphError'>>;
   rebases?: Resolver<Array<ResolversTypes['Rebase']>, ParentType, ContextType, RequireFields<QueryrebasesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  flashLoan?: Resolver<Maybe<ResolversTypes['FlashLoan']>, ParentType, ContextType, RequireFields<QueryflashLoanArgs, 'id' | 'subgraphError'>>;
+  flashLoans?: Resolver<Array<ResolversTypes['FlashLoan']>, ParentType, ContextType, RequireFields<QueryflashLoansArgs, 'skip' | 'first' | 'subgraphError'>>;
+  masterContract?: Resolver<Maybe<ResolversTypes['MasterContract']>, ParentType, ContextType, RequireFields<QuerymasterContractArgs, 'id' | 'subgraphError'>>;
+  masterContracts?: Resolver<Array<ResolversTypes['MasterContract']>, ParentType, ContextType, RequireFields<QuerymasterContractsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  clone?: Resolver<Maybe<ResolversTypes['Clone']>, ParentType, ContextType, RequireFields<QuerycloneArgs, 'id' | 'subgraphError'>>;
+  clones?: Resolver<Array<ResolversTypes['Clone']>, ParentType, ContextType, RequireFields<QueryclonesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  masterContractApproval?: Resolver<Maybe<ResolversTypes['MasterContractApproval']>, ParentType, ContextType, RequireFields<QuerymasterContractApprovalArgs, 'id' | 'subgraphError'>>;
+  masterContractApprovals?: Resolver<Array<ResolversTypes['MasterContractApproval']>, ParentType, ContextType, RequireFields<QuerymasterContractApprovalsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  protocol?: Resolver<Maybe<ResolversTypes['Protocol']>, ParentType, ContextType, RequireFields<QueryprotocolArgs, 'id' | 'subgraphError'>>;
+  protocols?: Resolver<Array<ResolversTypes['Protocol']>, ParentType, ContextType, RequireFields<QueryprotocolsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryuserArgs, 'id' | 'subgraphError'>>;
+  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryusersArgs, 'skip' | 'first' | 'subgraphError'>>;
+  userToken?: Resolver<Maybe<ResolversTypes['UserToken']>, ParentType, ContextType, RequireFields<QueryuserTokenArgs, 'id' | 'subgraphError'>>;
+  userTokens?: Resolver<Array<ResolversTypes['UserToken']>, ParentType, ContextType, RequireFields<QueryuserTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
+  transaction?: Resolver<Maybe<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<QuerytransactionArgs, 'id' | 'subgraphError'>>;
+  transactions?: Resolver<Array<ResolversTypes['Transaction']>, ParentType, ContextType, RequireFields<QuerytransactionsArgs, 'skip' | 'first' | 'subgraphError'>>;
   _meta?: Resolver<Maybe<ResolversTypes['_Meta_']>, ParentType, ContextType, Partial<Query_metaArgs>>;
   bundle?: Resolver<Maybe<ResolversTypes['Bundle']>, ParentType, ContextType, RequireFields<QuerybundleArgs, 'id' | 'subgraphError'>>;
   bundles?: Resolver<Array<ResolversTypes['Bundle']>, ParentType, ContextType, RequireFields<QuerybundlesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  factory?: Resolver<Maybe<ResolversTypes['Factory']>, ParentType, ContextType, RequireFields<QueryfactoryArgs, 'id' | 'subgraphError'>>;
+  factories?: Resolver<Array<ResolversTypes['Factory']>, ParentType, ContextType, RequireFields<QueryfactoriesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  hourData?: Resolver<Maybe<ResolversTypes['HourData']>, ParentType, ContextType, RequireFields<QueryhourDataArgs, 'id' | 'subgraphError'>>;
+  hourDatas?: Resolver<Array<ResolversTypes['HourData']>, ParentType, ContextType, RequireFields<QueryhourDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
+  dayData?: Resolver<Maybe<ResolversTypes['DayData']>, ParentType, ContextType, RequireFields<QuerydayDataArgs, 'id' | 'subgraphError'>>;
+  dayDatas?: Resolver<Array<ResolversTypes['DayData']>, ParentType, ContextType, RequireFields<QuerydayDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
+  tokenHourData?: Resolver<Maybe<ResolversTypes['TokenHourData']>, ParentType, ContextType, RequireFields<QuerytokenHourDataArgs, 'id' | 'subgraphError'>>;
+  tokenHourDatas?: Resolver<Array<ResolversTypes['TokenHourData']>, ParentType, ContextType, RequireFields<QuerytokenHourDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
+  tokenDayData?: Resolver<Maybe<ResolversTypes['TokenDayData']>, ParentType, ContextType, RequireFields<QuerytokenDayDataArgs, 'id' | 'subgraphError'>>;
+  tokenDayDatas?: Resolver<Array<ResolversTypes['TokenDayData']>, ParentType, ContextType, RequireFields<QuerytokenDayDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
+  pair?: Resolver<Maybe<ResolversTypes['Pair']>, ParentType, ContextType, RequireFields<QuerypairArgs, 'id' | 'subgraphError'>>;
+  pairs?: Resolver<Array<ResolversTypes['Pair']>, ParentType, ContextType, RequireFields<QuerypairsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  pairHourData?: Resolver<Maybe<ResolversTypes['PairHourData']>, ParentType, ContextType, RequireFields<QuerypairHourDataArgs, 'id' | 'subgraphError'>>;
+  pairHourDatas?: Resolver<Array<ResolversTypes['PairHourData']>, ParentType, ContextType, RequireFields<QuerypairHourDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
+  pairDayData?: Resolver<Maybe<ResolversTypes['PairDayData']>, ParentType, ContextType, RequireFields<QuerypairDayDataArgs, 'id' | 'subgraphError'>>;
+  pairDayDatas?: Resolver<Array<ResolversTypes['PairDayData']>, ParentType, ContextType, RequireFields<QuerypairDayDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
+  liquidityPosition?: Resolver<Maybe<ResolversTypes['LiquidityPosition']>, ParentType, ContextType, RequireFields<QueryliquidityPositionArgs, 'id' | 'subgraphError'>>;
+  liquidityPositions?: Resolver<Array<ResolversTypes['LiquidityPosition']>, ParentType, ContextType, RequireFields<QueryliquidityPositionsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  liquidityPositionSnapshot?: Resolver<Maybe<ResolversTypes['LiquidityPositionSnapshot']>, ParentType, ContextType, RequireFields<QueryliquidityPositionSnapshotArgs, 'id' | 'subgraphError'>>;
+  liquidityPositionSnapshots?: Resolver<Array<ResolversTypes['LiquidityPositionSnapshot']>, ParentType, ContextType, RequireFields<QueryliquidityPositionSnapshotsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  mint?: Resolver<Maybe<ResolversTypes['Mint']>, ParentType, ContextType, RequireFields<QuerymintArgs, 'id' | 'subgraphError'>>;
+  mints?: Resolver<Array<ResolversTypes['Mint']>, ParentType, ContextType, RequireFields<QuerymintsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  burn?: Resolver<Maybe<ResolversTypes['Burn']>, ParentType, ContextType, RequireFields<QueryburnArgs, 'id' | 'subgraphError'>>;
+  burns?: Resolver<Array<ResolversTypes['Burn']>, ParentType, ContextType, RequireFields<QueryburnsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  swap?: Resolver<Maybe<ResolversTypes['Swap']>, ParentType, ContextType, RequireFields<QueryswapArgs, 'id' | 'subgraphError'>>;
+  swaps?: Resolver<Array<ResolversTypes['Swap']>, ParentType, ContextType, RequireFields<QueryswapsArgs, 'skip' | 'first' | 'subgraphError'>>;
   tokenSearch?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokenSearchArgs, 'text' | 'first' | 'skip' | 'subgraphError'>>;
+  pairSearch?: Resolver<Array<ResolversTypes['Pair']>, ParentType, ContextType, RequireFields<QuerypairSearchArgs, 'text' | 'first' | 'skip' | 'subgraphError'>>;
+  userSearch?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryuserSearchArgs, 'text' | 'first' | 'skip' | 'subgraphError'>>;
 }>;
 
 export type SubscriptionResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
@@ -3422,16 +5051,68 @@ export type SubscriptionResolvers<ContextType = MeshContext, ParentType extends 
   bentoBoxes?: SubscriptionResolver<Array<ResolversTypes['BentoBox']>, "bentoBoxes", ParentType, ContextType, RequireFields<SubscriptionbentoBoxesArgs, 'skip' | 'first' | 'subgraphError'>>;
   token?: SubscriptionResolver<Maybe<ResolversTypes['Token']>, "token", ParentType, ContextType, RequireFields<SubscriptiontokenArgs, 'id' | 'subgraphError'>>;
   tokens?: SubscriptionResolver<Array<ResolversTypes['Token']>, "tokens", ParentType, ContextType, RequireFields<SubscriptiontokensArgs, 'skip' | 'first' | 'subgraphError'>>;
+  strategy?: SubscriptionResolver<Maybe<ResolversTypes['Strategy']>, "strategy", ParentType, ContextType, RequireFields<SubscriptionstrategyArgs, 'id' | 'subgraphError'>>;
+  strategies?: SubscriptionResolver<Array<ResolversTypes['Strategy']>, "strategies", ParentType, ContextType, RequireFields<SubscriptionstrategiesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  strategyHarvest?: SubscriptionResolver<Maybe<ResolversTypes['StrategyHarvest']>, "strategyHarvest", ParentType, ContextType, RequireFields<SubscriptionstrategyHarvestArgs, 'id' | 'subgraphError'>>;
+  strategyHarvests?: SubscriptionResolver<Array<ResolversTypes['StrategyHarvest']>, "strategyHarvests", ParentType, ContextType, RequireFields<SubscriptionstrategyHarvestsArgs, 'skip' | 'first' | 'subgraphError'>>;
   rebase?: SubscriptionResolver<Maybe<ResolversTypes['Rebase']>, "rebase", ParentType, ContextType, RequireFields<SubscriptionrebaseArgs, 'id' | 'subgraphError'>>;
   rebases?: SubscriptionResolver<Array<ResolversTypes['Rebase']>, "rebases", ParentType, ContextType, RequireFields<SubscriptionrebasesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  flashLoan?: SubscriptionResolver<Maybe<ResolversTypes['FlashLoan']>, "flashLoan", ParentType, ContextType, RequireFields<SubscriptionflashLoanArgs, 'id' | 'subgraphError'>>;
+  flashLoans?: SubscriptionResolver<Array<ResolversTypes['FlashLoan']>, "flashLoans", ParentType, ContextType, RequireFields<SubscriptionflashLoansArgs, 'skip' | 'first' | 'subgraphError'>>;
+  masterContract?: SubscriptionResolver<Maybe<ResolversTypes['MasterContract']>, "masterContract", ParentType, ContextType, RequireFields<SubscriptionmasterContractArgs, 'id' | 'subgraphError'>>;
+  masterContracts?: SubscriptionResolver<Array<ResolversTypes['MasterContract']>, "masterContracts", ParentType, ContextType, RequireFields<SubscriptionmasterContractsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  clone?: SubscriptionResolver<Maybe<ResolversTypes['Clone']>, "clone", ParentType, ContextType, RequireFields<SubscriptioncloneArgs, 'id' | 'subgraphError'>>;
+  clones?: SubscriptionResolver<Array<ResolversTypes['Clone']>, "clones", ParentType, ContextType, RequireFields<SubscriptionclonesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  masterContractApproval?: SubscriptionResolver<Maybe<ResolversTypes['MasterContractApproval']>, "masterContractApproval", ParentType, ContextType, RequireFields<SubscriptionmasterContractApprovalArgs, 'id' | 'subgraphError'>>;
+  masterContractApprovals?: SubscriptionResolver<Array<ResolversTypes['MasterContractApproval']>, "masterContractApprovals", ParentType, ContextType, RequireFields<SubscriptionmasterContractApprovalsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  protocol?: SubscriptionResolver<Maybe<ResolversTypes['Protocol']>, "protocol", ParentType, ContextType, RequireFields<SubscriptionprotocolArgs, 'id' | 'subgraphError'>>;
+  protocols?: SubscriptionResolver<Array<ResolversTypes['Protocol']>, "protocols", ParentType, ContextType, RequireFields<SubscriptionprotocolsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  user?: SubscriptionResolver<Maybe<ResolversTypes['User']>, "user", ParentType, ContextType, RequireFields<SubscriptionuserArgs, 'id' | 'subgraphError'>>;
+  users?: SubscriptionResolver<Array<ResolversTypes['User']>, "users", ParentType, ContextType, RequireFields<SubscriptionusersArgs, 'skip' | 'first' | 'subgraphError'>>;
+  userToken?: SubscriptionResolver<Maybe<ResolversTypes['UserToken']>, "userToken", ParentType, ContextType, RequireFields<SubscriptionuserTokenArgs, 'id' | 'subgraphError'>>;
+  userTokens?: SubscriptionResolver<Array<ResolversTypes['UserToken']>, "userTokens", ParentType, ContextType, RequireFields<SubscriptionuserTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
+  transaction?: SubscriptionResolver<Maybe<ResolversTypes['Transaction']>, "transaction", ParentType, ContextType, RequireFields<SubscriptiontransactionArgs, 'id' | 'subgraphError'>>;
+  transactions?: SubscriptionResolver<Array<ResolversTypes['Transaction']>, "transactions", ParentType, ContextType, RequireFields<SubscriptiontransactionsArgs, 'skip' | 'first' | 'subgraphError'>>;
   _meta?: SubscriptionResolver<Maybe<ResolversTypes['_Meta_']>, "_meta", ParentType, ContextType, Partial<Subscription_metaArgs>>;
   bundle?: SubscriptionResolver<Maybe<ResolversTypes['Bundle']>, "bundle", ParentType, ContextType, RequireFields<SubscriptionbundleArgs, 'id' | 'subgraphError'>>;
   bundles?: SubscriptionResolver<Array<ResolversTypes['Bundle']>, "bundles", ParentType, ContextType, RequireFields<SubscriptionbundlesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  factory?: SubscriptionResolver<Maybe<ResolversTypes['Factory']>, "factory", ParentType, ContextType, RequireFields<SubscriptionfactoryArgs, 'id' | 'subgraphError'>>;
+  factories?: SubscriptionResolver<Array<ResolversTypes['Factory']>, "factories", ParentType, ContextType, RequireFields<SubscriptionfactoriesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  hourData?: SubscriptionResolver<Maybe<ResolversTypes['HourData']>, "hourData", ParentType, ContextType, RequireFields<SubscriptionhourDataArgs, 'id' | 'subgraphError'>>;
+  hourDatas?: SubscriptionResolver<Array<ResolversTypes['HourData']>, "hourDatas", ParentType, ContextType, RequireFields<SubscriptionhourDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
+  dayData?: SubscriptionResolver<Maybe<ResolversTypes['DayData']>, "dayData", ParentType, ContextType, RequireFields<SubscriptiondayDataArgs, 'id' | 'subgraphError'>>;
+  dayDatas?: SubscriptionResolver<Array<ResolversTypes['DayData']>, "dayDatas", ParentType, ContextType, RequireFields<SubscriptiondayDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
+  tokenHourData?: SubscriptionResolver<Maybe<ResolversTypes['TokenHourData']>, "tokenHourData", ParentType, ContextType, RequireFields<SubscriptiontokenHourDataArgs, 'id' | 'subgraphError'>>;
+  tokenHourDatas?: SubscriptionResolver<Array<ResolversTypes['TokenHourData']>, "tokenHourDatas", ParentType, ContextType, RequireFields<SubscriptiontokenHourDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
+  tokenDayData?: SubscriptionResolver<Maybe<ResolversTypes['TokenDayData']>, "tokenDayData", ParentType, ContextType, RequireFields<SubscriptiontokenDayDataArgs, 'id' | 'subgraphError'>>;
+  tokenDayDatas?: SubscriptionResolver<Array<ResolversTypes['TokenDayData']>, "tokenDayDatas", ParentType, ContextType, RequireFields<SubscriptiontokenDayDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
+  pair?: SubscriptionResolver<Maybe<ResolversTypes['Pair']>, "pair", ParentType, ContextType, RequireFields<SubscriptionpairArgs, 'id' | 'subgraphError'>>;
+  pairs?: SubscriptionResolver<Array<ResolversTypes['Pair']>, "pairs", ParentType, ContextType, RequireFields<SubscriptionpairsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  pairHourData?: SubscriptionResolver<Maybe<ResolversTypes['PairHourData']>, "pairHourData", ParentType, ContextType, RequireFields<SubscriptionpairHourDataArgs, 'id' | 'subgraphError'>>;
+  pairHourDatas?: SubscriptionResolver<Array<ResolversTypes['PairHourData']>, "pairHourDatas", ParentType, ContextType, RequireFields<SubscriptionpairHourDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
+  pairDayData?: SubscriptionResolver<Maybe<ResolversTypes['PairDayData']>, "pairDayData", ParentType, ContextType, RequireFields<SubscriptionpairDayDataArgs, 'id' | 'subgraphError'>>;
+  pairDayDatas?: SubscriptionResolver<Array<ResolversTypes['PairDayData']>, "pairDayDatas", ParentType, ContextType, RequireFields<SubscriptionpairDayDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
+  liquidityPosition?: SubscriptionResolver<Maybe<ResolversTypes['LiquidityPosition']>, "liquidityPosition", ParentType, ContextType, RequireFields<SubscriptionliquidityPositionArgs, 'id' | 'subgraphError'>>;
+  liquidityPositions?: SubscriptionResolver<Array<ResolversTypes['LiquidityPosition']>, "liquidityPositions", ParentType, ContextType, RequireFields<SubscriptionliquidityPositionsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  liquidityPositionSnapshot?: SubscriptionResolver<Maybe<ResolversTypes['LiquidityPositionSnapshot']>, "liquidityPositionSnapshot", ParentType, ContextType, RequireFields<SubscriptionliquidityPositionSnapshotArgs, 'id' | 'subgraphError'>>;
+  liquidityPositionSnapshots?: SubscriptionResolver<Array<ResolversTypes['LiquidityPositionSnapshot']>, "liquidityPositionSnapshots", ParentType, ContextType, RequireFields<SubscriptionliquidityPositionSnapshotsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  mint?: SubscriptionResolver<Maybe<ResolversTypes['Mint']>, "mint", ParentType, ContextType, RequireFields<SubscriptionmintArgs, 'id' | 'subgraphError'>>;
+  mints?: SubscriptionResolver<Array<ResolversTypes['Mint']>, "mints", ParentType, ContextType, RequireFields<SubscriptionmintsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  burn?: SubscriptionResolver<Maybe<ResolversTypes['Burn']>, "burn", ParentType, ContextType, RequireFields<SubscriptionburnArgs, 'id' | 'subgraphError'>>;
+  burns?: SubscriptionResolver<Array<ResolversTypes['Burn']>, "burns", ParentType, ContextType, RequireFields<SubscriptionburnsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  swap?: SubscriptionResolver<Maybe<ResolversTypes['Swap']>, "swap", ParentType, ContextType, RequireFields<SubscriptionswapArgs, 'id' | 'subgraphError'>>;
+  swaps?: SubscriptionResolver<Array<ResolversTypes['Swap']>, "swaps", ParentType, ContextType, RequireFields<SubscriptionswapsArgs, 'skip' | 'first' | 'subgraphError'>>;
 }>;
 
 export type BentoBoxResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['BentoBox'] = ResolversParentTypes['BentoBox']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  protocols?: Resolver<Maybe<Array<ResolversTypes['Protocol']>>, ParentType, ContextType, RequireFields<BentoBoxprotocolsArgs, 'skip' | 'first'>>;
+  users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<BentoBoxusersArgs, 'skip' | 'first'>>;
   tokens?: Resolver<Maybe<Array<ResolversTypes['Token']>>, ParentType, ContextType, RequireFields<BentoBoxtokensArgs, 'skip' | 'first'>>;
+  masterContracts?: Resolver<Array<ResolversTypes['MasterContract']>, ParentType, ContextType, RequireFields<BentoBoxmasterContractsArgs, 'skip' | 'first'>>;
+  clones?: Resolver<Maybe<Array<ResolversTypes['Clone']>>, ParentType, ContextType, RequireFields<BentoBoxclonesArgs, 'skip' | 'first'>>;
+  flashloans?: Resolver<Maybe<Array<ResolversTypes['FlashLoan']>>, ParentType, ContextType, RequireFields<BentoBoxflashloansArgs, 'skip' | 'first'>>;
+  transactions?: Resolver<Maybe<Array<ResolversTypes['Transaction']>>, ParentType, ContextType, RequireFields<BentoBoxtransactionsArgs, 'skip' | 'first'>>;
   protocolCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   userCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   tokenCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -3454,11 +5135,77 @@ export interface BytesScalarConfig extends GraphQLScalarTypeConfig<ResolversType
   name: 'Bytes';
 }
 
+export type CloneResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Clone'] = ResolversParentTypes['Clone']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  bentoBox?: Resolver<ResolversTypes['BentoBox'], ParentType, ContextType>;
+  masterContract?: Resolver<ResolversTypes['MasterContract'], ParentType, ContextType>;
+  data?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  block?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type FlashLoanResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['FlashLoan'] = ResolversParentTypes['FlashLoan']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  bentoBox?: Resolver<ResolversTypes['BentoBox'], ParentType, ContextType>;
+  borrower?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  receiver?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['Token'], ParentType, ContextType>;
+  amount?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  feeAmount?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  block?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MasterContractResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['MasterContract'] = ResolversParentTypes['MasterContract']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  bentoBox?: Resolver<ResolversTypes['BentoBox'], ParentType, ContextType>;
+  clones?: Resolver<Maybe<Array<ResolversTypes['Clone']>>, ParentType, ContextType, RequireFields<MasterContractclonesArgs, 'skip' | 'first'>>;
+  masterContractApprovals?: Resolver<Maybe<Array<ResolversTypes['MasterContractApproval']>>, ParentType, ContextType, RequireFields<MasterContractmasterContractApprovalsArgs, 'skip' | 'first'>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MasterContractApprovalResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['MasterContractApproval'] = ResolversParentTypes['MasterContractApproval']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  masterContract?: Resolver<ResolversTypes['MasterContract'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  approved?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProtocolResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Protocol'] = ResolversParentTypes['Protocol']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  bentoBox?: Resolver<ResolversTypes['BentoBox'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type RebaseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Rebase'] = ResolversParentTypes['Rebase']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   token?: Resolver<ResolversTypes['Token'], ParentType, ContextType>;
   base?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
   elastic?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type StrategyResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Strategy'] = ResolversParentTypes['Strategy']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['Token'], ParentType, ContextType>;
+  balance?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  totalProfit?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  harvests?: Resolver<Maybe<Array<ResolversTypes['StrategyHarvest']>>, ParentType, ContextType, RequireFields<StrategyharvestsArgs, 'skip' | 'first'>>;
+  timestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  block?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type StrategyHarvestResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['StrategyHarvest'] = ResolversParentTypes['StrategyHarvest']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  strategy?: Resolver<ResolversTypes['Strategy'], ParentType, ContextType>;
+  profit?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  tokenElastic?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  block?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -3472,9 +5219,11 @@ export type TokenResolvers<ContextType = MeshContext, ParentType extends Resolve
   nameSuccess?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   decimals?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   decimalsSuccess?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  strategy?: Resolver<Maybe<ResolversTypes['Strategy']>, ParentType, ContextType>;
   strategyTargetPercentage?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   block?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   timestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  factory?: Resolver<ResolversTypes['Factory'], ParentType, ContextType>;
   totalSupply?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   volume?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
   volumeUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
@@ -3482,6 +5231,48 @@ export type TokenResolvers<ContextType = MeshContext, ParentType extends Resolve
   txCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   liquidity?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
   derivedETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  hourData?: Resolver<Array<ResolversTypes['TokenHourData']>, ParentType, ContextType, RequireFields<TokenhourDataArgs, 'skip' | 'first'>>;
+  dayData?: Resolver<Array<ResolversTypes['TokenDayData']>, ParentType, ContextType, RequireFields<TokendayDataArgs, 'skip' | 'first'>>;
+  basePairs?: Resolver<Array<ResolversTypes['Pair']>, ParentType, ContextType, RequireFields<TokenbasePairsArgs, 'skip' | 'first'>>;
+  quotePairs?: Resolver<Array<ResolversTypes['Pair']>, ParentType, ContextType, RequireFields<TokenquotePairsArgs, 'skip' | 'first'>>;
+  basePairsDayData?: Resolver<Array<ResolversTypes['PairDayData']>, ParentType, ContextType, RequireFields<TokenbasePairsDayDataArgs, 'skip' | 'first'>>;
+  quotePairsDayData?: Resolver<Array<ResolversTypes['PairDayData']>, ParentType, ContextType, RequireFields<TokenquotePairsDayDataArgs, 'skip' | 'first'>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type TransactionResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Transaction'] = ResolversParentTypes['Transaction']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  bentoBox?: Resolver<ResolversTypes['BentoBox'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['TransactionType'], ParentType, ContextType>;
+  from?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  to?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['Token'], ParentType, ContextType>;
+  amount?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
+  share?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  block?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  blockNumber?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  mints?: Resolver<Array<Maybe<ResolversTypes['Mint']>>, ParentType, ContextType, RequireFields<TransactionmintsArgs, 'skip' | 'first'>>;
+  burns?: Resolver<Array<Maybe<ResolversTypes['Burn']>>, ParentType, ContextType, RequireFields<TransactionburnsArgs, 'skip' | 'first'>>;
+  swaps?: Resolver<Array<Maybe<ResolversTypes['Swap']>>, ParentType, ContextType, RequireFields<TransactionswapsArgs, 'skip' | 'first'>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  bentoBox?: Resolver<ResolversTypes['BentoBox'], ParentType, ContextType>;
+  masterContractApprovals?: Resolver<Maybe<Array<ResolversTypes['MasterContractApproval']>>, ParentType, ContextType, RequireFields<UsermasterContractApprovalsArgs, 'skip' | 'first'>>;
+  block?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  liquidityPositions?: Resolver<Array<ResolversTypes['LiquidityPosition']>, ParentType, ContextType, RequireFields<UserliquidityPositionsArgs, 'skip' | 'first'>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserTokenResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['UserToken'] = ResolversParentTypes['UserToken']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['Token'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  share?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -3504,6 +5295,222 @@ export type BundleResolvers<ContextType = MeshContext, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type BurnResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Burn'] = ResolversParentTypes['Burn']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  transaction?: Resolver<ResolversTypes['Transaction'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  pair?: Resolver<ResolversTypes['Pair'], ParentType, ContextType>;
+  liquidity?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  sender?: Resolver<Maybe<ResolversTypes['Bytes']>, ParentType, ContextType>;
+  amount0?: Resolver<Maybe<ResolversTypes['BigDecimal']>, ParentType, ContextType>;
+  amount1?: Resolver<Maybe<ResolversTypes['BigDecimal']>, ParentType, ContextType>;
+  to?: Resolver<Maybe<ResolversTypes['Bytes']>, ParentType, ContextType>;
+  logIndex?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
+  amountUSD?: Resolver<Maybe<ResolversTypes['BigDecimal']>, ParentType, ContextType>;
+  complete?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  feeTo?: Resolver<Maybe<ResolversTypes['Bytes']>, ParentType, ContextType>;
+  feeLiquidity?: Resolver<Maybe<ResolversTypes['BigDecimal']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type DayDataResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['DayData'] = ResolversParentTypes['DayData']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  factory?: Resolver<ResolversTypes['Factory'], ParentType, ContextType>;
+  volumeETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  untrackedVolume?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  liquidityETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  liquidityUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  txCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type FactoryResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Factory'] = ResolversParentTypes['Factory']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  pairCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  volumeUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  untrackedVolumeUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  liquidityUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  liquidityETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  txCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  tokenCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  userCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  pairs?: Resolver<Array<ResolversTypes['Pair']>, ParentType, ContextType, RequireFields<FactorypairsArgs, 'skip' | 'first'>>;
+  tokens?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<FactorytokensArgs, 'skip' | 'first'>>;
+  hourData?: Resolver<Array<ResolversTypes['HourData']>, ParentType, ContextType, RequireFields<FactoryhourDataArgs, 'skip' | 'first'>>;
+  dayData?: Resolver<Array<ResolversTypes['DayData']>, ParentType, ContextType, RequireFields<FactorydayDataArgs, 'skip' | 'first'>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type HourDataResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['HourData'] = ResolversParentTypes['HourData']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  factory?: Resolver<ResolversTypes['Factory'], ParentType, ContextType>;
+  volumeETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  untrackedVolume?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  liquidityETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  liquidityUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  txCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type LiquidityPositionResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['LiquidityPosition'] = ResolversParentTypes['LiquidityPosition']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  pair?: Resolver<ResolversTypes['Pair'], ParentType, ContextType>;
+  liquidityTokenBalance?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  snapshots?: Resolver<Array<Maybe<ResolversTypes['LiquidityPositionSnapshot']>>, ParentType, ContextType, RequireFields<LiquidityPositionsnapshotsArgs, 'skip' | 'first'>>;
+  block?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type LiquidityPositionSnapshotResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['LiquidityPositionSnapshot'] = ResolversParentTypes['LiquidityPositionSnapshot']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  liquidityPosition?: Resolver<ResolversTypes['LiquidityPosition'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  block?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  pair?: Resolver<ResolversTypes['Pair'], ParentType, ContextType>;
+  token0PriceUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  token1PriceUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  reserve0?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  reserve1?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  reserveUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  liquidityTokenTotalSupply?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  liquidityTokenBalance?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MintResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Mint'] = ResolversParentTypes['Mint']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  transaction?: Resolver<ResolversTypes['Transaction'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  pair?: Resolver<ResolversTypes['Pair'], ParentType, ContextType>;
+  to?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  liquidity?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  sender?: Resolver<Maybe<ResolversTypes['Bytes']>, ParentType, ContextType>;
+  amount0?: Resolver<Maybe<ResolversTypes['BigDecimal']>, ParentType, ContextType>;
+  amount1?: Resolver<Maybe<ResolversTypes['BigDecimal']>, ParentType, ContextType>;
+  logIndex?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
+  amountUSD?: Resolver<Maybe<ResolversTypes['BigDecimal']>, ParentType, ContextType>;
+  feeTo?: Resolver<Maybe<ResolversTypes['Bytes']>, ParentType, ContextType>;
+  feeLiquidity?: Resolver<Maybe<ResolversTypes['BigDecimal']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type PairResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Pair'] = ResolversParentTypes['Pair']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  factory?: Resolver<ResolversTypes['Factory'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  token0?: Resolver<ResolversTypes['Token'], ParentType, ContextType>;
+  token1?: Resolver<ResolversTypes['Token'], ParentType, ContextType>;
+  reserve0?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  reserve1?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  totalSupply?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  reserveETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  reserveUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  trackedReserveETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  token0Price?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  token1Price?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeToken0?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeToken1?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  untrackedVolumeUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  txCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  liquidityProviderCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  liquidityPositions?: Resolver<Array<ResolversTypes['LiquidityPosition']>, ParentType, ContextType, RequireFields<PairliquidityPositionsArgs, 'skip' | 'first'>>;
+  liquidityPositionSnapshots?: Resolver<Array<ResolversTypes['LiquidityPositionSnapshot']>, ParentType, ContextType, RequireFields<PairliquidityPositionSnapshotsArgs, 'skip' | 'first'>>;
+  dayData?: Resolver<Array<ResolversTypes['PairDayData']>, ParentType, ContextType, RequireFields<PairdayDataArgs, 'skip' | 'first'>>;
+  hourData?: Resolver<Array<ResolversTypes['PairHourData']>, ParentType, ContextType, RequireFields<PairhourDataArgs, 'skip' | 'first'>>;
+  mints?: Resolver<Array<ResolversTypes['Mint']>, ParentType, ContextType, RequireFields<PairmintsArgs, 'skip' | 'first'>>;
+  burns?: Resolver<Array<ResolversTypes['Burn']>, ParentType, ContextType, RequireFields<PairburnsArgs, 'skip' | 'first'>>;
+  swaps?: Resolver<Array<ResolversTypes['Swap']>, ParentType, ContextType, RequireFields<PairswapsArgs, 'skip' | 'first'>>;
+  timestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  block?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type PairDayDataResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PairDayData'] = ResolversParentTypes['PairDayData']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  pair?: Resolver<ResolversTypes['Pair'], ParentType, ContextType>;
+  token0?: Resolver<ResolversTypes['Token'], ParentType, ContextType>;
+  token1?: Resolver<ResolversTypes['Token'], ParentType, ContextType>;
+  reserve0?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  reserve1?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  totalSupply?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  reserveUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeToken0?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeToken1?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  txCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type PairHourDataResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PairHourData'] = ResolversParentTypes['PairHourData']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  pair?: Resolver<ResolversTypes['Pair'], ParentType, ContextType>;
+  reserve0?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  reserve1?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  reserveUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeToken0?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeToken1?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  txCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SwapResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Swap'] = ResolversParentTypes['Swap']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  transaction?: Resolver<ResolversTypes['Transaction'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  pair?: Resolver<ResolversTypes['Pair'], ParentType, ContextType>;
+  sender?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  amount0In?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  amount1In?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  amount0Out?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  amount1Out?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  to?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  logIndex?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
+  amountUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type TokenDayDataResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['TokenDayData'] = ResolversParentTypes['TokenDayData']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['Token'], ParentType, ContextType>;
+  volume?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  txCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  liquidity?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  liquidityETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  liquidityUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  priceUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type TokenHourDataResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['TokenHourData'] = ResolversParentTypes['TokenHourData']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['Token'], ParentType, ContextType>;
+  volume?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  volumeUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  txCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  liquidity?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  liquidityETH?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  liquidityUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  priceUSD?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
@@ -3511,11 +5518,34 @@ export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   BigDecimal?: GraphQLScalarType;
   BigInt?: GraphQLScalarType;
   Bytes?: GraphQLScalarType;
+  Clone?: CloneResolvers<ContextType>;
+  FlashLoan?: FlashLoanResolvers<ContextType>;
+  MasterContract?: MasterContractResolvers<ContextType>;
+  MasterContractApproval?: MasterContractApprovalResolvers<ContextType>;
+  Protocol?: ProtocolResolvers<ContextType>;
   Rebase?: RebaseResolvers<ContextType>;
+  Strategy?: StrategyResolvers<ContextType>;
+  StrategyHarvest?: StrategyHarvestResolvers<ContextType>;
   Token?: TokenResolvers<ContextType>;
+  Transaction?: TransactionResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
+  UserToken?: UserTokenResolvers<ContextType>;
   _Block_?: _Block_Resolvers<ContextType>;
   _Meta_?: _Meta_Resolvers<ContextType>;
   Bundle?: BundleResolvers<ContextType>;
+  Burn?: BurnResolvers<ContextType>;
+  DayData?: DayDataResolvers<ContextType>;
+  Factory?: FactoryResolvers<ContextType>;
+  HourData?: HourDataResolvers<ContextType>;
+  LiquidityPosition?: LiquidityPositionResolvers<ContextType>;
+  LiquidityPositionSnapshot?: LiquidityPositionSnapshotResolvers<ContextType>;
+  Mint?: MintResolvers<ContextType>;
+  Pair?: PairResolvers<ContextType>;
+  PairDayData?: PairDayDataResolvers<ContextType>;
+  PairHourData?: PairHourDataResolvers<ContextType>;
+  Swap?: SwapResolvers<ContextType>;
+  TokenDayData?: TokenDayDataResolvers<ContextType>;
+  TokenHourData?: TokenHourDataResolvers<ContextType>;
 }>;
 
 
@@ -3544,7 +5574,13 @@ export type Scalars = {
 
 export type BentoBox = {
   id: Scalars['ID'];
+  protocols?: Maybe<Array<Protocol>>;
+  users?: Maybe<Array<User>>;
   tokens?: Maybe<Array<Token>>;
+  masterContracts: Array<MasterContract>;
+  clones?: Maybe<Array<Clone>>;
+  flashloans?: Maybe<Array<FlashLoan>>;
+  transactions?: Maybe<Array<Transaction>>;
   protocolCount: Scalars['BigInt'];
   userCount: Scalars['BigInt'];
   tokenCount: Scalars['BigInt'];
@@ -3555,12 +5591,66 @@ export type BentoBox = {
 };
 
 
+export type BentoBoxprotocolsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Protocol_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Protocol_filter>;
+};
+
+
+export type BentoBoxusersArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<User_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<User_filter>;
+};
+
+
 export type BentoBoxtokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Token_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<Token_filter>;
+};
+
+
+export type BentoBoxmasterContractsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContract_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContract_filter>;
+};
+
+
+export type BentoBoxclonesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Clone_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Clone_filter>;
+};
+
+
+export type BentoBoxflashloansArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<FlashLoan_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<FlashLoan_filter>;
+};
+
+
+export type BentoBoxtransactionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Transaction_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Transaction_filter>;
 };
 
 export type BentoBox_filter = {
@@ -3663,6 +5753,15 @@ export type Block_height = {
   number_gte?: InputMaybe<Scalars['Int']>;
 };
 
+export type Clone = {
+  id: Scalars['ID'];
+  bentoBox: BentoBox;
+  masterContract: MasterContract;
+  data: Scalars['Bytes'];
+  block: Scalars['BigInt'];
+  timestamp: Scalars['BigInt'];
+};
+
 export type Clone_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -3743,6 +5842,18 @@ export type Clone_orderBy =
   | 'data'
   | 'block'
   | 'timestamp';
+
+export type FlashLoan = {
+  id: Scalars['ID'];
+  bentoBox: BentoBox;
+  borrower: Scalars['Bytes'];
+  receiver: Scalars['Bytes'];
+  token: Token;
+  amount: Scalars['BigDecimal'];
+  feeAmount: Scalars['BigDecimal'];
+  block: Scalars['BigInt'];
+  timestamp: Scalars['BigInt'];
+};
 
 export type FlashLoan_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -3850,6 +5961,38 @@ export type FlashLoan_orderBy =
   | 'block'
   | 'timestamp';
 
+export type MasterContract = {
+  id: Scalars['ID'];
+  bentoBox: BentoBox;
+  clones?: Maybe<Array<Clone>>;
+  masterContractApprovals?: Maybe<Array<MasterContractApproval>>;
+};
+
+
+export type MasterContractclonesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Clone_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Clone_filter>;
+};
+
+
+export type MasterContractmasterContractApprovalsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContractApproval_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContractApproval_filter>;
+};
+
+export type MasterContractApproval = {
+  id: Scalars['ID'];
+  masterContract: MasterContract;
+  user: User;
+  approved: Scalars['Boolean'];
+};
+
 export type MasterContractApproval_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -3953,6 +6096,11 @@ export type OrderDirection =
   | 'asc'
   | 'desc';
 
+export type Protocol = {
+  id: Scalars['ID'];
+  bentoBox: BentoBox;
+};
+
 export type Protocol_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -3993,8 +6141,28 @@ export type Query = {
   bentoBoxes: Array<BentoBox>;
   token?: Maybe<Token>;
   tokens: Array<Token>;
+  strategy?: Maybe<Strategy>;
+  strategies: Array<Strategy>;
+  strategyHarvest?: Maybe<StrategyHarvest>;
+  strategyHarvests: Array<StrategyHarvest>;
   rebase?: Maybe<Rebase>;
   rebases: Array<Rebase>;
+  flashLoan?: Maybe<FlashLoan>;
+  flashLoans: Array<FlashLoan>;
+  masterContract?: Maybe<MasterContract>;
+  masterContracts: Array<MasterContract>;
+  clone?: Maybe<Clone>;
+  clones: Array<Clone>;
+  masterContractApproval?: Maybe<MasterContractApproval>;
+  masterContractApprovals: Array<MasterContractApproval>;
+  protocol?: Maybe<Protocol>;
+  protocols: Array<Protocol>;
+  user?: Maybe<User>;
+  users: Array<User>;
+  userToken?: Maybe<UserToken>;
+  userTokens: Array<UserToken>;
+  transaction?: Maybe<Transaction>;
+  transactions: Array<Transaction>;
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
 };
@@ -4036,6 +6204,42 @@ export type QuerytokensArgs = {
 };
 
 
+export type QuerystrategyArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerystrategiesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Strategy_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Strategy_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerystrategyHarvestArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerystrategyHarvestsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<StrategyHarvest_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<StrategyHarvest_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
 export type QueryrebaseArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
@@ -4049,6 +6253,150 @@ export type QueryrebasesArgs = {
   orderBy?: InputMaybe<Rebase_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<Rebase_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryflashLoanArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryflashLoansArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<FlashLoan_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<FlashLoan_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerymasterContractArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerymasterContractsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContract_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContract_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerycloneArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryclonesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Clone_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Clone_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerymasterContractApprovalArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerymasterContractApprovalsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContractApproval_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContractApproval_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryprotocolArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryprotocolsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Protocol_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Protocol_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryuserArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryusersArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<User_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<User_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryuserTokenArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryuserTokensArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<UserToken_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<UserToken_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytransactionArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytransactionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Transaction_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Transaction_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -4117,6 +6465,34 @@ export type Rebase_orderBy =
   | 'token'
   | 'base'
   | 'elastic';
+
+export type Strategy = {
+  id: Scalars['ID'];
+  token: Token;
+  balance: Scalars['BigInt'];
+  totalProfit: Scalars['BigInt'];
+  harvests?: Maybe<Array<StrategyHarvest>>;
+  timestamp: Scalars['BigInt'];
+  block: Scalars['BigInt'];
+};
+
+
+export type StrategyharvestsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<StrategyHarvest_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<StrategyHarvest_filter>;
+};
+
+export type StrategyHarvest = {
+  id: Scalars['ID'];
+  strategy: Strategy;
+  profit: Scalars['BigDecimal'];
+  tokenElastic: Scalars['BigDecimal'];
+  timestamp: Scalars['BigInt'];
+  block: Scalars['BigInt'];
+};
 
 export type StrategyHarvest_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -4266,8 +6642,28 @@ export type Subscription = {
   bentoBoxes: Array<BentoBox>;
   token?: Maybe<Token>;
   tokens: Array<Token>;
+  strategy?: Maybe<Strategy>;
+  strategies: Array<Strategy>;
+  strategyHarvest?: Maybe<StrategyHarvest>;
+  strategyHarvests: Array<StrategyHarvest>;
   rebase?: Maybe<Rebase>;
   rebases: Array<Rebase>;
+  flashLoan?: Maybe<FlashLoan>;
+  flashLoans: Array<FlashLoan>;
+  masterContract?: Maybe<MasterContract>;
+  masterContracts: Array<MasterContract>;
+  clone?: Maybe<Clone>;
+  clones: Array<Clone>;
+  masterContractApproval?: Maybe<MasterContractApproval>;
+  masterContractApprovals: Array<MasterContractApproval>;
+  protocol?: Maybe<Protocol>;
+  protocols: Array<Protocol>;
+  user?: Maybe<User>;
+  users: Array<User>;
+  userToken?: Maybe<UserToken>;
+  userTokens: Array<UserToken>;
+  transaction?: Maybe<Transaction>;
+  transactions: Array<Transaction>;
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
 };
@@ -4309,6 +6705,42 @@ export type SubscriptiontokensArgs = {
 };
 
 
+export type SubscriptionstrategyArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionstrategiesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Strategy_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Strategy_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionstrategyHarvestArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionstrategyHarvestsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<StrategyHarvest_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<StrategyHarvest_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
 export type SubscriptionrebaseArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
@@ -4322,6 +6754,150 @@ export type SubscriptionrebasesArgs = {
   orderBy?: InputMaybe<Rebase_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<Rebase_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionflashLoanArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionflashLoansArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<FlashLoan_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<FlashLoan_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionmasterContractArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionmasterContractsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContract_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContract_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptioncloneArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionclonesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Clone_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Clone_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionmasterContractApprovalArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionmasterContractApprovalsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContractApproval_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContractApproval_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionprotocolArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionprotocolsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Protocol_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Protocol_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionuserArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionusersArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<User_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<User_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionuserTokenArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionuserTokensArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<UserToken_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<UserToken_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontransactionArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontransactionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Transaction_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Transaction_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -4341,6 +6917,7 @@ export type Token = {
   nameSuccess: Scalars['Boolean'];
   decimals: Scalars['BigInt'];
   decimalsSuccess: Scalars['Boolean'];
+  strategy?: Maybe<Strategy>;
   strategyTargetPercentage: Scalars['BigInt'];
   block: Scalars['BigInt'];
   timestamp: Scalars['BigInt'];
@@ -4516,6 +7093,19 @@ export type Token_orderBy =
   | 'block'
   | 'timestamp';
 
+export type Transaction = {
+  id: Scalars['ID'];
+  bentoBox: BentoBox;
+  type: TransactionType;
+  from: User;
+  to: User;
+  token: Token;
+  amount?: Maybe<Scalars['BigInt']>;
+  share: Scalars['BigInt'];
+  block: Scalars['BigInt'];
+  timestamp: Scalars['BigInt'];
+};
+
 export type TransactionType =
   | 'deposit'
   | 'transfer'
@@ -4659,6 +7249,30 @@ export type Transaction_orderBy =
   | 'share'
   | 'block'
   | 'timestamp';
+
+export type User = {
+  id: Scalars['ID'];
+  bentoBox: BentoBox;
+  masterContractApprovals?: Maybe<Array<MasterContractApproval>>;
+  block: Scalars['BigInt'];
+  timestamp: Scalars['BigInt'];
+};
+
+
+export type UsermasterContractApprovalsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<MasterContractApproval_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<MasterContractApproval_filter>;
+};
+
+export type UserToken = {
+  id: Scalars['ID'];
+  token: Token;
+  user: User;
+  share: Scalars['BigDecimal'];
+};
 
 export type UserToken_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -4819,9 +7433,49 @@ export type _SubgraphErrorPolicy_ =
   /** null **/
   tokens: InContextSdkMethod<BentoboxTypes.Query['tokens'], BentoboxTypes.QuerytokensArgs, MeshContext>,
   /** null **/
+  strategy: InContextSdkMethod<BentoboxTypes.Query['strategy'], BentoboxTypes.QuerystrategyArgs, MeshContext>,
+  /** null **/
+  strategies: InContextSdkMethod<BentoboxTypes.Query['strategies'], BentoboxTypes.QuerystrategiesArgs, MeshContext>,
+  /** null **/
+  strategyHarvest: InContextSdkMethod<BentoboxTypes.Query['strategyHarvest'], BentoboxTypes.QuerystrategyHarvestArgs, MeshContext>,
+  /** null **/
+  strategyHarvests: InContextSdkMethod<BentoboxTypes.Query['strategyHarvests'], BentoboxTypes.QuerystrategyHarvestsArgs, MeshContext>,
+  /** null **/
   rebase: InContextSdkMethod<BentoboxTypes.Query['rebase'], BentoboxTypes.QueryrebaseArgs, MeshContext>,
   /** null **/
   rebases: InContextSdkMethod<BentoboxTypes.Query['rebases'], BentoboxTypes.QueryrebasesArgs, MeshContext>,
+  /** null **/
+  flashLoan: InContextSdkMethod<BentoboxTypes.Query['flashLoan'], BentoboxTypes.QueryflashLoanArgs, MeshContext>,
+  /** null **/
+  flashLoans: InContextSdkMethod<BentoboxTypes.Query['flashLoans'], BentoboxTypes.QueryflashLoansArgs, MeshContext>,
+  /** null **/
+  masterContract: InContextSdkMethod<BentoboxTypes.Query['masterContract'], BentoboxTypes.QuerymasterContractArgs, MeshContext>,
+  /** null **/
+  masterContracts: InContextSdkMethod<BentoboxTypes.Query['masterContracts'], BentoboxTypes.QuerymasterContractsArgs, MeshContext>,
+  /** null **/
+  clone: InContextSdkMethod<BentoboxTypes.Query['clone'], BentoboxTypes.QuerycloneArgs, MeshContext>,
+  /** null **/
+  clones: InContextSdkMethod<BentoboxTypes.Query['clones'], BentoboxTypes.QueryclonesArgs, MeshContext>,
+  /** null **/
+  masterContractApproval: InContextSdkMethod<BentoboxTypes.Query['masterContractApproval'], BentoboxTypes.QuerymasterContractApprovalArgs, MeshContext>,
+  /** null **/
+  masterContractApprovals: InContextSdkMethod<BentoboxTypes.Query['masterContractApprovals'], BentoboxTypes.QuerymasterContractApprovalsArgs, MeshContext>,
+  /** null **/
+  protocol: InContextSdkMethod<BentoboxTypes.Query['protocol'], BentoboxTypes.QueryprotocolArgs, MeshContext>,
+  /** null **/
+  protocols: InContextSdkMethod<BentoboxTypes.Query['protocols'], BentoboxTypes.QueryprotocolsArgs, MeshContext>,
+  /** null **/
+  user: InContextSdkMethod<BentoboxTypes.Query['user'], BentoboxTypes.QueryuserArgs, MeshContext>,
+  /** null **/
+  users: InContextSdkMethod<BentoboxTypes.Query['users'], BentoboxTypes.QueryusersArgs, MeshContext>,
+  /** null **/
+  userToken: InContextSdkMethod<BentoboxTypes.Query['userToken'], BentoboxTypes.QueryuserTokenArgs, MeshContext>,
+  /** null **/
+  userTokens: InContextSdkMethod<BentoboxTypes.Query['userTokens'], BentoboxTypes.QueryuserTokensArgs, MeshContext>,
+  /** null **/
+  transaction: InContextSdkMethod<BentoboxTypes.Query['transaction'], BentoboxTypes.QuerytransactionArgs, MeshContext>,
+  /** null **/
+  transactions: InContextSdkMethod<BentoboxTypes.Query['transactions'], BentoboxTypes.QuerytransactionsArgs, MeshContext>,
   /** Access to subgraph metadata **/
   _meta: InContextSdkMethod<BentoboxTypes.Query['_meta'], BentoboxTypes.Query_metaArgs, MeshContext>
 };
@@ -4840,9 +7494,49 @@ export type SubscriptionBentoboxSdk = {
   /** null **/
   tokens: InContextSdkMethod<BentoboxTypes.Subscription['tokens'], BentoboxTypes.SubscriptiontokensArgs, MeshContext>,
   /** null **/
+  strategy: InContextSdkMethod<BentoboxTypes.Subscription['strategy'], BentoboxTypes.SubscriptionstrategyArgs, MeshContext>,
+  /** null **/
+  strategies: InContextSdkMethod<BentoboxTypes.Subscription['strategies'], BentoboxTypes.SubscriptionstrategiesArgs, MeshContext>,
+  /** null **/
+  strategyHarvest: InContextSdkMethod<BentoboxTypes.Subscription['strategyHarvest'], BentoboxTypes.SubscriptionstrategyHarvestArgs, MeshContext>,
+  /** null **/
+  strategyHarvests: InContextSdkMethod<BentoboxTypes.Subscription['strategyHarvests'], BentoboxTypes.SubscriptionstrategyHarvestsArgs, MeshContext>,
+  /** null **/
   rebase: InContextSdkMethod<BentoboxTypes.Subscription['rebase'], BentoboxTypes.SubscriptionrebaseArgs, MeshContext>,
   /** null **/
   rebases: InContextSdkMethod<BentoboxTypes.Subscription['rebases'], BentoboxTypes.SubscriptionrebasesArgs, MeshContext>,
+  /** null **/
+  flashLoan: InContextSdkMethod<BentoboxTypes.Subscription['flashLoan'], BentoboxTypes.SubscriptionflashLoanArgs, MeshContext>,
+  /** null **/
+  flashLoans: InContextSdkMethod<BentoboxTypes.Subscription['flashLoans'], BentoboxTypes.SubscriptionflashLoansArgs, MeshContext>,
+  /** null **/
+  masterContract: InContextSdkMethod<BentoboxTypes.Subscription['masterContract'], BentoboxTypes.SubscriptionmasterContractArgs, MeshContext>,
+  /** null **/
+  masterContracts: InContextSdkMethod<BentoboxTypes.Subscription['masterContracts'], BentoboxTypes.SubscriptionmasterContractsArgs, MeshContext>,
+  /** null **/
+  clone: InContextSdkMethod<BentoboxTypes.Subscription['clone'], BentoboxTypes.SubscriptioncloneArgs, MeshContext>,
+  /** null **/
+  clones: InContextSdkMethod<BentoboxTypes.Subscription['clones'], BentoboxTypes.SubscriptionclonesArgs, MeshContext>,
+  /** null **/
+  masterContractApproval: InContextSdkMethod<BentoboxTypes.Subscription['masterContractApproval'], BentoboxTypes.SubscriptionmasterContractApprovalArgs, MeshContext>,
+  /** null **/
+  masterContractApprovals: InContextSdkMethod<BentoboxTypes.Subscription['masterContractApprovals'], BentoboxTypes.SubscriptionmasterContractApprovalsArgs, MeshContext>,
+  /** null **/
+  protocol: InContextSdkMethod<BentoboxTypes.Subscription['protocol'], BentoboxTypes.SubscriptionprotocolArgs, MeshContext>,
+  /** null **/
+  protocols: InContextSdkMethod<BentoboxTypes.Subscription['protocols'], BentoboxTypes.SubscriptionprotocolsArgs, MeshContext>,
+  /** null **/
+  user: InContextSdkMethod<BentoboxTypes.Subscription['user'], BentoboxTypes.SubscriptionuserArgs, MeshContext>,
+  /** null **/
+  users: InContextSdkMethod<BentoboxTypes.Subscription['users'], BentoboxTypes.SubscriptionusersArgs, MeshContext>,
+  /** null **/
+  userToken: InContextSdkMethod<BentoboxTypes.Subscription['userToken'], BentoboxTypes.SubscriptionuserTokenArgs, MeshContext>,
+  /** null **/
+  userTokens: InContextSdkMethod<BentoboxTypes.Subscription['userTokens'], BentoboxTypes.SubscriptionuserTokensArgs, MeshContext>,
+  /** null **/
+  transaction: InContextSdkMethod<BentoboxTypes.Subscription['transaction'], BentoboxTypes.SubscriptiontransactionArgs, MeshContext>,
+  /** null **/
+  transactions: InContextSdkMethod<BentoboxTypes.Subscription['transactions'], BentoboxTypes.SubscriptiontransactionsArgs, MeshContext>,
   /** Access to subgraph metadata **/
   _meta: InContextSdkMethod<BentoboxTypes.Subscription['_meta'], BentoboxTypes.Subscription_metaArgs, MeshContext>
 };
@@ -4909,6 +7603,23 @@ export type Bundle_filter = {
 export type Bundle_orderBy =
   | 'id'
   | 'ethPrice';
+
+export type Burn = {
+  id: Scalars['ID'];
+  transaction: Transaction;
+  timestamp: Scalars['BigInt'];
+  pair: Pair;
+  liquidity: Scalars['BigDecimal'];
+  sender?: Maybe<Scalars['Bytes']>;
+  amount0?: Maybe<Scalars['BigDecimal']>;
+  amount1?: Maybe<Scalars['BigDecimal']>;
+  to?: Maybe<Scalars['Bytes']>;
+  logIndex?: Maybe<Scalars['BigInt']>;
+  amountUSD?: Maybe<Scalars['BigDecimal']>;
+  complete: Scalars['Boolean'];
+  feeTo?: Maybe<Scalars['Bytes']>;
+  feeLiquidity?: Maybe<Scalars['BigDecimal']>;
+};
 
 export type Burn_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -5055,6 +7766,18 @@ export type Burn_orderBy =
   | 'feeTo'
   | 'feeLiquidity';
 
+export type DayData = {
+  id: Scalars['ID'];
+  date: Scalars['Int'];
+  factory: Factory;
+  volumeETH: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  untrackedVolume: Scalars['BigDecimal'];
+  liquidityETH: Scalars['BigDecimal'];
+  liquidityUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+};
+
 export type DayData_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -5152,6 +7875,59 @@ export type DayData_orderBy =
   | 'liquidityETH'
   | 'liquidityUSD'
   | 'txCount';
+
+export type Factory = {
+  id: Scalars['ID'];
+  pairCount: Scalars['BigInt'];
+  volumeUSD: Scalars['BigDecimal'];
+  volumeETH: Scalars['BigDecimal'];
+  untrackedVolumeUSD: Scalars['BigDecimal'];
+  liquidityUSD: Scalars['BigDecimal'];
+  liquidityETH: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+  tokenCount: Scalars['BigInt'];
+  userCount: Scalars['BigInt'];
+  pairs: Array<Pair>;
+  tokens: Array<Token>;
+  hourData: Array<HourData>;
+  dayData: Array<DayData>;
+};
+
+
+export type FactorypairsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Pair_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Pair_filter>;
+};
+
+
+export type FactorytokensArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Token_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Token_filter>;
+};
+
+
+export type FactoryhourDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<HourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<HourData_filter>;
+};
+
+
+export type FactorydayDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<DayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<DayData_filter>;
+};
 
 export type Factory_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -5252,6 +8028,18 @@ export type Factory_orderBy =
   | 'hourData'
   | 'dayData';
 
+export type HourData = {
+  id: Scalars['ID'];
+  date: Scalars['Int'];
+  factory: Factory;
+  volumeETH: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  untrackedVolume: Scalars['BigDecimal'];
+  liquidityETH: Scalars['BigDecimal'];
+  liquidityUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+};
+
 export type HourData_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -5349,6 +8137,41 @@ export type HourData_orderBy =
   | 'liquidityETH'
   | 'liquidityUSD'
   | 'txCount';
+
+export type LiquidityPosition = {
+  id: Scalars['ID'];
+  user: User;
+  pair: Pair;
+  liquidityTokenBalance: Scalars['BigDecimal'];
+  snapshots: Array<Maybe<LiquidityPositionSnapshot>>;
+  block: Scalars['Int'];
+  timestamp: Scalars['Int'];
+};
+
+
+export type LiquidityPositionsnapshotsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPositionSnapshot_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPositionSnapshot_filter>;
+};
+
+export type LiquidityPositionSnapshot = {
+  id: Scalars['ID'];
+  liquidityPosition: LiquidityPosition;
+  timestamp: Scalars['Int'];
+  block: Scalars['Int'];
+  user: User;
+  pair: Pair;
+  token0PriceUSD: Scalars['BigDecimal'];
+  token1PriceUSD: Scalars['BigDecimal'];
+  reserve0: Scalars['BigDecimal'];
+  reserve1: Scalars['BigDecimal'];
+  reserveUSD: Scalars['BigDecimal'];
+  liquidityTokenTotalSupply: Scalars['BigDecimal'];
+  liquidityTokenBalance: Scalars['BigDecimal'];
+};
 
 export type LiquidityPositionSnapshot_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -5592,6 +8415,22 @@ export type LiquidityPosition_orderBy =
   | 'block'
   | 'timestamp';
 
+export type Mint = {
+  id: Scalars['ID'];
+  transaction: Transaction;
+  timestamp: Scalars['BigInt'];
+  pair: Pair;
+  to: Scalars['Bytes'];
+  liquidity: Scalars['BigDecimal'];
+  sender?: Maybe<Scalars['Bytes']>;
+  amount0?: Maybe<Scalars['BigDecimal']>;
+  amount1?: Maybe<Scalars['BigDecimal']>;
+  logIndex?: Maybe<Scalars['BigInt']>;
+  amountUSD?: Maybe<Scalars['BigDecimal']>;
+  feeTo?: Maybe<Scalars['Bytes']>;
+  feeLiquidity?: Maybe<Scalars['BigDecimal']>;
+};
+
 export type Mint_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -5736,6 +8575,116 @@ export type Mint_orderBy =
 export type OrderDirection =
   | 'asc'
   | 'desc';
+
+export type Pair = {
+  id: Scalars['ID'];
+  factory: Factory;
+  name: Scalars['String'];
+  token0: Token;
+  token1: Token;
+  reserve0: Scalars['BigDecimal'];
+  reserve1: Scalars['BigDecimal'];
+  totalSupply: Scalars['BigDecimal'];
+  reserveETH: Scalars['BigDecimal'];
+  reserveUSD: Scalars['BigDecimal'];
+  trackedReserveETH: Scalars['BigDecimal'];
+  token0Price: Scalars['BigDecimal'];
+  token1Price: Scalars['BigDecimal'];
+  volumeToken0: Scalars['BigDecimal'];
+  volumeToken1: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  untrackedVolumeUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+  liquidityProviderCount: Scalars['BigInt'];
+  liquidityPositions: Array<LiquidityPosition>;
+  liquidityPositionSnapshots: Array<LiquidityPositionSnapshot>;
+  dayData: Array<PairDayData>;
+  hourData: Array<PairHourData>;
+  mints: Array<Mint>;
+  burns: Array<Burn>;
+  swaps: Array<Swap>;
+  timestamp: Scalars['BigInt'];
+  block: Scalars['BigInt'];
+};
+
+
+export type PairliquidityPositionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPosition_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPosition_filter>;
+};
+
+
+export type PairliquidityPositionSnapshotsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPositionSnapshot_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPositionSnapshot_filter>;
+};
+
+
+export type PairdayDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairDayData_filter>;
+};
+
+
+export type PairhourDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairHourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairHourData_filter>;
+};
+
+
+export type PairmintsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Mint_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Mint_filter>;
+};
+
+
+export type PairburnsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Burn_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Burn_filter>;
+};
+
+
+export type PairswapsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Swap_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Swap_filter>;
+};
+
+export type PairDayData = {
+  id: Scalars['ID'];
+  date: Scalars['Int'];
+  pair: Pair;
+  token0: Token;
+  token1: Token;
+  reserve0: Scalars['BigDecimal'];
+  reserve1: Scalars['BigDecimal'];
+  totalSupply: Scalars['BigDecimal'];
+  reserveUSD: Scalars['BigDecimal'];
+  volumeToken0: Scalars['BigDecimal'];
+  volumeToken1: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+};
 
 export type PairDayData_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -5894,6 +8843,19 @@ export type PairDayData_orderBy =
   | 'volumeToken1'
   | 'volumeUSD'
   | 'txCount';
+
+export type PairHourData = {
+  id: Scalars['ID'];
+  date: Scalars['Int'];
+  pair: Pair;
+  reserve0: Scalars['BigDecimal'];
+  reserve1: Scalars['BigDecimal'];
+  reserveUSD: Scalars['BigDecimal'];
+  volumeToken0: Scalars['BigDecimal'];
+  volumeToken1: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+};
 
 export type PairHourData_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -6252,13 +9214,63 @@ export type Pair_orderBy =
   | 'block';
 
 export type Query = {
+  user?: Maybe<User>;
+  users: Array<User>;
   bundle?: Maybe<Bundle>;
   bundles: Array<Bundle>;
+  factory?: Maybe<Factory>;
+  factories: Array<Factory>;
+  hourData?: Maybe<HourData>;
+  hourDatas: Array<HourData>;
+  dayData?: Maybe<DayData>;
+  dayDatas: Array<DayData>;
   token?: Maybe<Token>;
   tokens: Array<Token>;
+  tokenHourData?: Maybe<TokenHourData>;
+  tokenHourDatas: Array<TokenHourData>;
+  tokenDayData?: Maybe<TokenDayData>;
+  tokenDayDatas: Array<TokenDayData>;
+  pair?: Maybe<Pair>;
+  pairs: Array<Pair>;
+  pairHourData?: Maybe<PairHourData>;
+  pairHourDatas: Array<PairHourData>;
+  pairDayData?: Maybe<PairDayData>;
+  pairDayDatas: Array<PairDayData>;
+  liquidityPosition?: Maybe<LiquidityPosition>;
+  liquidityPositions: Array<LiquidityPosition>;
+  liquidityPositionSnapshot?: Maybe<LiquidityPositionSnapshot>;
+  liquidityPositionSnapshots: Array<LiquidityPositionSnapshot>;
+  transaction?: Maybe<Transaction>;
+  transactions: Array<Transaction>;
+  mint?: Maybe<Mint>;
+  mints: Array<Mint>;
+  burn?: Maybe<Burn>;
+  burns: Array<Burn>;
+  swap?: Maybe<Swap>;
+  swaps: Array<Swap>;
   tokenSearch: Array<Token>;
+  pairSearch: Array<Pair>;
+  userSearch: Array<User>;
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
+};
+
+
+export type QueryuserArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryusersArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<User_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<User_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -6275,6 +9287,60 @@ export type QuerybundlesArgs = {
   orderBy?: InputMaybe<Bundle_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<Bundle_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryfactoryArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryfactoriesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Factory_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Factory_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryhourDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryhourDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<HourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<HourData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerydayDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerydayDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<DayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<DayData_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -6298,7 +9364,223 @@ export type QuerytokensArgs = {
 };
 
 
+export type QuerytokenHourDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytokenHourDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenHourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<TokenHourData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytokenDayDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytokenDayDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<TokenDayData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Pair_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Pair_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairHourDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairHourDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairHourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairHourData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairDayDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairDayDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairDayData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryliquidityPositionArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryliquidityPositionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPosition_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPosition_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryliquidityPositionSnapshotArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryliquidityPositionSnapshotsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPositionSnapshot_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPositionSnapshot_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytransactionArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytransactionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Transaction_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Transaction_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerymintArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerymintsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Mint_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Mint_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryburnArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryburnsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Burn_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Burn_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryswapArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryswapsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Swap_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Swap_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
 export type QuerytokenSearchArgs = {
+  text: Scalars['String'];
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerypairSearchArgs = {
+  text: Scalars['String'];
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryuserSearchArgs = {
   text: Scalars['String'];
   first?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
@@ -6312,12 +9594,60 @@ export type Query_metaArgs = {
 };
 
 export type Subscription = {
+  user?: Maybe<User>;
+  users: Array<User>;
   bundle?: Maybe<Bundle>;
   bundles: Array<Bundle>;
+  factory?: Maybe<Factory>;
+  factories: Array<Factory>;
+  hourData?: Maybe<HourData>;
+  hourDatas: Array<HourData>;
+  dayData?: Maybe<DayData>;
+  dayDatas: Array<DayData>;
   token?: Maybe<Token>;
   tokens: Array<Token>;
+  tokenHourData?: Maybe<TokenHourData>;
+  tokenHourDatas: Array<TokenHourData>;
+  tokenDayData?: Maybe<TokenDayData>;
+  tokenDayDatas: Array<TokenDayData>;
+  pair?: Maybe<Pair>;
+  pairs: Array<Pair>;
+  pairHourData?: Maybe<PairHourData>;
+  pairHourDatas: Array<PairHourData>;
+  pairDayData?: Maybe<PairDayData>;
+  pairDayDatas: Array<PairDayData>;
+  liquidityPosition?: Maybe<LiquidityPosition>;
+  liquidityPositions: Array<LiquidityPosition>;
+  liquidityPositionSnapshot?: Maybe<LiquidityPositionSnapshot>;
+  liquidityPositionSnapshots: Array<LiquidityPositionSnapshot>;
+  transaction?: Maybe<Transaction>;
+  transactions: Array<Transaction>;
+  mint?: Maybe<Mint>;
+  mints: Array<Mint>;
+  burn?: Maybe<Burn>;
+  burns: Array<Burn>;
+  swap?: Maybe<Swap>;
+  swaps: Array<Swap>;
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
+};
+
+
+export type SubscriptionuserArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionusersArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<User_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<User_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
 };
 
 
@@ -6334,6 +9664,60 @@ export type SubscriptionbundlesArgs = {
   orderBy?: InputMaybe<Bundle_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<Bundle_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionfactoryArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionfactoriesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Factory_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Factory_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionhourDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionhourDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<HourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<HourData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiondayDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiondayDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<DayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<DayData_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -6357,8 +9741,221 @@ export type SubscriptiontokensArgs = {
 };
 
 
+export type SubscriptiontokenHourDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontokenHourDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenHourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<TokenHourData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontokenDayDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontokenDayDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<TokenDayData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionpairArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionpairsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Pair_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Pair_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionpairHourDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionpairHourDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairHourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairHourData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionpairDayDataArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionpairDayDatasArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairDayData_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionliquidityPositionArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionliquidityPositionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPosition_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPosition_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionliquidityPositionSnapshotArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionliquidityPositionSnapshotsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPositionSnapshot_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPositionSnapshot_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontransactionArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontransactionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Transaction_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Transaction_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionmintArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionmintsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Mint_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Mint_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionburnArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionburnsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Burn_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Burn_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionswapArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionswapsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Swap_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Swap_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
 export type Subscription_metaArgs = {
   block?: InputMaybe<Block_height>;
+};
+
+export type Swap = {
+  id: Scalars['ID'];
+  transaction: Transaction;
+  timestamp: Scalars['BigInt'];
+  pair: Pair;
+  sender: Scalars['Bytes'];
+  amount0In: Scalars['BigDecimal'];
+  amount1In: Scalars['BigDecimal'];
+  amount0Out: Scalars['BigDecimal'];
+  amount1Out: Scalars['BigDecimal'];
+  to: Scalars['Bytes'];
+  logIndex?: Maybe<Scalars['BigInt']>;
+  amountUSD: Scalars['BigDecimal'];
 };
 
 export type Swap_filter = {
@@ -6496,6 +10093,7 @@ export type Swap_orderBy =
 
 export type Token = {
   id: Scalars['ID'];
+  factory: Factory;
   symbol: Scalars['String'];
   name: Scalars['String'];
   decimals: Scalars['BigInt'];
@@ -6506,6 +10104,80 @@ export type Token = {
   txCount: Scalars['BigInt'];
   liquidity: Scalars['BigDecimal'];
   derivedETH: Scalars['BigDecimal'];
+  hourData: Array<TokenHourData>;
+  dayData: Array<TokenDayData>;
+  basePairs: Array<Pair>;
+  quotePairs: Array<Pair>;
+  basePairsDayData: Array<PairDayData>;
+  quotePairsDayData: Array<PairDayData>;
+};
+
+
+export type TokenhourDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenHourData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<TokenHourData_filter>;
+};
+
+
+export type TokendayDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<TokenDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<TokenDayData_filter>;
+};
+
+
+export type TokenbasePairsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Pair_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Pair_filter>;
+};
+
+
+export type TokenquotePairsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Pair_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Pair_filter>;
+};
+
+
+export type TokenbasePairsDayDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairDayData_filter>;
+};
+
+
+export type TokenquotePairsDayDataArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PairDayData_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<PairDayData_filter>;
+};
+
+export type TokenDayData = {
+  id: Scalars['ID'];
+  date: Scalars['Int'];
+  token: Token;
+  volume: Scalars['BigDecimal'];
+  volumeETH: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+  liquidity: Scalars['BigDecimal'];
+  liquidityETH: Scalars['BigDecimal'];
+  liquidityUSD: Scalars['BigDecimal'];
+  priceUSD: Scalars['BigDecimal'];
 };
 
 export type TokenDayData_filter = {
@@ -6623,6 +10295,20 @@ export type TokenDayData_orderBy =
   | 'liquidityETH'
   | 'liquidityUSD'
   | 'priceUSD';
+
+export type TokenHourData = {
+  id: Scalars['ID'];
+  date: Scalars['Int'];
+  token: Token;
+  volume: Scalars['BigDecimal'];
+  volumeETH: Scalars['BigDecimal'];
+  volumeUSD: Scalars['BigDecimal'];
+  txCount: Scalars['BigInt'];
+  liquidity: Scalars['BigDecimal'];
+  liquidityETH: Scalars['BigDecimal'];
+  liquidityUSD: Scalars['BigDecimal'];
+  priceUSD: Scalars['BigDecimal'];
+};
 
 export type TokenHourData_filter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -6895,6 +10581,42 @@ export type Token_orderBy =
   | 'basePairsDayData'
   | 'quotePairsDayData';
 
+export type Transaction = {
+  id: Scalars['ID'];
+  blockNumber: Scalars['BigInt'];
+  timestamp: Scalars['BigInt'];
+  mints: Array<Maybe<Mint>>;
+  burns: Array<Maybe<Burn>>;
+  swaps: Array<Maybe<Swap>>;
+};
+
+
+export type TransactionmintsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Mint_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Mint_filter>;
+};
+
+
+export type TransactionburnsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Burn_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Burn_filter>;
+};
+
+
+export type TransactionswapsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Swap_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Swap_filter>;
+};
+
 export type Transaction_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -6948,6 +10670,20 @@ export type Transaction_orderBy =
   | 'burns'
   | 'swaps';
 
+export type User = {
+  id: Scalars['ID'];
+  liquidityPositions: Array<LiquidityPosition>;
+};
+
+
+export type UserliquidityPositionsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<LiquidityPosition_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<LiquidityPosition_filter>;
+};
+
 export type User_filter = {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
@@ -6995,15 +10731,79 @@ export type _SubgraphErrorPolicy_ =
     }
     export type QueryExchangeSdk = {
   /** null **/
+  user: InContextSdkMethod<ExchangeTypes.Query['user'], ExchangeTypes.QueryuserArgs, MeshContext>,
+  /** null **/
+  users: InContextSdkMethod<ExchangeTypes.Query['users'], ExchangeTypes.QueryusersArgs, MeshContext>,
+  /** null **/
   bundle: InContextSdkMethod<ExchangeTypes.Query['bundle'], ExchangeTypes.QuerybundleArgs, MeshContext>,
   /** null **/
   bundles: InContextSdkMethod<ExchangeTypes.Query['bundles'], ExchangeTypes.QuerybundlesArgs, MeshContext>,
+  /** null **/
+  factory: InContextSdkMethod<ExchangeTypes.Query['factory'], ExchangeTypes.QueryfactoryArgs, MeshContext>,
+  /** null **/
+  factories: InContextSdkMethod<ExchangeTypes.Query['factories'], ExchangeTypes.QueryfactoriesArgs, MeshContext>,
+  /** null **/
+  hourData: InContextSdkMethod<ExchangeTypes.Query['hourData'], ExchangeTypes.QueryhourDataArgs, MeshContext>,
+  /** null **/
+  hourDatas: InContextSdkMethod<ExchangeTypes.Query['hourDatas'], ExchangeTypes.QueryhourDatasArgs, MeshContext>,
+  /** null **/
+  dayData: InContextSdkMethod<ExchangeTypes.Query['dayData'], ExchangeTypes.QuerydayDataArgs, MeshContext>,
+  /** null **/
+  dayDatas: InContextSdkMethod<ExchangeTypes.Query['dayDatas'], ExchangeTypes.QuerydayDatasArgs, MeshContext>,
   /** null **/
   token: InContextSdkMethod<ExchangeTypes.Query['token'], ExchangeTypes.QuerytokenArgs, MeshContext>,
   /** null **/
   tokens: InContextSdkMethod<ExchangeTypes.Query['tokens'], ExchangeTypes.QuerytokensArgs, MeshContext>,
   /** null **/
+  tokenHourData: InContextSdkMethod<ExchangeTypes.Query['tokenHourData'], ExchangeTypes.QuerytokenHourDataArgs, MeshContext>,
+  /** null **/
+  tokenHourDatas: InContextSdkMethod<ExchangeTypes.Query['tokenHourDatas'], ExchangeTypes.QuerytokenHourDatasArgs, MeshContext>,
+  /** null **/
+  tokenDayData: InContextSdkMethod<ExchangeTypes.Query['tokenDayData'], ExchangeTypes.QuerytokenDayDataArgs, MeshContext>,
+  /** null **/
+  tokenDayDatas: InContextSdkMethod<ExchangeTypes.Query['tokenDayDatas'], ExchangeTypes.QuerytokenDayDatasArgs, MeshContext>,
+  /** null **/
+  pair: InContextSdkMethod<ExchangeTypes.Query['pair'], ExchangeTypes.QuerypairArgs, MeshContext>,
+  /** null **/
+  pairs: InContextSdkMethod<ExchangeTypes.Query['pairs'], ExchangeTypes.QuerypairsArgs, MeshContext>,
+  /** null **/
+  pairHourData: InContextSdkMethod<ExchangeTypes.Query['pairHourData'], ExchangeTypes.QuerypairHourDataArgs, MeshContext>,
+  /** null **/
+  pairHourDatas: InContextSdkMethod<ExchangeTypes.Query['pairHourDatas'], ExchangeTypes.QuerypairHourDatasArgs, MeshContext>,
+  /** null **/
+  pairDayData: InContextSdkMethod<ExchangeTypes.Query['pairDayData'], ExchangeTypes.QuerypairDayDataArgs, MeshContext>,
+  /** null **/
+  pairDayDatas: InContextSdkMethod<ExchangeTypes.Query['pairDayDatas'], ExchangeTypes.QuerypairDayDatasArgs, MeshContext>,
+  /** null **/
+  liquidityPosition: InContextSdkMethod<ExchangeTypes.Query['liquidityPosition'], ExchangeTypes.QueryliquidityPositionArgs, MeshContext>,
+  /** null **/
+  liquidityPositions: InContextSdkMethod<ExchangeTypes.Query['liquidityPositions'], ExchangeTypes.QueryliquidityPositionsArgs, MeshContext>,
+  /** null **/
+  liquidityPositionSnapshot: InContextSdkMethod<ExchangeTypes.Query['liquidityPositionSnapshot'], ExchangeTypes.QueryliquidityPositionSnapshotArgs, MeshContext>,
+  /** null **/
+  liquidityPositionSnapshots: InContextSdkMethod<ExchangeTypes.Query['liquidityPositionSnapshots'], ExchangeTypes.QueryliquidityPositionSnapshotsArgs, MeshContext>,
+  /** null **/
+  transaction: InContextSdkMethod<ExchangeTypes.Query['transaction'], ExchangeTypes.QuerytransactionArgs, MeshContext>,
+  /** null **/
+  transactions: InContextSdkMethod<ExchangeTypes.Query['transactions'], ExchangeTypes.QuerytransactionsArgs, MeshContext>,
+  /** null **/
+  mint: InContextSdkMethod<ExchangeTypes.Query['mint'], ExchangeTypes.QuerymintArgs, MeshContext>,
+  /** null **/
+  mints: InContextSdkMethod<ExchangeTypes.Query['mints'], ExchangeTypes.QuerymintsArgs, MeshContext>,
+  /** null **/
+  burn: InContextSdkMethod<ExchangeTypes.Query['burn'], ExchangeTypes.QueryburnArgs, MeshContext>,
+  /** null **/
+  burns: InContextSdkMethod<ExchangeTypes.Query['burns'], ExchangeTypes.QueryburnsArgs, MeshContext>,
+  /** null **/
+  swap: InContextSdkMethod<ExchangeTypes.Query['swap'], ExchangeTypes.QueryswapArgs, MeshContext>,
+  /** null **/
+  swaps: InContextSdkMethod<ExchangeTypes.Query['swaps'], ExchangeTypes.QueryswapsArgs, MeshContext>,
+  /** null **/
   tokenSearch: InContextSdkMethod<ExchangeTypes.Query['tokenSearch'], ExchangeTypes.QuerytokenSearchArgs, MeshContext>,
+  /** null **/
+  pairSearch: InContextSdkMethod<ExchangeTypes.Query['pairSearch'], ExchangeTypes.QuerypairSearchArgs, MeshContext>,
+  /** null **/
+  userSearch: InContextSdkMethod<ExchangeTypes.Query['userSearch'], ExchangeTypes.QueryuserSearchArgs, MeshContext>,
   /** Access to subgraph metadata **/
   _meta: InContextSdkMethod<ExchangeTypes.Query['_meta'], ExchangeTypes.Query_metaArgs, MeshContext>
 };
@@ -7014,13 +10814,73 @@ export type MutationExchangeSdk = {
 
 export type SubscriptionExchangeSdk = {
   /** null **/
+  user: InContextSdkMethod<ExchangeTypes.Subscription['user'], ExchangeTypes.SubscriptionuserArgs, MeshContext>,
+  /** null **/
+  users: InContextSdkMethod<ExchangeTypes.Subscription['users'], ExchangeTypes.SubscriptionusersArgs, MeshContext>,
+  /** null **/
   bundle: InContextSdkMethod<ExchangeTypes.Subscription['bundle'], ExchangeTypes.SubscriptionbundleArgs, MeshContext>,
   /** null **/
   bundles: InContextSdkMethod<ExchangeTypes.Subscription['bundles'], ExchangeTypes.SubscriptionbundlesArgs, MeshContext>,
   /** null **/
+  factory: InContextSdkMethod<ExchangeTypes.Subscription['factory'], ExchangeTypes.SubscriptionfactoryArgs, MeshContext>,
+  /** null **/
+  factories: InContextSdkMethod<ExchangeTypes.Subscription['factories'], ExchangeTypes.SubscriptionfactoriesArgs, MeshContext>,
+  /** null **/
+  hourData: InContextSdkMethod<ExchangeTypes.Subscription['hourData'], ExchangeTypes.SubscriptionhourDataArgs, MeshContext>,
+  /** null **/
+  hourDatas: InContextSdkMethod<ExchangeTypes.Subscription['hourDatas'], ExchangeTypes.SubscriptionhourDatasArgs, MeshContext>,
+  /** null **/
+  dayData: InContextSdkMethod<ExchangeTypes.Subscription['dayData'], ExchangeTypes.SubscriptiondayDataArgs, MeshContext>,
+  /** null **/
+  dayDatas: InContextSdkMethod<ExchangeTypes.Subscription['dayDatas'], ExchangeTypes.SubscriptiondayDatasArgs, MeshContext>,
+  /** null **/
   token: InContextSdkMethod<ExchangeTypes.Subscription['token'], ExchangeTypes.SubscriptiontokenArgs, MeshContext>,
   /** null **/
   tokens: InContextSdkMethod<ExchangeTypes.Subscription['tokens'], ExchangeTypes.SubscriptiontokensArgs, MeshContext>,
+  /** null **/
+  tokenHourData: InContextSdkMethod<ExchangeTypes.Subscription['tokenHourData'], ExchangeTypes.SubscriptiontokenHourDataArgs, MeshContext>,
+  /** null **/
+  tokenHourDatas: InContextSdkMethod<ExchangeTypes.Subscription['tokenHourDatas'], ExchangeTypes.SubscriptiontokenHourDatasArgs, MeshContext>,
+  /** null **/
+  tokenDayData: InContextSdkMethod<ExchangeTypes.Subscription['tokenDayData'], ExchangeTypes.SubscriptiontokenDayDataArgs, MeshContext>,
+  /** null **/
+  tokenDayDatas: InContextSdkMethod<ExchangeTypes.Subscription['tokenDayDatas'], ExchangeTypes.SubscriptiontokenDayDatasArgs, MeshContext>,
+  /** null **/
+  pair: InContextSdkMethod<ExchangeTypes.Subscription['pair'], ExchangeTypes.SubscriptionpairArgs, MeshContext>,
+  /** null **/
+  pairs: InContextSdkMethod<ExchangeTypes.Subscription['pairs'], ExchangeTypes.SubscriptionpairsArgs, MeshContext>,
+  /** null **/
+  pairHourData: InContextSdkMethod<ExchangeTypes.Subscription['pairHourData'], ExchangeTypes.SubscriptionpairHourDataArgs, MeshContext>,
+  /** null **/
+  pairHourDatas: InContextSdkMethod<ExchangeTypes.Subscription['pairHourDatas'], ExchangeTypes.SubscriptionpairHourDatasArgs, MeshContext>,
+  /** null **/
+  pairDayData: InContextSdkMethod<ExchangeTypes.Subscription['pairDayData'], ExchangeTypes.SubscriptionpairDayDataArgs, MeshContext>,
+  /** null **/
+  pairDayDatas: InContextSdkMethod<ExchangeTypes.Subscription['pairDayDatas'], ExchangeTypes.SubscriptionpairDayDatasArgs, MeshContext>,
+  /** null **/
+  liquidityPosition: InContextSdkMethod<ExchangeTypes.Subscription['liquidityPosition'], ExchangeTypes.SubscriptionliquidityPositionArgs, MeshContext>,
+  /** null **/
+  liquidityPositions: InContextSdkMethod<ExchangeTypes.Subscription['liquidityPositions'], ExchangeTypes.SubscriptionliquidityPositionsArgs, MeshContext>,
+  /** null **/
+  liquidityPositionSnapshot: InContextSdkMethod<ExchangeTypes.Subscription['liquidityPositionSnapshot'], ExchangeTypes.SubscriptionliquidityPositionSnapshotArgs, MeshContext>,
+  /** null **/
+  liquidityPositionSnapshots: InContextSdkMethod<ExchangeTypes.Subscription['liquidityPositionSnapshots'], ExchangeTypes.SubscriptionliquidityPositionSnapshotsArgs, MeshContext>,
+  /** null **/
+  transaction: InContextSdkMethod<ExchangeTypes.Subscription['transaction'], ExchangeTypes.SubscriptiontransactionArgs, MeshContext>,
+  /** null **/
+  transactions: InContextSdkMethod<ExchangeTypes.Subscription['transactions'], ExchangeTypes.SubscriptiontransactionsArgs, MeshContext>,
+  /** null **/
+  mint: InContextSdkMethod<ExchangeTypes.Subscription['mint'], ExchangeTypes.SubscriptionmintArgs, MeshContext>,
+  /** null **/
+  mints: InContextSdkMethod<ExchangeTypes.Subscription['mints'], ExchangeTypes.SubscriptionmintsArgs, MeshContext>,
+  /** null **/
+  burn: InContextSdkMethod<ExchangeTypes.Subscription['burn'], ExchangeTypes.SubscriptionburnArgs, MeshContext>,
+  /** null **/
+  burns: InContextSdkMethod<ExchangeTypes.Subscription['burns'], ExchangeTypes.SubscriptionburnsArgs, MeshContext>,
+  /** null **/
+  swap: InContextSdkMethod<ExchangeTypes.Subscription['swap'], ExchangeTypes.SubscriptionswapArgs, MeshContext>,
+  /** null **/
+  swaps: InContextSdkMethod<ExchangeTypes.Subscription['swaps'], ExchangeTypes.SubscriptionswapsArgs, MeshContext>,
   /** Access to subgraph metadata **/
   _meta: InContextSdkMethod<ExchangeTypes.Subscription['_meta'], ExchangeTypes.Subscription_metaArgs, MeshContext>
 };
@@ -7038,15 +10898,14 @@ export type MeshContext = BentoboxContext & ExchangeContext & BaseMeshContext;
 
 import { getMesh } from '@graphql-mesh/runtime';
 import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
-import pathModule from 'path';
+import { path as pathModule } from '@graphql-mesh/cross-helpers';
 import { fileURLToPath } from '@graphql-mesh/utils';
 import ExternalModule_0 from '@graphql-mesh/cache-inmemory-lru';
 import ExternalModule_1 from '@graphql-mesh/graphql';
 import ExternalModule_2 from '@graphql-mesh/merger-stitching';
-import ExternalModule_3 from '@graphql-mesh/transform-filter-schema';
-import ExternalModule_4 from '@graphql-mesh/transform-type-merging';
-import ExternalModule_5 from './sources/bentobox/schema.graphql.ts';
-import ExternalModule_6 from './sources/exchange/schema.graphql.ts';
+import ExternalModule_3 from '@graphql-mesh/transform-type-merging';
+import ExternalModule_4 from './sources/bentobox/introspectionSchema';
+import ExternalModule_5 from './sources/exchange/introspectionSchema';
 
 const importedModules: Record<string, any> = {
   // @ts-ignore
@@ -7056,13 +10915,11 @@ const importedModules: Record<string, any> = {
   // @ts-ignore
   ["@graphql-mesh/merger-stitching"]: ExternalModule_2,
   // @ts-ignore
-  ["@graphql-mesh/transform-filter-schema"]: ExternalModule_3,
+  ["@graphql-mesh/transform-type-merging"]: ExternalModule_3,
   // @ts-ignore
-  ["@graphql-mesh/transform-type-merging"]: ExternalModule_4,
+  [".graphclient/sources/bentobox/introspectionSchema"]: ExternalModule_4,
   // @ts-ignore
-  [".graphclient/sources/bentobox/schema.graphql.ts"]: ExternalModule_5,
-  // @ts-ignore
-  [".graphclient/sources/exchange/schema.graphql.ts"]: ExternalModule_6
+  [".graphclient/sources/exchange/introspectionSchema"]: ExternalModule_5
 };
 
 const baseDir = pathModule.join(__dirname, '..');
@@ -7078,6 +10935,7 @@ const importFn = (moduleId: string) => {
 const rootStore = new MeshStore('.graphclient', new FsStoreStorageAdapter({
   cwd: baseDir,
   importFn,
+  fileType: 'ts',
 }), {
   readonly: true,
   validate: false
@@ -7091,10 +10949,10 @@ import MeshCache from '@graphql-mesh/cache-inmemory-lru';
 import { DefaultLogger } from '@graphql-mesh/utils';
 import GraphqlHandler from '@graphql-mesh/graphql'
 import StitchingMerger from '@graphql-mesh/merger-stitching';
-import FilterSchemaTransform from '@graphql-mesh/transform-filter-schema';
 import TypeMergingTransform from '@graphql-mesh/transform-type-merging';
 import { resolveAdditionalResolvers } from '@graphql-mesh/utils';
-export const rawConfig: YamlConfig.Config = {"sources":[{"name":"bentobox","handler":{"graphql":{"endpoint":"https://api.thegraph.com/subgraphs/name/matthewlilley/bentobox-ethereum"}},"transforms":[{"filterSchema":{"mode":"wrap","filters":["Type.!{Strategy, StrategyHarvest, FlashLoan, MasterContract, Clone, MasterContractApproval, Protocol, User, UserToken, Transaction}"]}},{"typeMerging":{"queryFields":[{"queryFieldName":"tokens","keyField":"id","keyArg":"ids"}]}}]},{"name":"exchange","handler":{"graphql":{"endpoint":"https://api.thegraph.com/subgraphs/name/sushiswap/exchange"}},"transforms":[{"filterSchema":{"mode":"wrap","filters":["Type.!{User, Factory, HourData, DayData, TokenHourData, TokenDayData, Pair, PairHourData, PairDayData, LiquidityPosition, LiquidityPositionSnapshot, Transaction, Mint, Burn, Swap}"]}},{"typeMerging":{"queryFields":[{"queryFieldName":"tokens","keyField":"id","keyArg":"ids"}]}}]}],"documents":["./query.graphql"]} as any
+import { parseWithCache } from '@graphql-mesh/utils';
+export const rawConfig: YamlConfig.Config = {"sources":[{"name":"bentobox","handler":{"graphql":{"endpoint":"https://api.thegraph.com/subgraphs/name/matthewlilley/bentobox-ethereum"}},"transforms":[{"typeMerging":{"queryFields":[{"queryFieldName":"tokens","keyField":"id","keyArg":"ids"}]}}]},{"name":"exchange","handler":{"graphql":{"endpoint":"https://api.thegraph.com/subgraphs/name/sushiswap/exchange"}},"transforms":[{"typeMerging":{"queryFields":[{"queryFieldName":"tokens","keyField":"id","keyArg":"ids"}]}}]}],"documents":["./query.graphql"]} as any
 export async function getMeshOptions(): Promise<GetMeshOptions> {
 const pubsub = new PubSub();
 const cache = new (MeshCache as any)({
@@ -7109,7 +10967,7 @@ const sources = [];
 const transforms = [];
 const bentoboxTransforms = [];
 const exchangeTransforms = [];
-const additionalTypeDefs: DocumentNode[] = [] as any[];
+const additionalTypeDefs = [] as any[];
 const bentoboxHandler = new GraphqlHandler({
               name: rawConfig.sources[0].name,
               config: rawConfig.sources[0].handler["graphql"],
@@ -7137,29 +10995,9 @@ const merger = new(StitchingMerger as any)({
         store: rootStore.child('stitchingMerger')
       })
 bentoboxTransforms.push(
-                new FilterSchemaTransform({
-                  apiName: rawConfig.sources[0].name,
-                  config: rawConfig.sources[0].transforms[0]["filterSchema"],
-                  baseDir,
-                  cache,
-                  pubsub,
-                  importFn
-                })
-              );
-bentoboxTransforms.push(
                 new TypeMergingTransform({
                   apiName: rawConfig.sources[0].name,
-                  config: rawConfig.sources[0].transforms[1]["typeMerging"],
-                  baseDir,
-                  cache,
-                  pubsub,
-                  importFn
-                })
-              );
-exchangeTransforms.push(
-                new FilterSchemaTransform({
-                  apiName: rawConfig.sources[1].name,
-                  config: rawConfig.sources[1].transforms[0]["filterSchema"],
+                  config: rawConfig.sources[0].transforms[0]["typeMerging"],
                   baseDir,
                   cache,
                   pubsub,
@@ -7169,7 +11007,7 @@ exchangeTransforms.push(
 exchangeTransforms.push(
                 new TypeMergingTransform({
                   apiName: rawConfig.sources[1].name,
-                  config: rawConfig.sources[1].transforms[1]["typeMerging"],
+                  config: rawConfig.sources[1].transforms[0]["typeMerging"],
                   baseDir,
                   cache,
                   pubsub,
@@ -7195,6 +11033,11 @@ const additionalResolvers = await resolveAdditionalResolvers(
   )
 const liveQueryInvalidations = rawConfig.liveQueryInvalidations;
 const additionalEnvelopPlugins = [];
+const documents = documentsInSDL.map((documentSdl: string, i: number) => ({
+              rawSDL: documentSdl,
+              document: parseWithCache(documentSdl),
+              location: `document_${i}.graphql`,
+            }))
 
   return {
     sources,
@@ -7207,6 +11050,7 @@ const additionalEnvelopPlugins = [];
     logger,
     liveQueryInvalidations,
     additionalEnvelopPlugins,
+    documents,
   };
 }
 
@@ -7231,9 +11075,9 @@ export async function getBuiltGraphClient(): Promise<MeshInstance<MeshContext>> 
   return getMesh<MeshContext>(meshConfig);
 }
 
-export async function getBuiltGraphSDK<TGlobalContext = any, TGlobalRoot = any, TOperationContext = any, TOperationRoot = any>(sdkOptions?: SdkOptions<TGlobalContext, TGlobalRoot>) {
-  const { schema } = await getBuiltGraphClient();
-  return getSdk<TGlobalContext, TGlobalRoot, TOperationContext, TOperationRoot>(schema, sdkOptions);
+export async function getBuiltGraphSDK<TGlobalContext = any, TOperationContext = any>(globalContext?: TGlobalContext) {
+  const { sdkRequesterFactory } = await getBuiltGraphClient();
+  return getSdk<TOperationContext>(sdkRequesterFactory(globalContext));
 }
 export type BentoBoxQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7244,38 +11088,30 @@ export type BentoBoxQuery = { bentoBox?: Maybe<{ tokens?: Maybe<Array<(
     )>> }>, bundle?: Maybe<Pick<Bundle, 'ethPrice'>> };
 
 
-export const BentoBoxDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"BentoBox"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bentoBox"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"StringValue","value":"0xf5bce5077908a1b7370b9ae04adc565ebd643966","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"symbol"}},{"kind":"Field","name":{"kind":"Name","value":"rebase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"elastic"}}]}},{"kind":"Field","name":{"kind":"Name","value":"derivedETH"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"bundle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ethPrice"}}]}}]}}]} as unknown as DocumentNode<BentoBoxQuery, BentoBoxQueryVariables>;
-
-
-function handleExecutionResult<T>(result: ExecutionResult, operationName: string) {
-  if (result.errors) {
-    const originalErrors = result.errors.map(error => error.originalError|| error);
-    throw new AggregateError(originalErrors, `Failed to execute ${operationName}: \n\t${originalErrors.join('\n\t')}`);
-  }
-  return result.data as unknown as T;
-}
-export interface SdkOptions<TGlobalContext = any, TGlobalRoot = any> {
-  globalContext?: TGlobalContext;
-  globalRoot?: TGlobalRoot;
-  jitOptions?: Partial<CompilerOptions>;
-}
-export function getSdk<TGlobalContext = any, TGlobalRoot = any, TOperationContext = any, TOperationRoot = any>(schema: GraphQLSchema, { globalContext, globalRoot, jitOptions = {} }: SdkOptions<TGlobalContext, TGlobalRoot> = {}) {
-    const BentoBoxCompiled = compileQuery(schema, BentoBoxDocument, 'BentoBox', jitOptions);
-    if(!(isCompiledQuery(BentoBoxCompiled))) {
-      const originalErrors = BentoBoxCompiled?.errors?.map(error => error.originalError || error) || [];
-      throw new AggregateError(originalErrors, `Failed to compile BentoBox: \n\t${originalErrors.join('\n\t')}`);
+export const BentoBoxDocument = gql`
+    query BentoBox {
+  bentoBox(id: "0xf5bce5077908a1b7370b9ae04adc565ebd643966") {
+    tokens {
+      id
+      symbol
+      rebase {
+        elastic
+      }
+      derivedETH
     }
+  }
+  bundle(id: 1) {
+    ethPrice
+  }
+}
+    ` as unknown as DocumentNode<BentoBoxQuery, BentoBoxQueryVariables>;
 
+
+export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
+export function getSdk<C>(requester: Requester<C>) {
   return {
-    async BentoBox(variables?: BentoBoxQueryVariables, context?: TOperationContext, root?: TOperationRoot): Promise<BentoBoxQuery> {
-      const result = await BentoBoxCompiled.query({
-        ...globalRoot,
-        ...root
-      }, {
-        ...globalContext,
-        ...context
-      }, variables);
-      return handleExecutionResult(result, 'BentoBox');
+    BentoBox(variables?: BentoBoxQueryVariables, options?: C): Promise<BentoBoxQuery> {
+      return requester<BentoBoxQuery, BentoBoxQueryVariables>(BentoBoxDocument, variables, options);
     }
   };
 }

@@ -4,10 +4,10 @@ sources:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/matthewlilley/bentobox-ethereum
     transforms:
-      - filterSchema:
-          mode: wrap
-          filters:
-          - Type.!{Strategy, StrategyHarvest, FlashLoan, MasterContract, Clone, MasterContractApproval, Protocol, User, UserToken, Transaction}
+      # - filterSchema:
+      #     mode: wrap
+      #     filters:
+      #     - Type.!{Strategy, StrategyHarvest, FlashLoan, MasterContract, Clone, MasterContractApproval, Protocol, User, UserToken, Transaction}
       - typeMerging:
           queryFields:
             - queryFieldName: tokens
@@ -18,10 +18,10 @@ sources:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/sushiswap/exchange
     transforms:
-      - filterSchema:
-          mode: wrap
-          filters:
-          - Type.!{User, Factory, HourData, DayData, TokenHourData, TokenDayData, Pair, PairHourData, PairDayData, LiquidityPosition, LiquidityPositionSnapshot, Transaction, Mint, Burn, Swap}
+      # - filterSchema:
+      #     mode: wrap
+      #     filters:
+      #     - Type.!{User, Factory, HourData, DayData, TokenHourData, TokenDayData, Pair, PairHourData, PairDayData, LiquidityPosition, LiquidityPositionSnapshot, Transaction, Mint, Burn, Swap}
       - typeMerging:
           queryFields:
             - queryFieldName: tokens
