@@ -2,12 +2,6 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   content: ['node_modules/ui/**/*.{js,ts,jsx,tsx}'],
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/line-clamp'),
-    require('@tailwindcss/typography'),
-  ],
   theme: {
     extend: {
       backgroundImage: () => ({
@@ -147,4 +141,10 @@ module.exports = {
       sans: ['DM Sans', ...defaultTheme.fontFamily.sans],
     },
   },
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/line-clamp'),
+    require('@tailwindcss/typography'),
+  ],
 }

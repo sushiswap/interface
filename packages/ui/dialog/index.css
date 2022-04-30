@@ -1,0 +1,9 @@
+@layer components {
+    .dialog-root {
+        @apply fixed inset-0 z-10 overflow-y-auto
+    }
+
+    .dialog-overlay {
+        @apply fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75
+    }
+}
